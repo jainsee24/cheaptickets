@@ -1,0 +1,504 @@
+/* Copy styles from styles.css */
+
+/* Example styles, adjust according to your actual styles.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #fff;
+    border-bottom: 1px solid #ccc;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+header .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #e74c3c;
+}
+
+header nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+}
+
+header nav ul li {
+    cursor: pointer;
+    color: #555;
+    transition: color 0.3s ease;
+}
+
+header nav ul li:hover {
+    color: #007bff;
+}
+
+.search-section {
+    padding: 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-top: 20px;
+}
+
+.tab-menu {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.tab {
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px 5px 0 0;
+    margin-right: -1px;
+    transition: background-color 0.3s ease, border 0.3s ease;
+}
+
+.tab.active {
+    background-color: #fff;
+    color: #007bff;
+    border: 1px solid #007bff;
+    border-bottom: none;
+}
+
+.tab:hover {
+    background-color: #ddd;
+}
+
+.tab-content {
+    display: none;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 0 5px 5px 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+#flights {
+    display: block;
+}
+
+.trip-type, .class-type, .add-ons {
+    margin-bottom: 15px;
+    text-align: left;
+    display: flex;
+    justify-content: space-around;
+}
+
+.trip-type label, .class-type label, .add-ons label {
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.trip-type label input, .class-type label input, .add-ons label input {
+    margin-right: 5px;
+}
+
+.flight-details {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.flight-details input, .flight-details select, .flight-details button {
+    padding: 10px;
+    flex: 1;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.flight-details input[type="text"], .flight-details input[type="date"] {
+    flex: 1 1 calc(33.333% - 10px);
+}
+
+.flight-details select {
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.flight-details button {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 4px;
+}
+
+.flight-details button:hover {
+    background-color: #d62c1a;
+}
+
+.flight-details input::placeholder {
+    color: #aaa;
+}
+.navbar {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar .logo {
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #fff;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.search-form {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.form-group {
+    margin-bottom: 10px;
+    flex: 1;
+    min-width: 150px;
+}
+
+.results-container {
+    display: flex;
+    padding: 20px;
+}
+
+.filters {
+    width: 25%;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.filters h3 {
+    margin-top: 0;
+}
+
+.filter-section {
+    margin-bottom: 20px;
+}
+
+.filter-section h4 {
+    margin-bottom: 10px;
+}
+
+.filter-section label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.filter-section label input {
+    margin-right: 10px;
+}
+
+.filter-section a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.filter-section a:hover {
+    text-decoration: underline;
+}
+
+.results {
+    width: 75%;
+    margin-left: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header h3 {
+    margin: 0;
+}
+
+.sort-by {
+    display: flex;
+    align-items: center;
+}
+
+.sort-by label {
+    margin-right: 10px;
+}
+
+.spinner {
+    text-align: center;
+    font-size: 24px;
+    color: #007bff;
+}
+
+.dates {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.dates .date {
+    text-align: center;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.dates .highlighted {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.flight-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.flight-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.flight-time,
+.flight-route,
+.flight-carrier {
+    margin-bottom: 10px;
+}
+
+.flight-time span,
+.flight-route span {
+    display: block;
+}
+
+.flight-carrier img {
+    height: 20px;
+    margin-right: 10px;
+}
+
+.flight-price {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.flight-price span {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.flight-price button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.flight-price button:hover {
+    background-color: #0056b3;
+}
+
+.feedback-section {
+    text-align: center;
+    margin: 20px;
+}
+
+.feedback-section a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.feedback-section a:hover {
+    text-decoration: underline;
+}
+
+.app-promo {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+}
+
+.qr-code {
+    text-align: center;
+    margin-top: 20px;
+}
+
+footer {
+    padding: 20px;
+    background-color: #f1f1f1;
+    text-align: center;
+}
+
+footer .footer-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+footer .footer-links {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+footer .footer-links div {
+    flex: 1;
+    padding: 0 10px;
+}
+
+footer h4 {
+    margin-top: 0;
+}
+
+footer p {
+    margin-top: 20px;
+    font-size: 12px;
+    color: #555;
+}
+
+.dates-row {
+    display: flex;
+    justify-content: space-between;
+    overflow-x: auto;
+}
+
+.date {
+    text-align: center;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    min-width: 100px;
+    margin: 5px;
+}
+
+.date.highlighted {
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* Existing styles... */
+
+.popup {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.popup-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    text-align: left;
+    position: relative;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.popup-content h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.popup-content p {
+    margin: 10px 0;
+}
+
+.popup-content hr {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin: 10px 0;
+}
+
+#book-popup {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    margin: 20px auto;
+    width: 50%;
+}
+
+#book-popup:hover {
+    background-color: #0056b3;
+}
+
+/* Existing styles... */
