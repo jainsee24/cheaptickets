@@ -71,4 +71,4 @@ def fetch_flights():
     return jsonify({'flights': flight_data.get('itineraries', [])})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0',port=8080)
