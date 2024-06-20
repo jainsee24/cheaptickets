@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 import requests
 import json
-
+import time
 app = Flask(__name__)
 
 # Load airports data
@@ -25,6 +25,16 @@ def get_airport_info(access_key, query):
 @app.route('/search_flights', methods=['GET'])
 def search_flights():
     return render_template('results.html')
+
+def check_flight_status(api_url):
+    while True:
+        response = requests.get(api_url)
+        flight_data = response.json()
+        if flight_data['context']['status'] == 'complete':
+            return flight_data
+        time.sleep(1)  # Wait for 5 seconds before retrying
+
+
 
 @app.route('/fetch_flights', methods=['GET'])
 def fetch_flights():
@@ -57,12 +67,12 @@ def fetch_flights():
         api_url += f"&returnDate={return_date}"
 
     # Make the API request
-    response = requests.get(api_url)
-    flight_data = response.json()
+    flight_data = check_flight_status(api_url)
+
     for itinerary in flight_data.get('itineraries', []):
         original_price = itinerary['price']['raw']
-        if original_price > 290:
-            discounted_price = original_price - 200
+        if original_price > 100:
+            discounted_price = original_price - 100
             itinerary['price']['raw'] = int(discounted_price)
             itinerary['price']['formatted'] = f"${int(discounted_price)}"
 
@@ -71,4 +81,4 @@ def fetch_flights():
     return jsonify({'flights': flight_data.get('itineraries', [])})
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',port=80)
+    app.run(host='0.0.0.0',port=8080)
