@@ -29,7 +29,7 @@ def search_flights():
 def check_flight_status(api_url):
     i=0
     flight_data=''
-    while i<10:
+    while i<5:
         i+=1
         response = requests.get(api_url)
         flight_data = response.json()
@@ -55,12 +55,18 @@ def fetch_flights():
     origin_info = get_airport_info(access_key, origin_query)
     destination_info = get_airport_info(access_key, destination_query)
     # print(origin_info)
-    print(2)
-
     origin_sky_id = origin_info[0]['skyId']
     origin_entity_id = origin_info[0]['entityId']
     destination_sky_id = destination_info[0]['skyId']
     destination_entity_id = destination_info[0]['entityId']
+
+    for i in destination_info:
+        if i['skyId']==destination_query:
+            destination_entity_id = i['entityId']
+    for i in origin_info:
+        if i['skyId']==origin_query:
+            origin_entity_id = i['entityId']
+    
 
     # Construct the API URL for flight search
     api_url = (
@@ -71,6 +77,7 @@ def fetch_flights():
     )
     if return_date:
         api_url += f"&returnDate={return_date}"
+    print(api_url)
 
     # Make the API request
     flight_data = check_flight_status(api_url)
@@ -89,7 +96,7 @@ def fetch_flights():
                 if carrier['name'] == 'Alaska Airlines':
                     carrier['logoUrl'] = 'https://banner2.cleanpng.com/20180704/yik/kisspng-alaska-airlines-bna-seattletacoma-internation-5b3d8aefc5ec28.5427569615307599198107.jpg'
 
-
+    print(flight_data)
     # Render the flight data to the results section
     return jsonify({'flights': flight_data.get('itineraries', []),'class': str(cabin_class[0]).upper()+str(cabin_class[1:])})
 
