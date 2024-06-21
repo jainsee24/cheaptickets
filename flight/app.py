@@ -27,11 +27,16 @@ def search_flights():
     return render_template('results.html')
 
 def check_flight_status(api_url):
-    while True:
+    i=0
+    flight_data=''
+    while i<10:
+        i+=1
         response = requests.get(api_url)
         flight_data = response.json()
         if flight_data['context']['status'] == 'complete':
             return flight_data
+        time.sleep(1)
+    return flight_data
 
 
 
@@ -72,14 +77,14 @@ def fetch_flights():
 
     for itinerary in flight_data.get('itineraries', []):
         original_price = itinerary['price']['raw']
-        if original_price > 150:
-            discounted_price = original_price - 150
+        if original_price > 400:
+            discounted_price = original_price - 400
             itinerary['price']['raw'] = int(discounted_price)
             itinerary['price']['formatted'] = f"${int(discounted_price)}"
 
 
     # Render the flight data to the results section
-    return jsonify({'flights': flight_data.get('itineraries', [])})
+    return jsonify({'flights': flight_data.get('itineraries', []),'class': str(cabin_class[0]).upper()+str(cabin_class[1:])})
 
 
 @app.route('/book', methods=['GET'])

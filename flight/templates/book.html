@@ -201,11 +201,14 @@
             // Retrieve flight data from URL parameters
             const params = new URLSearchParams(window.location.search);
             const flightData = JSON.parse(params.get('flight'));
+            const classs = JSON.parse(params.get('class'));
+
 
             // Fill the price summary
             const priceSummary = document.getElementById('price-summary');
             priceSummary.innerHTML = `
                 <div class="summary-item"><span><strong>Flight:</strong></span> <span>${flightData.legs[0].origin.city} (${flightData.legs[0].origin.displayCode}) to ${flightData.legs[0].destination.city} (${flightData.legs[0].destination.displayCode})</span></div>
+                // <div class="summary-item"><span><strong>Class:</strong></span> <span>$${classs}</span></div>
                 <div class="summary-item"><span><strong>Price:</strong></span> <span>$${(flightData.price.raw * 0.8).toFixed(2)}</span></div>
                 <div class="summary-item"><span><strong>Taxes and Fees:</strong></span> <span>$${(flightData.price.raw * 0.2).toFixed(2)}</span></div>
                 <div class="summary-item extra"><span><strong>Extras:</strong></span><span>$0.00</span></div>
