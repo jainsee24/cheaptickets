@@ -100,13 +100,13 @@
         </ul>
         <div class="qr-code">
             <p>Scan the QR code with your device camera and download our app</p>
-            <img src="path/to/qr-code.png" alt="QR code">
+            <img src="{{ url_for('static', filename='qr.webp') }}" alt="QR code">
         </div>
     </div>
     
     <footer>
         <div class="footer-section">
-            <img src="path/to/expedia-group-logo.png" alt="Expedia Group Logo">
+            <img src="{{ url_for('static', filename='logo.jpeg') }}" alt="Expedia Group Logo">
             <div class="footer-links">
                 <div>
                     <h4>Company</h4>
@@ -393,13 +393,21 @@
             `;
             popup.style.display = 'block';
 
-            document.getElementById('book-popup').onclick = () => showConfirmPopup();
+            document.getElementById('book-popup').onclick = () => showConfirmPopup(flight);
         }
+        function showConfirmPopup(flight) {
+    const flightData = JSON.stringify(flight);
+    console.log(flightData);
+    console.log(flight);
+    
+    const bookingUrl = `/book?flight=${encodeURIComponent(flightData)}`;
+    window.location.href = bookingUrl;
+}
 
-        function showConfirmPopup() {
-            const confirmPopup = document.getElementById('confirm-popup');
-            confirmPopup.style.display = 'block';
-        }
+        // function showConfirmPopup() {
+        //     const confirmPopup = document.getElementById('confirm-popup');
+        //     confirmPopup.style.display = 'block';
+        // }
 
         document.querySelectorAll('.close').forEach(button => {
             button.addEventListener('click', function() {

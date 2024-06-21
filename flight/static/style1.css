@@ -502,3 +502,576 @@ footer p {
 }
 
 /* Existing styles... */
+
+
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #fff;
+    padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.5em;
+    color: #333;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+}
+
+nav ul li {
+    cursor: pointer;
+    color: #0071c2;
+}
+
+.booking-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+    gap: 40px;
+}
+
+.booking-form, .booking-summary {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 45%;
+}
+
+.booking-form h2, .booking-summary h2 {
+    margin-top: 0;
+}
+
+.booking-form label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.booking-form input[type="text"], .booking-form input[type="email"], .booking-form input[type="tel"], .booking-form input[type="date"], .booking-form select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.booking-form .expiration-date {
+    display: flex;
+    gap: 10px;
+}
+
+.booking-form .expiration-date select {
+    width: 50%;
+}
+
+.booking-form button {
+    background-color: #0071c2;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 1em;
+}
+
+.booking-form button:hover {
+    background-color: #005f9e;
+}
+
+.booking-summary {
+    position: sticky;
+    top: 20px;
+}
+
+#price-summary {
+    background-color: #f8f8f8;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    margin-top: 20px;
+}
+
+#price-summary p {
+    margin: 5px 0;
+}
+
+footer {
+    background-color: #fff;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+footer .footer-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+footer .footer-section img {
+    height: 40px;
+}
+
+footer .footer-links {
+    display: flex;
+    gap: 20px;
+}
+
+footer .footer-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+footer .footer-links ul li {
+    margin-bottom: 5px;
+}
+
+footer .footer-links ul li a {
+    color: #0071c2;
+    text-decoration: none;
+}
+
+footer .footer-links ul li a:hover {
+    text-decoration: underline;
+}
+
+footer p {
+    margin: 10px 0 0;
+    color: #555;
+    font-size: 0.9em;
+}
+
+.payment-icons img {
+    height: 30px;
+    margin-right: 10px;
+}
+
+.booking-form h2, .booking-summary h2 {
+    margin-top: 0;
+}
+
+.complete-booking {
+    background-color: #28a745;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 1em;
+}
+
+.complete-booking:hover {
+    background-color: #218838;
+}
+
+.secure-booking-note {
+    font-size: 0.9em;
+    color: #555;
+    margin-top: 20px;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+}
+
+.total-price {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.protect-flight {
+    background-color: #f8f8f8;
+    padding: 20px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    margin-top: 20px;
+}
+
+.protect-flight h3 {
+    margin-top: 0;
+}
+
+.protect-flight .benefit-icon {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.protect-flight .benefit-icon i {
+    color: #0071c2;
+    margin-right: 10px;
+}
+
+.protect-flight .protection-option {
+    margin: 10px 0;
+}
+
+.review-booking {
+    background-color: #f8f8f8;
+    padding: 20px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    margin-top: 20px;
+}
+
+.review-booking h3 {
+    margin-top: 0;
+}
+
+.review-booking p {
+    margin: 5px 0;
+}
+
+.cancellation-note {
+    background-color: #e9f5ff;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    font-size: 0.9em;
+}
+
+.cancellation-note i {
+    color: #0071c2;
+    margin-right: 10px;
+}
+
+
+
+.sign-in-block {
+    background-color: #fff;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+    margin: 20px;
+}
+
+.sign-in-block:hover {
+    background-color: #f0f0f0;
+}
+
+.sign-in-popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.sign-in-popup .close {
+    float: right;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: #999;
+}
+
+.sign-in-popup .close:hover {
+    color: #333;
+}
+
+.sign-in-popup form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sign-in-popup input[type="email"], .sign-in-popup input[type="password"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.sign-in-popup button {
+    background-color: #0071c2;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.sign-in-popup button:hover {
+    background-color: #005f9e;
+}
+
+.sign-in-popup .social-login {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.social-login button {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.social-login button i {
+    margin-right: 10px;
+}
+
+.social-login button.apple {
+    background-color: #333;
+    color: #fff;
+}
+
+.social-login button.facebook {
+    background-color: #3b5998;
+    color: #fff;
+}
+
+/* Booking form and summary styles */
+.booking-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+    gap: 40px;
+}
+
+.booking-form, .booking-summary {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 45%;
+}
+
+.booking-form h2, .booking-summary h2 {
+    margin-top: 0;
+}
+
+.booking-form label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.booking-form input[type="text"], .booking-form input[type="email"], .booking-form input[type="tel"], .booking-form input[type="date"], .booking-form select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.booking-form .expiration-date {
+    display: flex;
+    gap: 10px;
+}
+
+.booking-form .expiration-date select {
+    width: 50%;
+}
+
+.booking-form button {
+    background-color: #0071c2;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 1em;
+}
+
+.booking-form button:hover {
+    background-color: #005f9e;
+}
+
+.booking-summary {
+    position: sticky;
+    top: 20px;
+}
+
+#price-summary {
+    background-color: #f8f8f8;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    margin-top: 20px;
+}
+
+#price-summary p {
+    margin: 5px 0;
+}
+
+footer {
+    background-color: #fff;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+footer .footer-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+footer .footer-section img {
+    height: 40px;
+}
+
+footer .footer-links {
+    display: flex;
+    gap: 20px;
+}
+
+footer .footer-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+footer .footer-links ul li {
+    margin-bottom: 5px;
+}
+
+footer .footer-links ul li a {
+    color: #0071c2;
+    text-decoration: none;
+}
+
+footer .footer-links ul li a:hover {
+    text-decoration: underline;
+}
+
+footer p {
+    margin: 10px 0 0;
+    color: #555;
+    font-size: 0.9em;
+}
+
+.payment-icons img {
+    height: 30px;
+    margin-right: 10px;
+}
+
+.booking-form h2, .booking-summary h2 {
+    margin-top: 0;
+}
+
+.complete-booking {
+    background-color: #28a745;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 1em;
+}
+
+.complete-booking:hover {
+    background-color: #218838;
+}
+
+.secure-booking-note {
+    font-size: 0.9em;
+    color: #555;
+    margin-top: 20px;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+}
+
+.total-price {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.protect-flight {
+    background-color: #f8f8f8;
+    padding: 20px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    margin-top: 20px;
+}
+
+.protect-flight h3 {
+    margin-top: 0;
+}
+
+.protect-flight .benefit-icon {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.protect-flight .benefit-icon i {
+    color: #0071c2;
+    margin-right: 10px;
+}
+
+.protect-flight .protection-option {
+    margin: 10px 0;
+}
+
+.review-booking {
+    background-color: #f8f8f8;
+    padding: 20px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    margin-top: 20px;
+}
+
+.review-booking h3 {
+    margin-top: 0;
+}
+
+.review-booking p {
+    margin: 5px 0;
+}
+
+/* Overlay styles */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 999;
+}

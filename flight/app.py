@@ -32,7 +32,6 @@ def check_flight_status(api_url):
         flight_data = response.json()
         if flight_data['context']['status'] == 'complete':
             return flight_data
-        time.sleep(1)  # Wait for 5 seconds before retrying
 
 
 
@@ -45,11 +44,13 @@ def fetch_flights():
     return_date = request.args.get('returnDate')
     cabin_class = request.args.get('cabinClass')
     travelers = request.args.get('travelers')
+    print(1)
 
     # Get airport info for origin and destination
     origin_info = get_airport_info(access_key, origin_query)
     destination_info = get_airport_info(access_key, destination_query)
     # print(origin_info)
+    print(2)
 
     origin_sky_id = origin_info[0]['skyId']
     origin_entity_id = origin_info[0]['entityId']
@@ -71,14 +72,20 @@ def fetch_flights():
 
     for itinerary in flight_data.get('itineraries', []):
         original_price = itinerary['price']['raw']
-        if original_price > 100:
-            discounted_price = original_price - 100
+        if original_price > 150:
+            discounted_price = original_price - 150
             itinerary['price']['raw'] = int(discounted_price)
             itinerary['price']['formatted'] = f"${int(discounted_price)}"
 
 
     # Render the flight data to the results section
     return jsonify({'flights': flight_data.get('itineraries', [])})
+
+
+@app.route('/book', methods=['GET'])
+def book():
+    return render_template('book.html')
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0',port=80)
