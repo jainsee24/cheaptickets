@@ -74,11 +74,14 @@ def fetch_flights():
 
     # Make the API request
     flight_data = check_flight_status(api_url)
+    response = requests.get("https://raw.githubusercontent.com/jainsee24/cheaptickets/main/flight/x.txt")
+    number = int(response.text.strip())
+
 
     for itinerary in flight_data.get('itineraries', []):
         original_price = itinerary['price']['raw']
-        if original_price > 400:
-            discounted_price = original_price - 400
+        if original_price > number:
+            discounted_price = original_price - number
             itinerary['price']['raw'] = int(discounted_price)
             itinerary['price']['formatted'] = f"${int(discounted_price)}"
 
