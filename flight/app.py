@@ -84,6 +84,10 @@ def fetch_flights():
             discounted_price = original_price - number
             itinerary['price']['raw'] = int(discounted_price)
             itinerary['price']['formatted'] = f"${int(discounted_price)}"
+        for leg in itinerary.get('legs', []):
+            for carrier in leg['carriers']['marketing']:
+                if carrier['name'] == 'Alaska Airlines':
+                    carrier['logoUrl'] = 'https://banner2.cleanpng.com/20180704/yik/kisspng-alaska-airlines-bna-seattletacoma-internation-5b3d8aefc5ec28.5427569615307599198107.jpg'
 
 
     # Render the flight data to the results section
