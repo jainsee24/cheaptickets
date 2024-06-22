@@ -6,146 +6,6 @@
     <title>Flight Results</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style1.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
-            margin: 0;
-            padding: 0;
-        }
-        .logo {
-            font-size: 1.5rem;
-        }
-        nav ul {
-            list-style: none;
-            display: flex;
-            gap: 1rem;
-            margin: 0;
-            padding: 0;
-        }
-        nav ul li {
-            cursor: pointer;
-        }
-        .results-container {
-            display: flex;
-            gap: 1rem;
-            padding: 1rem;
-        }
-        .filters {
-            width: 20%;
-            background-color: #fff;
-            padding: 1rem;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .results {
-            width: 75%;
-            background-color: #fff;
-            padding: 1rem;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .filter-section {
-            margin-bottom: 1rem;
-        }
-        .filter-section h4 {
-            margin-bottom: 0.5rem;
-        }
-        .flight-card {
-            background-color: #fff;
-            margin-bottom: 1rem;
-            padding: 1rem;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .flight-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .flight-route, .flight-carrier, .flight-price {
-            flex: 1;
-        }
-        .flight-route i {
-            margin: 0 1rem;
-        }
-        .segments-info {
-            margin-top: 1rem;
-            border-top: 1px solid #ddd;
-            padding-top: 1rem;
-        }
-        .segment {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .segment .line {
-            height: 1px;
-            background-color: #ddd;
-            flex: 1;
-            margin: 0 1rem;
-        }
-        .date {
-            display: inline-block;
-            margin-right: 1rem;
-            padding: 0.5rem;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .date.highlighted {
-            background-color: #0056b3;
-            color: #fff;
-        }
-        .dates-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .spinner {
-            text-align: center;
-            margin: 2rem 0;
-        }
-        .popup {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            display: none;
-            justify-content: center;
-            align-items: center;
-        }
-        .popup-content {
-            background: #fff;
-            padding: 2rem;
-            border-radius: 5px;
-            width: 50%;
-            text-align: center;
-        }
-        .popup-content .close {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            cursor: pointer;
-        }
-        .popup-content h2 {
-            margin-bottom: 1rem;
-        }
-        .popup-content p {
-            margin-bottom: 1rem;
-        }
-        .popup-content .book-button {
-            padding: 0.5rem 1rem;
-            background-color: #0056b3;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-    </style>
 </head>
 <body>
     <header>
@@ -305,7 +165,7 @@
         <div class="popup-content">
             <span class="close">&times;</span>
             <div id="popup-details"></div>
-            <button id="book-popup" class="book-button">Book</button>
+            <button id="book-popup">Book</button>
         </div>
     </div>
 
@@ -322,14 +182,10 @@
 
         function fetchFlightData() {
             const params = new URLSearchParams(window.location.search);
-            const cabinClass = params.get('cabinClass');
             fetch('/fetch_flights?' + params.toString())
                 .then(response => response.json())
                 .then(data => {
                     originalFlights = data.flights;
-                    originalFlights.forEach(flight => {
-                        flight.cabinClass = cabinClass; // Add the cabin class to each flight object
-                    });
                     renderFlights(data.flights);
                     renderFilters(data.flights);
                     renderDateRange(data.flights);
@@ -394,17 +250,6 @@
                             <img src="${flight.legs[0].carriers.marketing[0].logoUrl}" alt="${flight.legs[0].carriers.marketing[0].name} logo">
                             <span>${flight.legs[0].carriers.marketing[0].name}</span>
                         </div>
-                    </div>
-                    <div class="segments-info">
-                        ${flight.legs[0].segments.map(segment => `
-                            <div class="segment">
-                                <span>${segment.origin.displayCode} (${new Date(segment.departure).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })})</span>
-                                <div class="line"></div>
-                                <i class="fas fa-plane"></i>
-                                <div class="line"></div>
-                                <span>${segment.destination.displayCode} (${new Date(segment.arrival).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })})</span>
-                            </div>
-                        `).join('')}
                     </div>
                     <div class="flight-price">
                         <span>${flight.price.formatted}</span>
@@ -525,13 +370,12 @@
             let stopsHtml = '';
             flight.legs[0].segments.forEach(segment => {
                 stopsHtml += `
-                    <div class="segment">
-                        <span>${segment.origin.displayCode} (${new Date(segment.departure).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })})</span>
-                        <div class="line"></div>
-                        <i class="fas fa-plane"></i>
-                        <div class="line"></div>
-                        <span>${segment.destination.displayCode} (${new Date(segment.arrival).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })})</span>
-                    </div>
+                    <p><strong>Flight Number:</strong> ${segment.flightNumber}</p>
+                    <p><strong>From:</strong> ${segment.origin.name} (${segment.origin.displayCode})</p>
+                    <p><strong>To:</strong> ${segment.destination.name} (${segment.destination.displayCode})</p>
+                    <p><strong>Departure:</strong> ${segment.departure}</p>
+                    <p><strong>Arrival:</strong> ${segment.arrival}</p>
+                    <hr>
                 `;
             });
 
@@ -543,26 +387,27 @@
                 <p><strong>Arrival:</strong> ${flight.legs[0].arrival}</p>
                 <p><strong>Duration:</strong> ${Math.floor(flight.legs[0].durationInMinutes / 60)}h ${flight.legs[0].durationInMinutes % 60}m</p>
                 <p><strong>Price:</strong> ${flight.price.formatted}</p>
-                <p><strong>Cabin Class:</strong> ${flight.cabinClass}</p>
-                <p><strong>Including taxes and fees</strong></p>
+                <p><strong>Including taxes and fees</p>
                 <p>Free cancellation within 24 hours, after that non refundable</p>
-                <div class="segments-info">
-                    ${stopsHtml}
-                </div>
+                ${stopsHtml}
             `;
             popup.style.display = 'block';
 
             document.getElementById('book-popup').onclick = () => showConfirmPopup(flight);
         }
-
         function showConfirmPopup(flight) {
-            const flightData = JSON.stringify(flight);
-            console.log(flightData);
-            console.log(flight);
-            
-            const bookingUrl = `/book?flight=${encodeURIComponent(flightData)}`;
-            window.location.href = bookingUrl;
-        }
+    const flightData = JSON.stringify(flight);
+    console.log(flightData);
+    console.log(flight);
+    
+    const bookingUrl = `/book?flight=${encodeURIComponent(flightData)}`;
+    window.location.href = bookingUrl;
+}
+
+        // function showConfirmPopup() {
+        //     const confirmPopup = document.getElementById('confirm-popup');
+        //     confirmPopup.style.display = 'block';
+        // }
 
         document.querySelectorAll('.close').forEach(button => {
             button.addEventListener('click', function() {
