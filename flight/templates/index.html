@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Booking App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script defer src="{{ url_for('static', filename='scripts.js') }}"></script>
+    <script defer>
+        $(document).ready(function() {
+            $.getJSON('/airports', function(data) {
+                const airports = data;
+
+                function autocompleteSetup(selector) {
+                    $(selector).autocomplete({
+                        source: function(request, response) {
+                            const results = $.map(airports, function(airport) {
+                                const airportName = airport.name + " (" + airport.code + ")";
+                                if (airportName.toLowerCase().indexOf(request.term.toLowerCase()) !== -1) {
+                                    return {
+                                        label: '<i class="fas fa-plane"></i> ' + airportName,
+                                        value: airport.code
+                                    };
+                                }
+                            });
+                            response(results);
+                        },
+                        minLength: 2
+                    }).autocomplete("instance")._renderItem = function(ul, item) {
+                        return $("<li>")
+                            .append("<div class='ui-menu-item-wrapper'>" + item.label + "</div>")
+                            .appendTo(ul);
+                    };
+                }
+
+                autocompleteSetup("#from-airport");
+                autocompleteSetup("#to-airport");
+            });
+            $("#search-form").submit(function(event) {
+                event.preventDefault();
+                const formData = $(this).serialize();
+                const queryParams = new URLSearchParams(formData).toString();
+                window.location.href = '/search_flights?' + queryParams;
+            });
+
+        });
+
+        function toggleDateInputs() {
+            const tripType = document.querySelector('input[name="tripType"]:checked').value;
+            const returnDate = document.getElementById('return-date');
+            if (tripType === 'oneWay') {
+                returnDate.style.display = 'none';
+            } else {
+                returnDate.style.display = 'block';
+            }
+        }
+		function fetchFlightResults(formData) {
+            $.get("/fetch_flights", formData, function(data) {
+                $("#results").html(data);
+            });
+        }
+
+    </script>
+</head>
+<body>
+    <header>
+        <div class="logo"><i class="fas fa-plane-departure"></i> CheapTickets</div>
+        <nav>
+            <ul>
+                <li>Shop travel</li>
+                <li>Get the app</li>
+                <li>List your property</li>
+                <li>Support</li>
+                <li>Trips</li>
+                <li>Sign in</li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="search-section">
+            <div class="tab-menu">
+                <button class="tab active" onclick="showTab('flights')"><i class="fas fa-plane icon"></i>Flights</button>
+                <button class="tab" onclick="showTab('stays')"><i class="fas fa-hotel icon"></i>Stays</button>
+                <button class="tab" onclick="showTab('cars')"><i class="fas fa-car icon"></i>Cars</button>
+                <button class="tab" onclick="showTab('packages')"><i class="fas fa-suitcase icon"></i>Packages</button>
+                <button class="tab" onclick="showTab('thingsToDo')"><i class="fas fa-map-signs icon"></i>Things to do</button>
+                <button class="tab" onclick="showTab('cruises')"><i class="fas fa-ship icon"></i>Cruises</button>
+            </div>
+            <div id="flights" class="tab-content">
+                <form id="search-form">
+                    <div class="trip-type">
+                        <label><input type="radio" name="tripType" value="roundTrip" onclick="toggleDateInputs()"> Roundtrip</label>
+                        <label><input type="radio" name="tripType" value="oneWay" checked onclick="toggleDateInputs()"> One-way</label>
+                        <label><input type="radio" name="tripType" value="multiCity" onclick="toggleDateInputs()"> Multi-city</label>
+                    </div>
+                    <div class="flight-details">
+                        <input type="text" id="from-airport" name="origin" placeholder="Leaving from">
+                        <input type="text" id="to-airport" name="destination" placeholder="Going to">
+                        <input type="date" id="depart-date" name="date">
+                        <input type="date" id="return-date" name="returnDate" style="display: none;">
+						<input type="text" name="travelers" value="1" placeholder="1 traveler">
+                    
+                    <div class="class-type">
+                        <select name="cabinClass">
+                            <option value="economy">Economy</option>
+                            <option value="business">Business</option>
+                            <option value="first">First Class</option>
+                        </select>
+                    </div>
+                   
+                    <button type="submit"><i class="fas fa-search icon"></i>Search</button></div>
+                </form>
+				<div class="add-ons">
+					<label><input type="checkbox" name="addStay"> Add a place to stay</label>
+					<label><input type="checkbox" name="addCar"> Add a car</label>
+				</div>
+
+            </div>
+        </div>
+        <div class="banner">
+            <h2>WELCOME TO THE STUDENT TRAVEL HUB</h2>
+			<img src="https://forever.travel-assets.com/flex/flexmanager/images/2022/01/05/CTIX_StudentTravel_lpadB_1680x350_20220104.jpg" alt="" width="100%">
+        </div>
+        <div class="explore">
+            <h3>Explore stays in trending destinations</h3>
+            <div class="destination-grid">
+                <div class="destination-card">
+                    <img src="{{ url_for('static', filename='paris.jpeg') }}" alt="Destination 1">
+                    <h4>Paris</h4>
+                    <p>The city of lights offers iconic landmarks and rich culture.</p>
+                </div>
+                <div class="destination-card">
+                    <img src="{{ url_for('static', filename='tokyo.jpeg') }}" alt="Destination 2">
+                    <h4>Tokyo</h4>
+                    <p>A bustling metropolis known for its modern architecture and cuisine.</p>
+                </div>
+                <div class="destination-card">
+                    <img src="{{ url_for('static', filename='ny.jpeg') }}" alt="Destination 3">
+                    <h4>New York</h4>
+                    <p>The Big Apple is a hub of entertainment, fashion, and finance.</p>
+                </div>
+                <div class="destination-card">
+                    <img src="{{ url_for('static', filename='sydney.jpeg') }}" alt="Destination 4">
+                    <h4>Sydney</h4>
+                    <p>Known for its Sydney Opera House and beautiful beaches.</p>
+                </div>
+				<div class="destination-card">
+                    <img src="{{ url_for('static', filename='paris.jpeg') }}" alt="Destination 1">
+                    <h4>Munich</h4>
+                    <p>The city of lights offers iconic landmarks and rich culture.</p>
+                </div>
+                <div class="destination-card">
+                    <img src="{{ url_for('static', filename='tokyo.jpeg') }}" alt="Destination 2">
+                    <h4>Delhi</h4>
+                    <p>A bustling metropolis known for its modern architecture and cuisine.</p>
+                </div>
+                <div class="destination-card">
+                    <img src="{{ url_for('static', filename='ny.jpeg') }}" alt="Destination 3">
+                    <h4>Chicago</h4>
+                    <p>The Big Apple is a hub of entertainment, fashion, and finance.</p>
+                </div>
+                <div class="destination-card">
+                    <img src="{{ url_for('static', filename='sydney.jpeg') }}" alt="Destination 4">
+                    <h4>Austria</h4>
+                    <p>Known for its Sydney Opera House and beautiful beaches.</p>
+                </div>
+				<div class="destination-card">
+                    <img src="{{ url_for('static', filename='paris.jpeg') }}" alt="Destination 1">
+                    <h4>nantes</h4>
+                    <p>The city of lights offers iconic landmarks and rich culture.</p>
+                </div>
+                <div class="destination-card">
+                    <img src="{{ url_for('static', filename='tokyo.jpeg') }}" alt="Destination 2">
+                    <h4>Shenghai</h4>
+                    <p>A bustling metropolis known for its modern architecture and cuisine.</p>
+                </div>
+                <div class="destination-card">
+                    <img src="{{ url_for('static', filename='ny.jpeg') }}" alt="Destination 3">
+                    <h4>San Francisco</h4>
+                    <p>The Big Apple is a hub of entertainment, fashion, and finance.</p>
+                </div>
+                <div class="destination-card">
+                    <img src="{{ url_for('static', filename='sydney.jpeg') }}" alt="Destination 4">
+                    <h4>London</h4>
+                    <p>Known for its Sydney Opera House and beautiful beaches.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <button><i class="fas fa-question-circle icon"></i>Help</button>
+    </footer>
+    <script>
+        function showTab(tabId) {
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => {
+                tab.style.display = 'none';
+            });
+            document.getElementById(tabId).style.display = 'block';
+            
+            const tabButtons = document.querySelectorAll('.tab');
+            tabButtons.forEach(button => {
+                button.classList.remove('active');
+            });
+            document.querySelector(`button[onclick="showTab('${tabId}')"]`).classList.add('active');
+        }
+    </script>
+	
+</body>
+</html>
