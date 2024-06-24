@@ -1,0 +1,1104 @@
+/* Copy styles from styles.css */
+
+/* Example styles, adjust according to your actual styles.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #fff;
+    border-bottom: 1px solid #ccc;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+header .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #e74c3c;
+}
+
+header nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+}
+
+header nav ul li {
+    cursor: pointer;
+    color: #555;
+    transition: color 0.3s ease;
+}
+
+header nav ul li:hover {
+    color: #007bff;
+}
+
+.search-section {
+    padding: 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-top: 20px;
+}
+
+.tab-menu {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.tab {
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px 5px 0 0;
+    margin-right: -1px;
+    transition: background-color 0.3s ease, border 0.3s ease;
+}
+
+.tab.active {
+    background-color: #fff;
+    color: #007bff;
+    border: 1px solid #007bff;
+    border-bottom: none;
+}
+
+.tab:hover {
+    background-color: #ddd;
+}
+
+.tab-content {
+    display: none;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 0 5px 5px 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+#flights {
+    display: block;
+}
+
+.trip-type, .add-ons {
+    margin-bottom: 15px;
+    text-align: left;
+    display: flex;
+    justify-content: space-around;
+}
+
+.class-type{
+    text-align: left;
+    display: flex;
+    justify-content: space-around;
+}
+
+.trip-type label, .class-type label, .add-ons label {
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.trip-type label input, .class-type label input, .add-ons label input {
+    margin-right: 5px;
+}
+
+.flight-details {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.flight-details input, .flight-details select, .flight-details button {
+    padding: 10px;
+    flex: 1;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.flight-details input[type="text"], .flight-details input[type="date"] {
+    flex: 1 1 calc(33.333% - 10px);
+}
+
+.flight-details select {
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.flight-details button {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 4px;
+}
+
+.flight-details button:hover {
+    background-color: #d62c1a;
+}
+
+.flight-details input::placeholder {
+    color: #aaa;
+}
+.navbar {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar .logo {
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #fff;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.search-form {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.form-group {
+    margin-bottom: 10px;
+    flex: 1;
+    min-width: 150px;
+}
+
+.results-container {
+    display: flex;
+    padding: 20px;
+}
+
+.filters {
+    width: 25%;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.filters h3 {
+    margin-top: 0;
+}
+
+.filter-section {
+    margin-bottom: 20px;
+}
+
+.filter-section h4 {
+    margin-bottom: 10px;
+}
+
+.filter-section label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.filter-section label input {
+    margin-right: 10px;
+}
+
+.filter-section a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.filter-section a:hover {
+    text-decoration: underline;
+}
+
+.results {
+    width: 75%;
+    margin-left: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header h3 {
+    margin: 0;
+}
+
+.sort-by {
+    display: flex;
+    align-items: center;
+}
+
+.sort-by label {
+    margin-right: 10px;
+}
+
+.spinner {
+    text-align: center;
+    font-size: 24px;
+    color: #007bff;
+}
+
+.dates {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.dates .date {
+    text-align: center;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.dates .highlighted {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.flight-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.flight-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.flight-time,
+.flight-route,
+.flight-carrier {
+    margin-bottom: 10px;
+}
+
+.flight-time span,
+.flight-route span {
+    display: block;
+}
+
+.flight-carrier img {
+    height: 20px;
+    margin-right: 10px;
+}
+
+.flight-price {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.flight-price span {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.flight-price button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.flight-price button:hover {
+    background-color: #0056b3;
+}
+
+.feedback-section {
+    text-align: center;
+    margin: 20px;
+}
+
+.feedback-section a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.feedback-section a:hover {
+    text-decoration: underline;
+}
+
+.app-promo {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+}
+
+.qr-code {
+    text-align: center;
+    margin-top: 20px;
+}
+
+footer {
+    padding: 20px;
+    background-color: #f1f1f1;
+    text-align: center;
+}
+
+footer .footer-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+footer .footer-links {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+footer .footer-links div {
+    flex: 1;
+    padding: 0 10px;
+}
+
+footer h4 {
+    margin-top: 0;
+}
+
+footer p {
+    margin-top: 20px;
+    font-size: 12px;
+    color: #555;
+}
+
+.dates-row {
+    display: flex;
+    justify-content: space-between;
+    overflow-x: auto;
+}
+
+.date {
+    text-align: center;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    min-width: 100px;
+    margin: 5px;
+}
+
+.date.highlighted {
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* Existing styles... */
+
+.popup {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.popup-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    text-align: left;
+    position: relative;
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    max-width: 500px;
+    width: 100%;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.popup-content h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.popup-content p {
+    margin: 10px 0;
+}
+
+.popup-content hr {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin: 10px 0;
+}
+
+#book-popup {
+    background-color: #d3d3d3;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    margin: 20px auto;
+    width: 50%;
+}
+
+#book-popup:hover {
+    background-color: #0056b3;
+}
+
+/* Existing styles... */
+
+
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #fff;
+    padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.5em;
+    color: #333;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+}
+
+nav ul li {
+    cursor: pointer;
+    color: #0071c2;
+}
+
+.booking-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+    gap: 40px;
+}
+
+.booking-form, .booking-summary {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 45%;
+}
+
+.booking-form h2, .booking-summary h2 {
+    margin-top: 0;
+}
+
+.booking-form label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.booking-form input[type="text"], .booking-form input[type="email"], .booking-form input[type="tel"], .booking-form input[type="date"], .booking-form select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.booking-form .expiration-date {
+    display: flex;
+    gap: 10px;
+}
+
+.booking-form .expiration-date select {
+    width: 50%;
+}
+
+.booking-form button {
+    background-color: #0071c2;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 1em;
+}
+
+.booking-form button:hover {
+    background-color: #005f9e;
+}
+
+.booking-summary {
+    position: sticky;
+    top: 20px;
+}
+
+#price-summary {
+    background-color: #f8f8f8;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    margin-top: 20px;
+}
+
+#price-summary p {
+    margin: 5px 0;
+}
+
+footer {
+    background-color: #fff;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+footer .footer-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+footer .footer-section img {
+    height: 40px;
+}
+
+footer .footer-links {
+    display: flex;
+    gap: 20px;
+}
+
+footer .footer-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+footer .footer-links ul li {
+    margin-bottom: 5px;
+}
+
+footer .footer-links ul li a {
+    color: #0071c2;
+    text-decoration: none;
+}
+
+footer .footer-links ul li a:hover {
+    text-decoration: underline;
+}
+
+footer p {
+    margin: 10px 0 0;
+    color: #555;
+    font-size: 0.9em;
+}
+
+.payment-icons img {
+    height: 30px;
+    margin-right: 10px;
+}
+
+.booking-form h2, .booking-summary h2 {
+    margin-top: 0;
+}
+
+.complete-booking {
+    background-color: #28a745;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 1em;
+}
+
+.complete-booking:hover {
+    background-color: #218838;
+}
+
+.secure-booking-note {
+    font-size: 0.9em;
+    color: #555;
+    margin-top: 20px;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+}
+
+.total-price {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.protect-flight {
+    background-color: #f8f8f8;
+    padding: 20px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    margin-top: 20px;
+}
+
+.protect-flight h3 {
+    margin-top: 0;
+}
+
+.protect-flight .benefit-icon {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.protect-flight .benefit-icon i {
+    color: #0071c2;
+    margin-right: 10px;
+}
+
+.protect-flight .protection-option {
+    margin: 10px 0;
+}
+
+.review-booking {
+    background-color: #f8f8f8;
+    padding: 20px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    margin-top: 20px;
+}
+
+.review-booking h3 {
+    margin-top: 0;
+}
+
+.review-booking p {
+    margin: 5px 0;
+}
+
+.cancellation-note {
+    background-color: #e9f5ff;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    font-size: 0.9em;
+}
+
+.cancellation-note i {
+    color: #0071c2;
+    margin-right: 10px;
+}
+
+
+
+.sign-in-block {
+    background-color: #fff;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+    margin: 20px;
+}
+
+.sign-in-block:hover {
+    background-color: #f0f0f0;
+}
+
+.sign-in-popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.sign-in-popup .close {
+    float: right;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: #999;
+}
+
+.sign-in-popup .close:hover {
+    color: #333;
+}
+
+.sign-in-popup form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sign-in-popup input[type="email"], .sign-in-popup input[type="password"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.sign-in-popup button {
+    background-color: #0071c2;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.sign-in-popup button:hover {
+    background-color: #005f9e;
+}
+
+.sign-in-popup .social-login {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.social-login button {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.social-login button i {
+    margin-right: 10px;
+}
+
+.social-login button.apple {
+    background-color: #333;
+    color: #fff;
+}
+
+.social-login button.facebook {
+    background-color: #3b5998;
+    color: #fff;
+}
+
+/* Booking form and summary styles */
+.booking-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+    gap: 40px;
+}
+
+.booking-form, .booking-summary {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 45%;
+}
+
+.booking-form h2, .booking-summary h2 {
+    margin-top: 0;
+}
+
+.booking-form label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.booking-form input[type="text"], .booking-form input[type="email"], .booking-form input[type="tel"], .booking-form input[type="date"], .booking-form select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.booking-form .expiration-date {
+    display: flex;
+    gap: 10px;
+}
+
+.booking-form .expiration-date select {
+    width: 50%;
+}
+
+.booking-form button {
+    background-color: #0071c2;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 1em;
+}
+
+.booking-form button:hover {
+    background-color: #005f9e;
+}
+
+.booking-summary {
+    position: sticky;
+    top: 20px;
+}
+
+#price-summary {
+    background-color: #f8f8f8;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    margin-top: 20px;
+}
+
+#price-summary p {
+    margin: 5px 0;
+}
+
+footer {
+    background-color: #fff;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+footer .footer-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+footer .footer-section img {
+    height: 40px;
+}
+
+footer .footer-links {
+    display: flex;
+    gap: 20px;
+}
+
+footer .footer-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+footer .footer-links ul li {
+    margin-bottom: 5px;
+}
+
+footer .footer-links ul li a {
+    color: #0071c2;
+    text-decoration: none;
+}
+
+footer .footer-links ul li a:hover {
+    text-decoration: underline;
+}
+
+footer p {
+    margin: 10px 0 0;
+    color: #555;
+    font-size: 0.9em;
+}
+
+.payment-icons img {
+    height: 30px;
+    margin-right: 10px;
+}
+
+.booking-form h2, .booking-summary h2 {
+    margin-top: 0;
+}
+
+.complete-booking {
+    background-color: #28a745;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 1em;
+}
+
+.complete-booking:hover {
+    background-color: #218838;
+}
+
+.secure-booking-note {
+    font-size: 0.9em;
+    color: #555;
+    margin-top: 20px;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+}
+
+.total-price {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.protect-flight {
+    background-color: #f8f8f8;
+    padding: 20px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    margin-top: 20px;
+}
+
+.protect-flight h3 {
+    margin-top: 0;
+}
+
+.protect-flight .benefit-icon {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.protect-flight .benefit-icon i {
+    color: #0071c2;
+    margin-right: 10px;
+}
+
+.protect-flight .protection-option {
+    margin: 10px 0;
+}
+
+.review-booking {
+    background-color: #f8f8f8;
+    padding: 20px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    margin-top: 20px;
+}
+
+.review-booking h3 {
+    margin-top: 0;
+}
+
+.review-booking p {
+    margin: 5px 0;
+}
+
+/* Overlay styles */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 999;
+}
+
+

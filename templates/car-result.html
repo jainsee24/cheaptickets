@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Rental Booking</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style1.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .logo {
+            font-size: 1.5rem;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 1rem;
+            margin: 0;
+            padding: 0;
+        }
+        nav ul li {
+            cursor: pointer;
+        }
+        .results-container {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+        }
+        .filters {
+            width: 20%;
+            background-color: #fff;
+            padding: 1rem;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .results {
+            width: 75%;
+            background-color: #fff;
+            padding: 1rem;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .filter-section {
+            margin-bottom: 1rem;
+        }
+        .filter-section h4 {
+            margin-bottom: 0.5rem;
+        }
+        .car-card {
+            background-color: #fff;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .car-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .car-info img {
+            width: 200px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        .car-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .car-details h3 {
+            margin: 0;
+        }
+        .car-details p {
+            margin: 0.2rem 0;
+        }
+        .car-details .icons {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .car-details .icon-text {
+            display: flex;
+            align-items: center;
+            gap: 0.2rem;
+        }
+        .divider {
+            margin: 1rem 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .car-price {
+            text-align: right;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        .car-price span {
+            color: #0056b3;
+        }
+        .car-price p {
+            margin: 0.2rem 0;
+        }
+        .book-button {
+            padding: 0.5rem 1rem;
+            background-color: #0056b3;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+        .popup-content {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 5px;
+            text-align: center;
+            position: relative;
+            max-width: 500px;
+            width: 100%;
+        }
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        .popup-content h2 {
+            margin-top: 0;
+        }
+        .popup-content p {
+            margin: 0.5rem 0;
+        }
+        .popup-content img {
+            width: 150px;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+        .confirm-button {
+            padding: 0.5rem 1rem;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+        .popup-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        .popup-table th, .popup-table td {
+            border: 1px solid #ddd;
+            padding: 0.5rem;
+        }
+        .popup-table th {
+            background-color: #f4f4f4;
+        }
+        .spinner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100%;
+            background-color: #fff;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+        .spinner i {
+            font-size: 3rem;
+            color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="/" style="text-decoration: none; color: inherit;">
+                <i class="fas fa-plane-departure"></i> CheapFlightTickets
+            </a>
+        </div>
+        <nav>
+            <ul>
+                <li>Shop travel</li>
+                <li>Get the app</li>
+                <li>List your property</li>
+                <li>Support</li>
+                <li>Trips</li>
+                <li>Sign in</li>
+            </ul>
+        </nav>
+    </header>
+
+    <div id="cars" class="tab-content">
+        <form id="search-form">
+            <div class="car-rental-details">
+                <input type="text" id="pick-up-location" name="pickUpLocation" placeholder="Pick-up location">
+                <input type="text" id="drop-off-location" name="dropOffLocation" placeholder="Drop-off location">
+                <input type="date" id="pick-up-date" name="pickUpDate">
+                <input type="date" id="drop-off-date" name="dropOffDate">
+                <input type="time" id="pick-up-time" name="pickUpTime">
+                <input type="time" id="drop-off-time" name="dropOffTime">
+                <button type="submit"><i class="fas fa-search icon"></i>Search</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="loading-spinner" class="spinner">
+        <i class="fas fa-spinner fa-spin"></i> Loading...
+    </div>
+
+    <div class="results-container">
+        <div class="filters">
+            <h3>Filter by</h3>
+            <div class="filter-section">
+                <h4>Car Type</h4>
+                <div id="filter-car-type"></div>
+            </div>
+            <div class="filter-section">
+                <h4>Car Rental Company</h4>
+                <div id="filter-car-company"></div>
+            </div>
+        </div>
+        <div class="results">
+            <div class="results-header">
+                <h3 id="results-count">Showing {{ cars|length }} rental cars</h3>
+                <span>Sorted by best price first</span>
+            </div>
+
+            <div id="car-results">
+                {% for car in cars %}
+                    <div class="car-card">
+                        <div class="car-info">
+                            <img src="{{ car.image }}" alt="{{ car.type }}">
+                            <div class="car-details">
+                                <h3>{{ car.type }}</h3>
+                                <p>{{ car.model }} or similar</p>
+                                <div class="icons">
+                                    <div class="icon-text"><i class="fas fa-users"></i> {{ car.passengers }} Passengers</div>
+                                    <div class="icon-text"><i class="fas fa-suitcase"></i> {{ car.bags }} Bags</div>
+                                    <div class="icon-text"><i class="fas fa-cogs"></i> {{ car.transmission }}</div>
+                                    <div class="icon-text"><i class="fas fa-snowflake"></i> Air Conditioning</div>
+                                    <div class="icon-text"><i class="fas fa-road"></i> Unlimited Mileage</div>
+                                </div>
+                                <div class="divider"></div>
+                                <p><i class="fas fa-map-marker-alt"></i> Pick-up at {{ car.pickupLocation }}</p>
+                                <p><i class="fas fa-check-circle"></i> Free Cancellation until {{ car.cancellationDeadline }}</p>
+                            </div>
+                        </div>
+                        <div class="car-price">
+                            <img src="{{ car.companyLogo }}" alt="{{ car.company }}" style="width: 100px; margin-bottom: 1rem;">
+                            <p>$<span>{{ (car.pricePerDay * car.days)|round(2) }}</span> 
+                            ({{ car.days }} day{% if car.days > 1 %}s{% endif %}) / ${{ car.pricePerDay }} per day</p>
+                            <p>Total including taxes and fees</p>
+                            <button class="book-button" onclick="showPopup('{{ car.type }}', '{{ car.model }}', '{{ car.company }}', '{{ car.pricePerDay }}', '{{ car.days }}', '{{ car.pickupLocation }}', '{{ car.cancellationDeadline }}', '{{ car.image }}', '{{ car.companyLogo }}')">Select</button>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2024 CarRental, an Expedia Group company. All rights reserved.</p>
+    </footer>
+
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <span class="close" onclick="closePopup()">&times;</span>
+            <div id="popup-details"></div>
+            <button id="confirm-booking" class="confirm-button">Confirm</button>
+        </div>
+    </div>
+
+    <script>
+        const initialCars = {{ cars|tojson }};
+        const carTypeContainer = document.getElementById('filter-car-type');
+        const carCompanyContainer = document.getElementById('filter-car-company');
+
+        // Populate filter options
+        const carTypes = [...new Set(initialCars.map(car => car.type.toLowerCase()))];
+        const carCompanies = [...new Set(initialCars.map(car => car.company.toLowerCase()))];
+
+        carTypes.forEach(type => {
+            const label = document.createElement('label');
+            label.innerHTML = `<input type="checkbox" name="carType" value="${type}"> ${type.charAt(0).toUpperCase() + type.slice(1)}`;
+            carTypeContainer.appendChild(label);
+            carTypeContainer.appendChild(document.createElement('br'));
+        });
+
+        carCompanies.forEach(company => {
+            const label = document.createElement('label');
+            label.innerHTML = `<input type="checkbox" name="carCompany" value="${company}"> ${company.charAt(0).toUpperCase() + company.slice(1)}`;
+            carCompanyContainer.appendChild(label);
+            carCompanyContainer.appendChild(document.createElement('br'));
+        });
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function applyFilters() {
+            const carTypeFilters = Array.from(document.querySelectorAll('input[name="carType"]:checked')).map(el => el.value);
+            const carCompanyFilters = Array.from(document.querySelectorAll('input[name="carCompany"]:checked')).map(el => el.value);
+
+            let filteredCars = initialCars.filter(car => {
+                return (carTypeFilters.length === 0 || carTypeFilters.includes(car.type.toLowerCase())) &&
+                       (carCompanyFilters.length === 0 || carCompanyFilters.includes(car.company.toLowerCase()));
+            });
+
+            shuffle(filteredCars);
+
+            document.getElementById('results-count').innerText = `Showing ${filteredCars.length} rental cars`;
+            renderCars(filteredCars);
+        }
+
+        function renderCars(cars) {
+            const carResults = document.getElementById('car-results');
+            carResults.innerHTML = '';
+
+            shuffle(cars);
+
+            cars.forEach(car => {
+                const carCard = document.createElement('div');
+                carCard.className = 'car-card';
+
+                carCard.innerHTML = `
+                    <div class="car-info">
+                        <img src="${car.image}" alt="${car.type}">
+                        <div class="car-details">
+                            <h3>${car.type}</h3>
+                            <p>${car.model} or similar</p>
+                            <div class="icons">
+                                <div class="icon-text"><i class="fas fa-users"></i> ${car.passengers} Passengers</div>
+                                <div class="icon-text"><i class="fas fa-suitcase"></i> ${car.bags} Bags</div>
+                                <div class="icon-text"><i class="fas fa-cogs"></i> ${car.transmission}</div>
+                                <div class="icon-text"><i class="fas fa-snowflake"></i> Air Conditioning</div>
+                                <div class="icon-text"><i class="fas fa-road"></i> Unlimited Mileage</div>
+                            </div>
+                            <div class="divider"></div>
+                            <p><i class="fas fa-map-marker-alt"></i> Pick-up at ${car.pickupLocation}</p>
+                            <p><i class="fas fa-check-circle"></i> Free Cancellation until ${car.cancellationDeadline}</p>
+                        </div>
+                    </div>
+                    <div class="car-price">
+                        <img src="${car.companyLogo}" alt="${car.company}" style="width: 100px; margin-bottom: 1rem;">
+                        <p>$<span>${(car.pricePerDay * car.days).toFixed(2)}</span> 
+                        (${car.days} day${car.days > 1 ? 's' : ''}) / $${car.pricePerDay} per day</p>
+                        <p>Total including taxes and fees</p>
+                        <button class="book-button" onclick="showPopup('${car.type}', '${car.model}', '${car.company}', '${car.pricePerDay}', '${car.days}', '${car.pickupLocation}', '${car.cancellationDeadline}', '${car.image}', '${car.companyLogo}')">Select</button>
+                    </div>
+                `;
+
+                carResults.appendChild(carCard);
+            });
+        }
+
+        function showPopup(type, model, company, pricePerDay, days, pickupLocation, cancellationDeadline, image, companyLogo) {
+            const popupDetails = document.getElementById('popup-details');
+            popupDetails.innerHTML = `
+                <h2>Confirm Booking</h2>
+                <img src="${image}" alt="${type}" style="width: 150px; border-radius: 5px; margin-bottom: 1rem;">
+                <table class="popup-table">
+                    <tr>
+                        <th>Type</th>
+                        <td>${type}</td>
+                    </tr>
+                    <tr>
+                        <th>Model</th>
+                        <td>${model} or similar</td>
+                    </tr>
+                    <tr>
+                        <th>Company</th>
+                        <td>${company}</td>
+                    </tr>
+                    <tr>
+                        <th>Price</th>
+                        <td>$${pricePerDay} per day</td>
+                    </tr>
+                    <tr>
+                        <th>Days</th>
+                        <td>${days}</td>
+                    </tr>
+                    <tr>
+                        <th>Total Price</th>
+                        <td>$${(pricePerDay * days).toFixed(2)}</td>
+                    </tr>
+                    <tr>
+                        <th>Pick-up Location</th>
+                        <td>${pickupLocation}</td>
+                    </tr>
+                    <tr>
+                        <th>Free Cancellation until</th>
+                        <td>${cancellationDeadline}</td>
+                    </tr>
+                </table>
+            `;
+            const popup = document.getElementById('popup');
+            popup.style.display = 'flex';
+
+            document.getElementById('confirm-booking').onclick = () => {
+                window.location.href = `car-book?type=${type}&model=${model}&company=${company}&pricePerDay=${pricePerDay}&days=${days}&pickupLocation=${pickupLocation}&cancellationDeadline=${cancellationDeadline}&image=${image}&companyLogo=${companyLogo}`;
+            };
+        }
+
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+        }
+
+        document.querySelectorAll('.filters input[type="checkbox"]').forEach(filter => {
+            filter.addEventListener('change', function() {
+                applyFilters();
+            });
+        });
+
+        // Initial render
+        document.addEventListener('DOMContentLoaded', () => {
+            // Show spinner initially
+            document.getElementById('loading-spinner').style.display = 'flex';
+            document.querySelector('.results-container').style.display = 'none';
+
+            // Wait for 4 seconds, then show the results
+            setTimeout(() => {
+                document.getElementById('loading-spinner').style.display = 'none';
+                document.querySelector('.results-container').style.display = 'flex';
+                applyFilters();
+            }, 4000);
+        });
+    </script>
+</body>
+</html>

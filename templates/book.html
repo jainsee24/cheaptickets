@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style1.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="/" style="text-decoration: none; color: inherit;">
+                <i class="fas fa-plane-departure"></i> CheapFlightTickets
+            </a>
+        </div>
+        <nav>
+            <ul>
+                <li>Shop travel</li>
+                <li>Get the app</li>
+                <li>List your property</li>
+                <li>Support</li>
+                <li>Trips</li>
+                <li>Sign in</li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="cancellation-note">
+        <i class="fas fa-clock"></i> Free cancellation if plans change. There's no fee to cancel within 24 hours of booking.
+    </div>
+
+    <div class="sign-in-block" onclick="showSignInPopup()">
+        <span>Sign in to book faster</span>
+    </div>
+
+    <div id="sign-in-popup" class="sign-in-popup">
+        <span class="close" onclick="closeSignInPopup()">&times;</span>
+        <form>
+            <label for="email">Email address</label>
+            <input type="email" id="email" required>
+            <label for="password">Password</label>
+            <input type="password" id="password" required>
+            <p>By signing in, I agree to the <a href="#">CheapCash Terms and Conditions</a>.</p>
+            <button type="submit">Sign in</button>
+            <a href="#">Forgot your password?</a>
+            <div class="social-login">
+                <button class="apple"><i class="fab fa-apple"></i> Sign in with Apple</button>
+                <button class="facebook"><i class="fab fa-facebook-f"></i> Sign in with Facebook</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="overlay" id="overlay" onclick="closeSignInPopup()"></div>
+
+
+    <div class="booking-container">
+        
+        <div class="booking-form">
+            
+            <h2>Who's traveling?</h2>
+
+            <form id="booking-form">
+                <label for="first-name">First name *</label>
+                <input type="text" id="first-name" name="firstName" required>
+
+                <label for="middle-name">Middle name</label>
+                <input type="text" id="middle-name" name="middleName">
+
+                <label for="last-name">Last name *</label>
+                <input type="text" id="last-name" name="lastName" required>
+
+                <label for="email">Email address *</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="phone-number">Phone number *</label>
+                <input type="tel" id="phone-number" name="phoneNumber" required>
+
+                <label for="gender">Gender *</label>
+                <select id="gender" name="gender" required>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+
+                <label for="dob">Date of birth *</label>
+                <input type="date" id="dob" name="dob" required>
+
+                <label for="address1">Billing address 1 *</label>
+                <input type="text" id="address1" name="address1" required>
+
+                <label for="address2">Billing address 2</label>
+                <input type="text" id="address2" name="address2">
+
+                <label for="city">City *</label>
+                <input type="text" id="city" name="city" required>
+
+                <label for="state">State *</label>
+                <input type="text" id="state" name="state" required>
+
+                <label for="zip">ZIP Code *</label>
+                <input type="text" id="zip" name="zip" required>
+
+                <label for="country">Country/Territory *</label>
+                <select id="country" name="country" required>
+                    <option value="US">United States of America</option>
+                    <option value="US">Other</option>
+                    <!-- Add other countries as needed -->
+                </select>
+
+                <div class="protect-flight">
+                    <h2>Protect your flight <span class="recommended">Recommended</span></h2>
+                    <p><strong>Don’t delay! Protect your trip while you still can.</strong></p>
+                    <div class="benefit-icon"><i class="fas fa-plane"></i> Trip cancellation and interruption up to 100% of trip cost</div>
+                    <div class="benefit-icon"><i class="fas fa-medkit"></i> Medical expense up to $5,000 per person</div>
+                    <div class="benefit-icon"><i class="fas fa-suitcase"></i> Baggage loss up to $500 or baggage delay up to $200 per person</div>
+                    <div class="benefit-icon"><i class="fas fa-clock"></i> Travel delay up to $500 per person</div>
+                    <div class="benefit-icon"><i class="fas fa-headset"></i> 24/7 Travel Assistance Services</div>
+                    <p><a href="#">View benefit details</a></p>
+                    <div class="protection-option">
+                        <input type="radio" id="protection-yes" name="flight-protection" value="yes">
+                        <label for="protection-yes">Yes, I want to add flight protection to my flight.</label>
+                    </div>
+                    <div class="protection-option">
+                        <input type="radio" id="protection-no" name="flight-protection" value="no">
+                        <label for="protection-no">No, I understand my booking won’t be protected.</label>
+                    </div>
+                    <p>“A 4th time return customer, had 3 claims in the ... <a href="#">Read more</a></p>
+                    <p><a href="#">View plan details and disclosures</a></p>
+                </div>
+
+                <h2>Payment Information</h2>
+
+                <div class="payment-icons">
+                    <img src="https://github.com/slaterjohn/payment-logos/blob/master/Square%20Corners/PNG/small/american-express.png?raw=true" alt="American Express">
+                    <img src="https://github.com/slaterjohn/payment-logos/blob/master/Square%20Corners/PNG/small/mastercard.png?raw=true" alt="MasterCard">
+                    <img src="https://github.com/slaterjohn/payment-logos/blob/master/Square%20Corners/PNG/small/visa.png?raw=true" alt="Visa">
+                </div>
+
+                <label for="card-name">Name on Card *</label>
+                <input type="text" id="card-name" name="cardName" required>
+
+                <label for="card-number">Debit/Credit card number *</label>
+                <input type="text" id="card-number" name="cardNumber" required>
+
+                <label for="exp-month">Expiration date *</label>
+                <div class="expiration-date">
+                    <select id="exp-month" name="expMonth" required>
+                        <option value="01">January</option>
+                        <!-- Add other months -->
+                    </select>
+                    <select id="exp-year" name="expYear" required>
+                        <option value="2024">2024</option>
+                        <!-- Add other years -->
+                    </select>
+                </div>
+
+                <label for="security-code">Security code *</label>
+                <input type="text" id="security-code" name="securityCode" required>
+
+                <div class="review-booking">
+                    <h2>Review and book your trip</h2>
+                    <p><strong>Free cancellation within 24 hours of booking!</strong></p>
+                    <p>1. Review your trip details to make sure the dates and times are correct.</p>
+                    <p>2. Check your spelling. Flight passenger names must match government-issued photo ID exactly.</p>
+                    <p>3. Review the terms of your booking:</p>
+                    <ul>
+                        <li>Pay to choose your seat</li>
+                        <li>Carry-on bag not allowed</li>
+                        <li>No refund 24 hours after booking</li>
+                        <li>Changes not allowed</li>
+                        <li>Bring a personal item</li>
+                    </ul>
+                    <p>By clicking on the button below, I acknowledge that I have reviewed the <a href="#">Privacy Statement</a> and <a href="#">Government Travel Advice</a> and have reviewed and accept the above <a href="#">Rules & Restrictions</a> and <a href="#">Terms of Use</a>.</p>
+                    <button type="submit" class="complete-booking">Complete Booking</button>
+                    <p class="secure-booking-note"><i class="fas fa-lock"></i> We use secure transmission and encrypted storage to protect your personal information. Payments are processed in the U.S. except where the travel provider (hotel / airline etc) processes your payment outside the U.S., in which case your card issuer may charge a foreign transaction fee.</p>
+                </div>
+
+                
+            </form>
+        </div>
+
+        <div class="booking-summary">
+            <h2>Your Price Summary</h2>
+            <div id="price-summary">
+                <!-- Summary will be filled by JavaScript -->
+            </div>
+            <div class="secure-booking-note">
+                <p><i class="fas fa-lock"></i> We use secure transmission and encrypted storage to protect your personal information.</p>
+                <p>Payments are processed in the U.S. except where the travel provider (hotel / airline etc) processes your payment outside the U.S., in which case your card issuer may charge a foreign transaction fee.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-section">
+            <img src="data:image/png;base64,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" alt="Expedia Group Logo">
+            <div class="footer-links">
+                <!-- Add footer links here -->
+            </div>
+        </div>
+        <p>© 2024 CheapTickets, an Expedia Group company. All rights reserved. CheapTickets, CheapTickets.com, and the CheapTickets Logo are trademarks or registered trademarks of Orbitz, LLC. CST# 2063530-50.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Retrieve flight data from URL parameters
+            const params = new URLSearchParams(window.location.search);
+            const flightData = JSON.parse(params.get('flight'));
+            const classs = JSON.parse(params.get('class'));
+
+
+            // Fill the price summary
+            const priceSummary = document.getElementById('price-summary');
+            priceSummary.innerHTML = `
+                <div class="summary-item"><span><strong>Flight:</strong></span> <span>${flightData.legs[0].origin.city} (${flightData.legs[0].origin.displayCode}) to ${flightData.legs[0].destination.city} (${flightData.legs[0].destination.displayCode})</span></div>
+                <div class="summary-item"><span><strong>Price:</strong></span> <span>$${(flightData.price.raw * 0.8).toFixed(2)}</span></div>
+                <div class="summary-item"><span><strong>Taxes and Fees:</strong></span> <span>$${(flightData.price.raw * 0.2).toFixed(2)}</span></div>
+                <div class="summary-item extra"><span><strong>Extras:</strong></span><span>$0.00</span></div>
+                <div class="summary-item total-price"><span><strong>Total Price:</strong></span> <span>$${(flightData.price.raw * 1).toFixed(2)}</span></div>
+            `;
+
+            document.querySelectorAll('input[name="flight-protection"]').forEach(option => {
+                option.addEventListener('change', () => {
+                    const extra = (option.value === 'yes') ? 19 : 0;
+                    const totalPrice = discountedPrice + (discountedPrice * 0.2) + extra;
+
+                    document.querySelector('.summary-item.extra span:last-child').textContent = `$${extra.toFixed(2)}`;
+                    document.querySelector('.summary-item.total-price span:last-child').textContent = `$${totalPrice.toFixed(2)}`;
+                });
+            });
+
+        });
+        function showSignInPopup() {
+            document.getElementById('sign-in-popup').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        }
+
+        function closeSignInPopup() {
+            document.getElementById('sign-in-popup').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+    </script>
+</body>
+</html>

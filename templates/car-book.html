@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Booking</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style1.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        .car-details-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        .car-details-table th, .car-details-table td {
+            border: 1px solid #ddd;
+            padding: 0.5rem;
+        }
+        .car-details-table th {
+            background-color: #f4f4f4;
+        }
+        .map-container {
+            height: 300px;
+            width: 100%;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="/" style="text-decoration: none; color: inherit;">
+                <i class="fas fa-plane-departure"></i> CheapFlightTickets
+            </a>
+        </div>
+        <nav>
+            <ul>
+                <li>Shop travel</li>
+                <li>Get the app</li>
+                <li>List your property</li>
+                <li>Support</li>
+                <li>Trips</li>
+                <li>Sign in</li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="cancellation-note">
+        <i class="fas fa-clock"></i> Free cancellation if plans change. There's no fee to cancel within 24 hours of booking.
+    </div>
+
+    <div class="sign-in-block" onclick="showSignInPopup()">
+        <span>Sign in to book faster</span>
+    </div>
+
+    <div id="sign-in-popup" class="sign-in-popup">
+        <span class="close" onclick="closeSignInPopup()">&times;</span>
+        <form>
+            <label for="email">Email address</label>
+            <input type="email" id="email" required>
+            <label for="password">Password</label>
+            <input type="password" id="password" required>
+            <p>By signing in, I agree to the <a href="#">Terms and Conditions</a>.</p>
+            <button type="submit">Sign in</button>
+            <a href="#">Forgot your password?</a>
+            <div class="social-login">
+                <button class="apple"><i class="fab fa-apple"></i> Sign in with Apple</button>
+                <button class="facebook"><i class="fab fa-facebook-f"></i> Sign in with Facebook</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="overlay" id="overlay" onclick="closeSignInPopup()"></div>
+
+    <div class="booking-container">
+        <div class="booking-form">
+            <h2>Who's driving?</h2>
+            <form id="booking-form">
+                <label for="first-name">First name *</label>
+                <input type="text" id="first-name" name="firstName" required>
+
+                <label for="middle-name">Middle name</label>
+                <input type="text" id="middle-name" name="middleName">
+
+                <label for="last-name">Last name *</label>
+                <input type="text" id="last-name" name="lastName" required>
+
+                <label for="email">Email address *</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="phone-number">Phone number *</label>
+                <input type="tel" id="phone-number" name="phoneNumber" required>
+
+                <label for="gender">Gender *</label>
+                <select id="gender" name="gender" required>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+
+                <label for="dob">Date of birth *</label>
+                <input type="date" id="dob" name="dob" required>
+
+                <label for="address1">Billing address 1 *</label>
+                <input type="text" id="address1" name="address1" required>
+
+                <label for="address2">Billing address 2</label>
+                <input type="text" id="address2" name="address2">
+
+                <label for="city">City *</label>
+                <input type="text" id="city" name="city" required>
+
+                <label for="state">State *</label>
+                <input type="text" id="state" name="state" required>
+
+                <label for="zip">ZIP Code *</label>
+                <input type="text" id="zip" name="zip" required>
+
+                <label for="country">Country/Territory *</label>
+                <select id="country" name="country" required>
+                    <option value="US">United States of America</option>
+                    <option value="US">Other</option>
+                    <!-- Add other countries as needed -->
+                </select>
+
+                <label for="license-country">Driver's License Country *</label>
+                <select id="license-country" name="licenseCountry" required>
+                    <option value="US">United States of America</option>
+                    <option value="US">Other</option>
+                    <!-- Add other countries as needed -->
+                </select>
+
+                <label for="license-state">Driver's License State *</label>
+                <select id="license-state" name="licenseState" required>
+                    <option value="CA">California</option>
+                    <option value="US">Other</option>
+                    <!-- Add other states as needed -->
+                </select>
+
+                <label for="license-number">Driver's License Number *</label>
+                <input type="text" id="license-number" name="licenseNumber" required>
+
+                <h2>Payment Information</h2>
+
+                <div class="payment-icons">
+                    <img src="https://github.com/slaterjohn/payment-logos/blob/master/Square%20Corners/PNG/small/american-express.png?raw=true" alt="American Express">
+                    <img src="https://github.com/slaterjohn/payment-logos/blob/master/Square%20Corners/PNG/small/mastercard.png?raw=true" alt="MasterCard">
+                    <img src="https://github.com/slaterjohn/payment-logos/blob/master/Square%20Corners/PNG/small/visa.png?raw=true" alt="Visa">
+                </div>
+
+                <label for="card-name">Name on Card *</label>
+                <input type="text" id="card-name" name="cardName" required>
+
+                <label for="card-number">Debit/Credit card number *</label>
+                <input type="text" id="card-number" name="cardNumber" required>
+
+                <label for="exp-month">Expiration date *</label>
+                <div class="expiration-date">
+                    <select id="exp-month" name="expMonth" required>
+                        <option value="01">January</option>
+                        <!-- Add other months -->
+                    </select>
+                    <select id="exp-year" name="expYear" required>
+                        <option value="2024">2024</option>
+                        <!-- Add other years -->
+                    </select>
+                </div>
+
+                <label for="security-code">Security code *</label>
+                <input type="text" id="security-code" name="securityCode" required>
+
+                <div class="review-booking">
+                    <h2>Review and book your car</h2>
+                    <p><strong>Free cancellation within 24 hours of booking!</strong></p>
+                    <p>1. Review your trip details to make sure the dates and times are correct.</p>
+                    <p>2. Check your spelling. Names must match government-issued photo ID exactly.</p>
+                    <p>3. Review the terms of your booking:</p>
+                    <ul>
+                        <li>Pay to choose your car model</li>
+                        <li>Have your own insurance ready</li>
+                    </ul>
+                    <p>By clicking on the button below, I acknowledge that I have reviewed the <a href="#">Privacy Statement</a> and <a href="#">Government Travel Advice</a> and have reviewed and accept the above <a href="#">Rules & Restrictions</a> and <a href="#">Terms of Use</a>.</p>
+                    <button type="submit" class="complete-booking">Complete Booking</button>
+                    <p class="secure-booking-note"><i class="fas fa-lock"></i> We use secure transmission and encrypted storage to protect your personal information. Payments are processed in the U.S. except where the travel provider (hotel / airline etc) processes your payment outside the U.S., in which case your card issuer may charge a foreign transaction fee.</p>
+                </div>
+            </form>
+        </div>
+
+        <div class="booking-summary">
+            <h2>Your Car Details</h2>
+            <div id="car-summary">
+                <!-- Car details will be filled by JavaScript -->
+            </div>
+            <div class="map-container" id="map-container"></div>
+            <div class="secure-booking-note">
+                <p><i class="fas fa-lock"></i> We use secure transmission and encrypted storage to protect your personal information.</p>
+                <p>Payments are processed in the U.S. except where the travel provider processes your payment outside the U.S., in which case your card issuer may charge a foreign transaction fee.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-section">
+            <div class="footer-links">
+                <!-- Add footer links here -->
+            </div>
+        </div>
+        <p>© 2024 CarRental, an Expedia Group company. All rights reserved. CarRental, CarRental.com, and the CarRental Logo are trademarks or registered trademarks of Orbitz, LLC. CST# 2063530-50.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Retrieve car data from URL parameters
+            const params = new URLSearchParams(window.location.search);
+            const carData = {
+                type: params.get('type'),
+                model: params.get('model'),
+                company: params.get('company'),
+                pricePerDay: params.get('pricePerDay'),
+                days: params.get('days'),
+                pickupLocation: params.get('pickupLocation'),
+                cancellationDeadline: params.get('cancellationDeadline'),
+                image: params.get('image'),
+                companyLogo: params.get('companyLogo')
+            };
+
+            // Fill the car details summary
+            const carSummary = document.getElementById('car-summary');
+            carSummary.innerHTML = `
+                <img src="${carData.image}" alt="${carData.type}" style="width: 100px; border-radius: 5px; margin-bottom: 1rem;">
+                <table class="car-details-table">
+                    <tr>
+                        <th>Type</th>
+                        <td>${carData.type}</td>
+                    </tr>
+                    <tr>
+                        <th>Model</th>
+                        <td>${carData.model} or similar</td>
+                    </tr>
+                    <tr>
+                        <th>Company</th>
+                        <td><img src="${carData.companyLogo}" alt="${carData.company}" style="width: 50px;"></td>
+                    </tr>
+                    <tr>
+                        <th>Price</th>
+                        <td>$${carData.pricePerDay} per day</td>
+                    </tr>
+                    <tr>
+                        <th>Days</th>
+                        <td>${carData.days}</td>
+                    </tr>
+                    <tr>
+                        <th>Total Price</th>
+                        <td>$${(carData.pricePerDay * carData.days).toFixed(2)}</td>
+                    </tr>
+                    <tr>
+                        <th>Pick-up Location</th>
+                        <td>${carData.pickupLocation}</td>
+                    </tr>
+                    <tr>
+                        <th>Free Cancellation until</th>
+                        <td>${carData.cancellationDeadline}</td>
+                    </tr>
+                </table>
+            `;
+
+            // Initialize map
+            const mapContainer = document.getElementById('map-container');
+            const map = new google.maps.Map(mapContainer, {
+                zoom: 14,
+                center: { lat: 37.7749, lng: -122.4194 } // Default center, change to dynamic location if available
+            });
+            new google.maps.Marker({
+                position: { lat: 37.7749, lng: -122.4194 }, // Default marker position
+                map: map,
+                title: 'Pick-up Location'
+            });
+
+            // Add address to the map if available
+            if (carData.pickupLocation && carData.pickupLocation !== 'Unknown location') {
+                const geocoder = new google.maps.Geocoder();
+                geocoder.geocode({ address: carData.pickupLocation }, (results, status) => {
+                    if (status === 'OK') {
+                        map.setCenter(results[0].geometry.location);
+                        new google.maps.Marker({
+                            map: map,
+                            position: results[0].geometry.location,
+                            title: 'Pick-up Location'
+                        });
+                    }
+                });
+            }
+        });
+
+        function showSignInPopup() {
+            document.getElementById('sign-in-popup').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        }
+
+        function closeSignInPopup() {
+            document.getElementById('sign-in-popup').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+    </script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCorQJiXLi0dnoumNtBKjPphOFmLA0vX8A&loading=async&callback=initMap&v=weekly"></script>
+
+</body>
+</html>
