@@ -10,6 +10,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script defer src="{{ url_for('static', filename='scripts.js') }}"></script>
+    <link type="image/png" sizes="16x16" rel="icon" href="{{ url_for('static', filename='favicon.png') }}">
     <script defer>
         $(document).ready(function() {
             $.getJSON('/airports', function(data) {
