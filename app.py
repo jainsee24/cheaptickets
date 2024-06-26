@@ -411,18 +411,18 @@ def car_book():
 
     return render_template('car-book.html', car_details=car_details)
 
-@app.errorhandler(404)
-def not_found(e):
-    return render_template('index.html'), 404
+# @app.errorhandler(404)
+# def not_found(e):
+#     return render_template('index.html'), 404
 
-@app.errorhandler(405)
-def method_not_allowed(e):
-    return render_template('index.html'), 405
+# @app.errorhandler(405)
+# def method_not_allowed(e):
+#     return render_template('index.html'), 405
 
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
-def catch_all(path):
-    return render_template('index.html')
+# @app.route('/', defaults={'path': ''})
+# @app.route('/<path:path>')
+# def catch_all(path):
+#     return render_template('index.html')
 
 
 if __name__ == '__main__':
