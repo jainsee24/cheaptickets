@@ -361,7 +361,7 @@ def search_cars():
     for car_type in car_types:
         i+=1
         for car_company in car_companies:
-            price_per_day = random.randint(5, 15)
+            price_per_day = random.randint(2, 6)
             cancellation_deadline = pick_up_date_obj - timedelta(days=3)
             company_logo = f"/static/images/{car_company.lower()}.png"
             image = f"/static/images/{car_type.lower()}.png"
