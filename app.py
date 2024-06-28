@@ -42,7 +42,7 @@ with open('static/airports.json', 'r') as f:
 def home():
     return render_template('index.html')
 @app.route('/flight')
-def home():
+def home1():
     return render_template('index.html')
 
 @app.route('/airports')
