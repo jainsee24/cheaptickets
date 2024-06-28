@@ -5,6 +5,7 @@ import time
 
 from datetime import datetime, timedelta
 import random
+from flask import send_from_directory
 
 
 app = Flask(__name__)
@@ -44,6 +45,12 @@ def home():
 @app.route('/flight')
 def home1():
     return render_template('index.html')
+
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(app.root_path, 'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
 
 @app.route('/airports')
 def get_airports():
