@@ -75,13 +75,12 @@ def search_flights():
 def check_flight_status(api_url):
     i=0
     flight_data=''
-    while i<5:
+    while i<20:
         i+=1
         response = requests.get(api_url)
         flight_data = response.json()
         if flight_data['context']['status'] == 'complete':
             return flight_data
-        time.sleep(1)
     return flight_data
 
 
