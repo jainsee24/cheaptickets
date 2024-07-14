@@ -73,15 +73,33 @@ def search_flights():
     return render_template('results.html')
 
 def check_flight_status(api_url):
-    i=0
-    flight_data=''
-    while i<30:
-        i+=1
+    i = 0
+    final_flight_data = None
+    itinerary_ids = set()
+    
+    while i < 30:
+        i += 1
         response = requests.get(api_url)
         flight_data = response.json()
+        
+        if final_flight_data is None:
+            final_flight_data = flight_data
+        else:
+            final_flight_data['itineraries'].extend(flight_data.get('itineraries', []))
+        
+        new_itineraries = []
+        for itinerary in final_flight_data['itineraries']:
+            if itinerary['id'] not in itinerary_ids:
+                itinerary_ids.add(itinerary['id'])
+                new_itineraries.append(itinerary)
+        
+        final_flight_data['itineraries'] = new_itineraries
+        
         if flight_data['context']['status'] == 'complete':
-            return flight_data
-    return flight_data
+            break
+    
+    return final_flight_data
+
 
 
 
