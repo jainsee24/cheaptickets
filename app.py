@@ -73,34 +73,15 @@ def search_flights():
     return render_template('results.html')
 
 def check_flight_status(api_url):
-    i = 0
-    final_flight_data = None
-    
-    
-    while i < 30:
-        itinerary_ids = set()
-        i += 1
+    i=0
+    flight_data=''
+    while i<5:
+        i+=1
         response = requests.get(api_url)
         flight_data = response.json()
-        
-        if final_flight_data is None:
-            final_flight_data = flight_data
-        else:
-            final_flight_data['itineraries'].extend(flight_data.get('itineraries', []))
-        
-        new_itineraries = []
-        for itinerary in final_flight_data['itineraries']:
-            if itinerary['id'] not in itinerary_ids:
-                itinerary_ids.add(itinerary['id'])
-                new_itineraries.append(itinerary)
-        
-        final_flight_data['itineraries'] = new_itineraries
-        
         if flight_data['context']['status'] == 'complete':
-            break
-    
-    return final_flight_data
-
+            return flight_data
+    return flight_data
 
 
 
@@ -160,6 +141,60 @@ def fetch_flights():
                     carrier['logoUrl'] = 'https://banner2.cleanpng.com/20180704/yik/kisspng-alaska-airlines-bna-seattletacoma-internation-5b3d8aefc5ec28.5427569615307599198107.jpg'
 
     print(flight_data)
+    additional_flight = {
+        'id': 'custom-1',
+        'price': {'raw': 1507, 'formatted': '$1507'},
+        'legs': [
+            {
+                'id': 'custom-leg-1',
+                'origin': {'name': 'San Francisco International Airport', 'displayCode': 'SFO', 'city': 'San Francisco', 'country': 'United States'},
+                'destination': {'name': 'Heathrow Airport', 'displayCode': 'LHR', 'city': 'London', 'country': 'United Kingdom'},
+                'departure': '2024-11-14T15:45:00',
+                'arrival': '2024-11-15T10:00:00',
+                'durationInMinutes': 615,
+                'carriers': {'marketing': [{'name': 'Virgin Atlantic', 'logoUrl': 'data:image/png;base64,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'}]},
+                'segments': [
+                    {
+                        'origin': {'flightPlaceId': 'SFO', 'displayCode': 'SFO', 'name': 'San Francisco International', 'type': 'Airport'},
+                        'destination': {'flightPlaceId': 'LHR', 'displayCode': 'LHR', 'name': 'Heathrow Airport', 'type': 'Airport'},
+                        'departure': '2024-11-14T15:45:00',
+                        'arrival': '2024-11-15T10:00:00',
+                        'durationInMinutes': 615,
+                        'flightNumber': 'VS 20',
+                        'marketingCarrier': {'name': 'Virgin Atlantic', 'alternateId': 'VS', 'displayCode': 'VS'},
+                        'aircraft': {'code': '787', 'name': '787 (widebody)'},
+                        'cabinClass': 'Upper Class'
+                    }
+                ]
+            },
+            {
+                'id': 'custom-leg-2',
+                'origin': {'name': 'Heathrow Airport', 'displayCode': 'LHR', 'city': 'London', 'country': 'United Kingdom'},
+                'destination': {'name': 'Kempegowda Intl Airport', 'displayCode': 'BLR', 'city': 'Bengaluru', 'country': 'India'},
+                'departure': '2024-11-15T11:05:00',
+                'arrival': '2024-11-16T02:35:00',
+                'durationInMinutes': 600,
+                'carriers': {'marketing': [{'name': 'Virgin Atlantic', 'logoUrl': 'data:image/png;base64,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'}]},
+                'segments': [
+                    {
+                        'origin': {'flightPlaceId': 'LHR', 'displayCode': 'LHR', 'name': 'Heathrow Airport', 'type': 'Airport'},
+                        'destination': {'flightPlaceId': 'BLR', 'displayCode': 'BLR', 'name': 'Kempegowda Intl Airport', 'type': 'Airport'},
+                        'departure': '2024-11-15T11:05:00',
+                        'arrival': '2024-11-16T02:35:00',
+                        'durationInMinutes': 600,
+                        'flightNumber': 'VS 316',
+                        'marketingCarrier': {'name': 'Virgin Atlantic', 'alternateId': 'VS', 'displayCode': 'VS'},
+                        'aircraft': {'code': '787', 'name': '787 (widebody)'},
+                        'cabinClass': 'Upper Class'
+                    }
+                ]
+            }
+        ],
+        'isSelfTransfer': False,
+        'isProtectedSelfTransfer': True
+    }
+    
+    flight_data['itineraries'].append(additional_flight)
     # Render the flight data to the results section
     return jsonify({'flights': flight_data.get('itineraries', []),'classs': str(cabin_class[0]).upper()+str(cabin_class[1:])})
 
