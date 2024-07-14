@@ -75,9 +75,10 @@ def search_flights():
 def check_flight_status(api_url):
     i = 0
     final_flight_data = None
-    itinerary_ids = set()
+    
     
     while i < 30:
+        itinerary_ids = set()
         i += 1
         response = requests.get(api_url)
         flight_data = response.json()
