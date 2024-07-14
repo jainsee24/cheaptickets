@@ -87,7 +87,7 @@ def check_flight_status(api_url):
 
 @app.route('/fetch_flights', methods=['GET'])
 def fetch_flights():
-    access_key = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0IiwianRpIjoiYTU5MDg0ZGQ2NWU2MzRkZjlkMWUzZGFlMDQwOWNjY2FhZWQzZmU0OTAyYzRjZTU5NmZkNzNiYzViOGFiMjUwZTg4NGViNzdiOWE2OWU5NmQiLCJpYXQiOjE3MTkzMzQ5NjMsIm5iZiI6MTcxOTMzNDk2MywiZXhwIjoxNzUwODcwOTYzLCJzdWIiOiIyMjczOCIsInNjb3BlcyI6W119.BCT0OdqtBvrfzrzB8yavHzLHZ9Kn2fvW4h-izJlKfvdelrBElXXRxw6jcZ5qHSMDvH_tzOA8ZwWhmcUJwVoP3A'
+    access_key = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0IiwianRpIjoiYmMwNzA2NWIxZTIzZjU4NzU0N2I2M2Y1NjM5Njc4ZGU0MzNlMzkxYzYwNGMwYzAxNmM0ZjEwOWFkYmU5OWJkNTUyYjdmNzMxODZlMzA1NDAiLCJpYXQiOjE3MjA5NTAxMTgsIm5iZiI6MTcyMDk1MDExOCwiZXhwIjoxNzUyNDg2MTE4LCJzdWIiOiIyMjgyNSIsInNjb3BlcyI6W119.uN3amniKbYUyVtnts-2-P4TFmdNGmcjXavGeeOVnC8u6yp19HG1RIz545Pd-CV_ZwSjTRrx9mKLbepzQRaPzcA'
     origin_query = request.args.get('origin')
     destination_query = request.args.get('destination')
     date = request.args.get('date')
