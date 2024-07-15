@@ -145,6 +145,7 @@ def fetch_flights():
                     carrier['logoUrl'] = 'https://banner2.cleanpng.com/20180704/yik/kisspng-alaska-airlines-bna-seattletacoma-internation-5b3d8aefc5ec28.5427569615307599198107.jpg'
     # Add the new flight details manually
     new_itinerary = {
+        'id' : 'custom',
         'price': {'raw': 163, 'formatted': '$163'},
         'legs': [
             {
