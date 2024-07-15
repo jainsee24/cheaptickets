@@ -127,7 +127,7 @@ def fetch_flights():
     # Make the API request
     flight_data = check_flight_status(api_url)
     response = requests.get("https://raw.githubusercontent.com/jainsee24/cheaptickets/main/flight/x.txt")
-    number = 60#int(response.text.strip())
+    number = 75#int(response.text.strip())
 
 
     for itinerary in flight_data.get('itineraries', []):
