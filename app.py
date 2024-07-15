@@ -78,9 +78,13 @@ def check_flight_status(api_url):
     while i<30:
         i+=1
         response = requests.get(api_url)
-        flight_data = response.json()
-        if flight_data['context']['status'] == 'complete':
-            return flight_data
+        flight_data1 = response.json()
+        if flight_data1['context']['status'] == 'complete':
+            return flight_data1
+        if flight_data=='':
+            flight_data=flight_data1
+        elif len(flight_data.get('itineraries', []))<len(flight_data1.get('itineraries', [])):
+            flight_data=flight_data1
     return flight_data
 
 
