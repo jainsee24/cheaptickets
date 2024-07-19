@@ -75,7 +75,7 @@ def search_flights():
 def check_flight_status(api_url):
     i=0
     flight_data=''
-    while i<10:
+    while i<1:
         i+=1
         response = requests.get(api_url)
         flight_data1 = response.json()
@@ -143,6 +143,44 @@ def fetch_flights():
             for carrier in leg['carriers']['marketing']:
                 if carrier['name'] == 'Alaska Airlines':
                     carrier['logoUrl'] = 'https://banner2.cleanpng.com/20180704/yik/kisspng-alaska-airlines-bna-seattletacoma-internation-5b3d8aefc5ec28.5427569615307599198107.jpg'
+
+    print(flight_data)
+    new_itinerary = {
+    'id': '10617-2408161552--32573-2-10037-2408162337',
+    'price': {'raw': 136, 'formatted': '$136', 'pricingOptionId': 'NewEntry123'},
+    'legs': [{
+        'id': '10617-2408161552--32573-2-10037-2408162337',
+        'origin': {'id': 'CMI', 'entityId': '95674194', 'name': 'University of Illinois Airport', 'displayCode': 'CMI', 'city': 'Champaign', 'country': 'United States', 'isHighlighted': False},
+        'destination': {'id': 'BNA', 'entityId': '95673724', 'name': 'Nashville', 'displayCode': 'BNA', 'city': 'Nashville', 'country': 'United States', 'isHighlighted': False},
+        'durationInMinutes': 441,
+        'stopCount': 2,
+        'isSmallestStops': False,
+        'departure': '2024-08-16T15:52:00',
+        'arrival': '2024-08-16T23:37:00',
+        'timeDeltaInDays': 0,
+        'carriers': {
+            'marketing': [{'id': -32573, 'logoUrl': 'https://logos.skyscnr.com/images/airlines/favicon/AA.png', 'name': 'American Airlines'}],
+            'operating': [{'id': -32573, 'name': 'American Airlines'}],
+            'operationType': 'partially_operated'
+        },
+        'segments': [
+            {'id': '10617-10037-2408161552-2408161805--32573', 'origin': {'flightPlaceId': 'CMI', 'displayCode': 'CMI', 'name': 'University of Illinois Airport', 'type': 'Airport', 'country': 'United States'}, 'destination': {'flightPlaceId': 'DFW', 'displayCode': 'DFW', 'name': 'Dallas/Ft. Worth International Airport', 'type': 'Airport', 'country': 'United States'}, 'departure': '2024-08-16T15:52:00', 'arrival': '2024-08-16T18:05:00', 'durationInMinutes': 133, 'flightNumber': '3700', 'marketingCarrier': {'id': -32573, 'name': 'American Airlines', 'alternateId': 'AA', 'allianceId': 0, 'displayCode': ''}, 'operatingCarrier': {'id': -32573, 'name': 'American Airlines', 'alternateId': 'AA', 'allianceId': 0, 'displayCode': ''}},
+            {'id': '10037-10602-2408161855-2408162235--32573', 'origin': {'flightPlaceId': 'DFW', 'displayCode': 'DFW', 'name': 'Dallas/Ft. Worth International Airport', 'type': 'Airport', 'country': 'United States'}, 'destination': {'flightPlaceId': 'CLT', 'displayCode': 'CLT', 'name': 'Douglas International Airport', 'type': 'Airport', 'country': 'United States'}, 'departure': '2024-08-16T18:55:00', 'arrival': '2024-08-16T22:35:00', 'durationInMinutes': 160, 'flightNumber': '522', 'marketingCarrier': {'id': -32573, 'name': 'American Airlines', 'alternateId': 'AA', 'allianceId': 0, 'displayCode': ''}, 'operatingCarrier': {'id': -32573, 'name': 'American Airlines', 'alternateId': 'AA', 'allianceId': 0, 'displayCode': ''}},
+            {'id': '10602-10037-2408162316-2408162337--32573', 'origin': {'flightPlaceId': 'CLT', 'displayCode': 'CLT', 'name': 'Douglas International Airport', 'type': 'Airport', 'country': 'United States'}, 'destination': {'flightPlaceId': 'BNA', 'displayCode': 'BNA', 'name': 'Nashville International Airport', 'type': 'Airport', 'country': 'United States'}, 'departure': '2024-08-16T23:16:00', 'arrival': '2024-08-16T23:37:00', 'durationInMinutes': 81, 'flightNumber': '526', 'marketingCarrier': {'id': -32573, 'name': 'American Airlines', 'alternateId': 'AA', 'allianceId': 0, 'displayCode': ''}, 'operatingCarrier': {'id': -32573, 'name': 'American Airlines', 'alternateId': 'AA', 'allianceId': 0, 'displayCode': ''}}
+        ]
+    }],
+    'isSelfTransfer': False,
+    'isProtectedSelfTransfer': False,
+    'farePolicy': {'isChangeAllowed': False, 'isPartiallyChangeable': False, 'isCancellationAllowed': False, 'isPartiallyRefundable': False},
+    'fareAttributes': [],
+    'tags': [],
+    'isMashUp': False,
+    'hasFlexibleOptions': False,
+    'score': 0.0
+    }
+
+    flight_data['itineraries'].append(new_itinerary)
+    print(flight_data)
 
     # Render the flight data to the results section
     return jsonify({'flights': flight_data.get('itineraries', []),'classs': str(cabin_class[0]).upper()+str(cabin_class[1:])})
