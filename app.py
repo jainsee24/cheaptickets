@@ -75,7 +75,7 @@ def search_flights():
 def check_flight_status(api_url):
     i=0
     flight_data=''
-    while i<1:
+    while i<10:
         i+=1
         response = requests.get(api_url)
         flight_data1 = response.json()
@@ -179,7 +179,7 @@ def fetch_flights():
     'score': 0.0
     }
 
-    flight_data['itineraries'].append(new_itinerary)
+    # flight_data['itineraries'].append(new_itinerary)
     print(flight_data)
 
     # Render the flight data to the results section
