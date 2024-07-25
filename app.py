@@ -412,12 +412,31 @@ def search_cars():
         'Dollar', 'Budget', 'Avis', 'Alamo'
     ]
 
+    car_type_prices = {
+    'Compact': 2,
+    'Truck': 4,
+    'Luxury': 6,
+    'Convertible': 5,
+    'Electric': 4,
+    'SUV': 5,
+    'Van': 3,
+    'Hybrid': 4,
+    'Economy': 2,
+    'Full-size': 4,
+    'Midsize': 3,
+    'Mini': 2,
+    'Premium': 5,
+    'Standard': 3,
+    'Mid-size': 3,
+    'Mystery': 2
+}
+
     car_results = []
     i=-1
     for car_type in car_types:
         i+=1
         for car_company in car_companies:
-            price_per_day = random.randint(2, 6)
+            price_per_day = car_type_prices.get(car_type, 3)  
             cancellation_deadline = pick_up_date_obj - timedelta(days=3)
             company_logo = f"/static/images/{car_company.lower()}.png"
             image = f"/static/images/{car_type.lower()}.png"
