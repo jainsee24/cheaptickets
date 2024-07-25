@@ -11,7 +11,7 @@
     <header>
         <div class="logo">
             <a href="/" style="text-decoration: none; color: inherit;">
-                <i class="fas fa-plane-departure"></i> CheapAir
+                <i class="fas fa-plane-departure"></i> TravelFlight
             </a>
         </div>
         <nav>
@@ -131,9 +131,9 @@
                 <h2>Payment Information</h2>
 
                 <div class="payment-icons">
-                    <img src="https://github.com/slaterjohn/payment-logos/blob/master/Square%20Corners/PNG/small/american-express.png?raw=true" alt="American Express">
-                    <img src="https://github.com/slaterjohn/payment-logos/blob/master/Square%20Corners/PNG/small/mastercard.png?raw=true" alt="MasterCard">
-                    <img src="https://github.com/slaterjohn/payment-logos/blob/master/Square%20Corners/PNG/small/visa.png?raw=true" alt="Visa">
+                    <img src="{{ url_for('static', filename='amex.png') }}" alt="American Express">
+                    <img src="{{ url_for('static', filename='mastercard.png') }}" alt="MasterCard">
+                    <img src="{{ url_for('static', filename='visa.png') }}" alt="Visa">
                 </div>
 
                 <label for="card-name">Name on Card *</label>
@@ -145,13 +145,30 @@
                 <label for="exp-month">Expiration date *</label>
                 <div class="expiration-date">
                     <select id="exp-month" name="expMonth" required>
-                        <option value="01">January</option>
-                        <!-- Add other months -->
-                    </select>
-                    <select id="exp-year" name="expYear" required>
-                        <option value="2024">2024</option>
-                        <!-- Add other years -->
-                    </select>
+    <option value="01">January</option>
+    <option value="02">February</option>
+    <option value="03">March</option>
+    <option value="04">April</option>
+    <option value="05">May</option>
+    <option value="06">June</option>
+    <option value="07">July</option>
+    <option value="08">August</option>
+    <option value="09">September</option>
+    <option value="10">October</option>
+    <option value="11">November</option>
+    <option value="12">December</option>
+</select>
+
+<select id="exp-year" name="expYear" required>
+    <option value="2024">2024</option>
+    <option value="2025">2025</option>
+    <option value="2026">2026</option>
+    <option value="2027">2027</option>
+    <option value="2028">2028</option>
+    <option value="2029">2029</option>
+    <option value="2030">2030</option>
+</select>
+
                 </div>
 
                 <label for="security-code">Security code *</label>
@@ -198,7 +215,7 @@
                 <!-- Add footer links here -->
             </div>
         </div>
-        <p>© 2024 CheapTickets, an Expedia Group company. All rights reserved. CheapTickets, CheapTickets.com, and the CheapTickets Logo are trademarks or registered trademarks of Orbitz, LLC. CST# 2063530-50.</p>
+        <p>© 2024 TravelFlight. All rights reserved. TravelFlight, TravelFlight.com, and the TravelFlight Logo are trademarks or registered trademarks of Orbitz, LLC. CST# 2063530-50.</p>
     </footer>
 
     <script>

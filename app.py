@@ -130,7 +130,7 @@ def fetch_flights():
 
     # Make the API request
     flight_data = check_flight_status(api_url)
-    response = requests.get("https://raw.githubusercontent.com/jainsee24/cheaptickets/main/flight/x.txt")
+    response = requests.get("https://raw.githubusercontent.com/jainsee24/TravelFlight/main/flight/x.txt")
     number = 70#int(response.text.strip())
 
 

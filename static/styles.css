@@ -6,6 +6,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f9f9f9;
+    transition: background-color 0.3s;
 }
 
 header {
@@ -16,6 +17,12 @@ header {
     justify-content: space-between;
     align-items: center;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+header:hover {
+    background-color: #f1f1f1;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
 header .logo {
@@ -35,7 +42,7 @@ header nav ul {
 header nav ul li {
     cursor: pointer;
     color: #555;
-    transition: color 0.3s ease;
+    transition: color 0.3s;
 }
 
 header nav ul li:hover {
@@ -49,6 +56,12 @@ header nav ul li:hover {
     text-align: center;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     margin-top: 20px;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.search-section:hover {
+    background-color: #f1f1f1;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
 .tab-menu {
@@ -64,7 +77,7 @@ header nav ul li:hover {
     cursor: pointer;
     border-radius: 5px 5px 0 0;
     margin-right: -1px;
-    transition: background-color 0.3s ease, border 0.3s ease;
+    transition: background-color 0.3s, border 0.3s;
 }
 
 .tab.active {
@@ -97,7 +110,7 @@ header nav ul li:hover {
     display: flex;
     justify-content: space-around;
 }
- .class-type {
+.class-type {
     text-align: left;
     display: flex;
     justify-content: space-around;
@@ -125,30 +138,28 @@ header nav ul li:hover {
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-.flight-details input[type="text"], .flight-details input[type="date"] {
-    flex: 1 1 calc(33.333% - 10px);
-}
-
-.flight-details select {
-    background-color: #fff;
-    cursor: pointer;
+.flight-details input:focus, .flight-details select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
 .flight-details button {
-    background-color: #e74c3c;
+    background-color: #007bff;
     color: white;
     border: none;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s, transform 0.3s;
     padding: 10px 20px;
     font-size: 16px;
     border-radius: 4px;
 }
 
 .flight-details button:hover {
-    background-color: #d62c1a;
+    background-color: #0056b3;
+    transform: scale(1.05);
 }
 
 .flight-details input::placeholder {
@@ -161,17 +172,18 @@ header nav ul li:hover {
     text-align: center;
     padding: 40px 20px;
     margin-top: 20px;
+    width: 80%; 
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 .banner h2 {
     margin: 0;
     font-size: 36px;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-}
-
-.banner p {
-    margin: 10px 0 0;
-    font-size: 18px;
     text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
 }
 
@@ -199,12 +211,13 @@ footer button {
     border: none;
     padding: 10px 20px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s, transform 0.3s;
     border-radius: 4px;
 }
 
 footer button:hover {
     background-color: #0056b3;
+    transform: scale(1.05);
 }
 
 .icon {
@@ -220,41 +233,11 @@ input[type="checkbox"], input[type="radio"] {
     margin-right: 5px;
 }
 
-/* Styles for the search button */
-.flight-details button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.flight-details button:hover {
-    background-color: #0056b3;
-    transform: scale(1.05);
-}
-
 /* Styles for the economy dropdown */
 .flight-details select {
     background-color: #fff;
     cursor: pointer;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
-
-.flight-details select:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-}
-
 
 .explore {
     padding: 20px;
@@ -272,6 +255,7 @@ input[type="checkbox"], input[type="radio"] {
     justify-content: space-around;
     flex-wrap: wrap;
     gap: 20px;
+    animation: fadeIn 1s ease-in-out;
 }
 
 .destination-card {
@@ -282,6 +266,12 @@ input[type="checkbox"], input[type="radio"] {
     padding: 10px;
     width: 200px;
     text-align: left;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.destination-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
 .destination-card img {
@@ -309,6 +299,7 @@ input[type="checkbox"], input[type="radio"] {
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     z-index: 1000;
+    animation: fadeIn 0.5s ease-in-out;
 }
 
 .ui-menu-item {
@@ -316,7 +307,7 @@ input[type="checkbox"], input[type="radio"] {
     display: flex;
     align-items: center;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s;
 }
 
 .ui-menu-item:hover {
@@ -376,7 +367,6 @@ input[type="checkbox"], input[type="radio"] {
     color: #007bff;
 }
 
-
 .results-container {
     display: flex;
     justify-content: center;
@@ -412,7 +402,6 @@ input[type="checkbox"], input[type="radio"] {
 .flight-info strong, .flight-details strong {
     color: #007bff;
 }
-
 
 body {
     font-family: Arial, sans-serif;
@@ -527,13 +516,13 @@ body {
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.3s;
 }
 
 .flight-price button:hover {
     background-color: #0056b3;
+    transform: scale(1.05);
 }
-
 
 .dates-row {
     display: flex;
@@ -555,7 +544,6 @@ body {
     background-color: #007bff;
     color: #fff;
 }
-
 
 header nav ul {
     list-style-type: none;
@@ -582,9 +570,6 @@ header nav ul li a {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
 }
-
-
-
 
 .tab-content {
     display: none;
@@ -654,6 +639,12 @@ header nav ul li a {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.destination-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .destination-card img {
@@ -717,6 +708,7 @@ footer button {
     border-radius: 5px;
     overflow: hidden;
     z-index: 1;
+    transition: display 0.3s ease-in-out;
 }
 
 .dropdown:hover .dropdown-content {
@@ -728,8 +720,95 @@ footer button {
     padding: 10px 20px;
     text-decoration: none;
     display: block;
+    transition: background-color 0.3s;
 }
 
 .dropdown-content a:hover {
     background-color: #f1f1f1;
+}
+
+
+.srt-banner {
+    background-color: #007bff; /* Background color for the banner */
+    padding: 20px; /* Padding around the content */
+    display: flex; /* Flexbox for layout */
+    justify-content: space-between; /* Space between the elements */
+    align-items: center; /* Center vertically */
+    color: white; /* White text color */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Subtle shadow for depth */
+    width: 80%; /* Set the width to 80% */
+    margin: 0 auto; /* Center the banner */
+}
+
+.srt-banner__heading {
+    font-size: 20px; /* Heading size */
+    font-weight: bold; /* Bold text */
+    margin-right: 20px; /* Space between heading and text */
+}
+
+.srt-banner__text {
+    font-size: 16px; /* Text size */
+    margin-top: 10px; /* Space above the text */
+}
+
+.srt-banner__text .phone {
+    font-weight: bold; /* Bold for emphasis */
+    margin-left: 5px; /* Space between text and phone number */
+}
+
+.srt-banner__text .phone a {
+    color: white; /* White link color */
+    text-decoration: underline; /* Underline links */
+    transition: color 0.3s; /* Smooth transition for color change */
+}
+
+.srt-banner__text .phone a:hover {
+    color: #ffdd57; /* Highlight color on hover */
+}
+
+.airline-list {
+    display: flex; /* Flexbox for the list */
+    justify-content: space-between; /* Space between the images */
+    align-items: center; /* Center vertically */
+    gap: 10px; /* Gap between the columns */
+}
+
+.airline-list span {
+    display: flex; /* Flexbox for image and text */
+    flex-direction: column; /* Vertical layout */
+    align-items: center; /* Center elements */
+    text-align: center; /* Center text */
+    color: white; /* White text */
+}
+
+.airline-list img {
+    max-width: 100px; /* Maximum width for images */
+    height: auto; /* Keep aspect ratio */
+    margin-bottom: 5px; /* Space below the images */
+    transition: transform 0.3s; /* Smooth transform transition */
+}
+
+.airline-list img:hover {
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+@media (max-width: 768px) {
+    .srt-banner {
+        flex-direction: column; /* Stack elements vertically on smaller screens */
+        align-items: flex-start; /* Align items to the start */
+    }
+
+    .srt-banner__heading,
+    .srt-banner__text {
+        margin-right: 0; /* Remove right margin */
+    }
+
+    .airline-list {
+        justify-content: flex-start; /* Align items to the start */
+    }
+
+    .airline-list span {
+        flex: 1; /* Allow images to take more space */
+    }
 }
