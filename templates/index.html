@@ -225,7 +225,7 @@
                         <input type="text" id="dropoff-date" name="dropOffDate" placeholder="Select drop-off date">
                         <input type="time" id="pickup-time" name="pickUpTime" value="10:30" placeholder="Pick-up time">
                         <input type="time" id="dropoff-time" name="dropOffTime" value="10:30" placeholder="Drop-off time">
-                        <button type="button" onclick="validateDates()">Search</button>
+                        <button type="submit"><i class="fas fa-search icon"></i>Search</button>
                     </div>
                     
                     <script>
@@ -248,8 +248,6 @@
                             
                             if (dropoffDate <= pickupDate) {
                                 alert("Drop-off date must be after the pick-up date.");
-                            } else {
-                                alert("Dates are valid!");
                             }
                         }
                     </script>

@@ -430,6 +430,18 @@ def search_cars():
     'Mid-size': 3,
     'Mystery': 2
 }
+    car_companies_taxes = {
+    'Thrifty': 0.10,
+    'Sixt': 0.12,
+    'National': 0.15,
+    'Hertz': 0.13,
+    'Fox': 0.11,
+    'Enterprise': 0.14,
+    'Dollar': 0.09,
+    'Budget': 0.10,
+    'Avis': 0.13,
+    'Alamo': 0.12
+}
 
     car_results = []
     i=-1
@@ -437,6 +449,8 @@ def search_cars():
         i+=1
         for car_company in car_companies:
             price_per_day = car_type_prices.get(car_type, 3)  
+            tax_rate = car_companies_taxes.get(car_company, 0.10)
+            price_per_day = round(price_per_day * (1 + tax_rate), 2)
             cancellation_deadline = pick_up_date_obj
             company_logo = f"/static/images/{car_company.lower()}.png"
             image = f"/static/images/{car_type.lower()}.png"
