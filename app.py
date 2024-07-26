@@ -402,7 +402,7 @@ def search_cars():
 
     car_types_name = [
         'Ford Focus', 'Chevy Colorado', 'Chrysler 300', 'Ford Mustang', 'Telsa Model 3', 'Chevrolet Equinox', 
-        'Chevrolet Malibu', 'BMW X3', 'Chevrolet Spark', 'Chevrolet Malibu', 'GMC Yukon', 'Mitsuibuishi Mirage', 
+        'Nissan Van', 'BMW X3', 'Chevrolet Spark', 'Chevrolet Malibu', 'GMC Yukon', 'Mitsuibuishi Mirage', 
         'Nissan Maxima', 'Volkswagen Jetta', 'Mazda 3', 'Mystery'
     ]
     
