@@ -437,7 +437,7 @@ def search_cars():
         i+=1
         for car_company in car_companies:
             price_per_day = car_type_prices.get(car_type, 3)  
-            cancellation_deadline = pick_up_date_obj - timedelta(days=3)
+            cancellation_deadline = pick_up_date_obj
             company_logo = f"/static/images/{car_company.lower()}.png"
             image = f"/static/images/{car_type.lower()}.png"
 
