@@ -117,6 +117,10 @@
             document.querySelector(`button[onclick="showTab('${tabId}')"]`).classList.add('active');
         }
     </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    
+    
 </head>
 <body>
     <header>
@@ -156,8 +160,8 @@
                     <div class="flight-details">
                         <input type="text" id="from-airport" name="origin" placeholder="Leaving from">
                         <input type="text" id="to-airport" name="destination" placeholder="Going to">
-                        <input type="date" id="depart-date" name="date">
-                        <input type="date" id="return-date" name="returnDate" style="display: none;">
+                        <input type="text" id="depart-date" name="date" placeholder="Select departure date">
+                        <input type="text" id="return-date" name="returnDate" placeholder="Select return date" style="display: none;">
                         <input type="text" name="travelers" value="1" placeholder="1 traveler">
                         <div class="class-type">
                             <select name="cabinClass">
@@ -166,8 +170,33 @@
                                 <option value="first">First Class</option>
                             </select>
                         </div>
-                        <button type="submit"><i class="fas fa-search icon"></i>Search</button>
+                        <button type="submit" onclick="validateDates()"><i class="fas fa-search icon"></i>Search</button>
                     </div>
+                    <script>
+                        var departDatepicker = flatpickr("#depart-date", {
+                            dateFormat: "Y-m-d",
+                            minDate: "today", // Prevent selecting past dates
+                            onChange: function(selectedDates) {
+                                returnDatepicker.set('minDate', selectedDates[0]); // Set minDate for return date
+                                // document.getElementById('return-date').style.display = 'inline'; // Show return date field if hidden
+                            }
+                        });
+                    
+                        var returnDatepicker = flatpickr("#return-date", {
+                            dateFormat: "Y-m-d",
+                            minDate: "today" // Initially, set to today or a later date
+                        });
+                    
+                        function validateDates() {
+                            var departDate = new Date(document.getElementById('depart-date').value);
+                            var returnDate = new Date(document.getElementById('return-date').value);
+                            
+                            if (returnDate <= departDate) {
+                                alert("Return date must be after the departure date.");
+                            }
+                        }
+                    </script>
+                    
                 </form>
                 <div class="add-ons">
                     <label><input type="checkbox" name="addStay"> Add a place to stay</label>
@@ -192,12 +221,40 @@
                     <div class="flight-details">
                         <input type="text" id="pickup-location" name="pickUpLocation" placeholder="Pick-up location">
                         <input type="text" id="dropoff-location" name="dropOffLocation" placeholder="Same as pick-up">
-                        <input type="date" id="pickup-date" name="pickUpDate">
-                        <input type="date" id="dropoff-date" name="dropOffDate">
-                        <input type="time" id="pickup-time" name="pickUpTime" value="10:30">
-                        <input type="time" id="dropoff-time" name="dropOffTime" value="10:30">
-                        <button type="submit"><i class="fas fa-search icon"></i>Search</button>
+                        <input type="text" id="pickup-date" name="pickUpDate" placeholder="Select pick-up date">
+                        <input type="text" id="dropoff-date" name="dropOffDate" placeholder="Select drop-off date">
+                        <input type="time" id="pickup-time" name="pickUpTime" value="10:30" placeholder="Pick-up time">
+                        <input type="time" id="dropoff-time" name="dropOffTime" value="10:30" placeholder="Drop-off time">
+                        <button type="button" onclick="validateDates()">Search</button>
                     </div>
+                    
+                    <script>
+                        var pickupDatepicker = flatpickr("#pickup-date", {
+                            dateFormat: "Y-m-d",
+                            minDate: "today", // Prevent selecting past dates
+                            onChange: function(selectedDates) {
+                                dropoffDatepicker.set('minDate', selectedDates[0]); // Set minDate for dropoff date
+                            }
+                        });
+                    
+                        var dropoffDatepicker = flatpickr("#dropoff-date", {
+                            dateFormat: "Y-m-d",
+                            minDate: "today" // Initially, set to today or a later date
+                        });
+                    
+                        function validateDates() {
+                            var pickupDate = new Date(document.getElementById('pickup-date').value);
+                            var dropoffDate = new Date(document.getElementById('dropoff-date').value);
+                            
+                            if (dropoffDate <= pickupDate) {
+                                alert("Drop-off date must be after the pick-up date.");
+                            } else {
+                                alert("Dates are valid!");
+                            }
+                        }
+                    </script>
+                    
+                    
                     <div class="add-ons">
                         <button class="additional-option"><i class="fas fa-percentage icon"></i>Show AARP rates</button>
                         <div class="dropdown">
@@ -211,6 +268,8 @@
                     </div>
                 </form>
             </div>
+
+            
 
             <div id="packages" class="tab-content">
                 <form id="packages-form">
