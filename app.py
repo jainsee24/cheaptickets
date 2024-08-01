@@ -147,7 +147,7 @@ def fetch_flights():
     print(flight_data)
     new_itinerary = {
     'id': 'SAN-LAX-16082024',
-    'price': {'raw': 79.34, 'formatted': '$79.34', 'pricingOptionId': 'NewEntry456'},
+    'price': {'raw': 87, 'formatted': '$87', 'pricingOptionId': 'NewEntry456'},
     'legs': [{
         'id': 'SAN-LAX-16082024',
         'origin': {'id': 'SAN', 'entityId': '12345678', 'name': 'San Diego International Airport', 'displayCode': 'SAN', 'city': 'San Diego', 'country': 'United States', 'isHighlighted': False},
@@ -159,7 +159,7 @@ def fetch_flights():
         'arrival': '2024-08-16T20:24:00',
         'timeDeltaInDays': 0,
         'carriers': {
-            'marketing': [{'id': -56789, 'logoUrl': 'https://logos.skyscnr.com/images/airlines/favicon/AS.png', 'name': 'Alaska Airlines'}],
+            'marketing': [{'id': -56789, 'logoUrl': 'https://banner2.cleanpng.com/20180704/yik/kisspng-alaska-airlines-bna-seattletacoma-internation-5b3d8aefc5ec28.5427569615307599198107.jpg', 'name': 'Alaska Airlines'}],
             'operating': [{'id': -56789, 'name': 'Alaska Airlines'}],
             'operationType': 'fully_operated'
         },
