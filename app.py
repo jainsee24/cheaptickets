@@ -422,7 +422,7 @@ def search_cars():
     'Van': 3,
     'Hybrid': 4,
     'Economy': 2,
-    'Full-size': 4,
+    'Full-size': 7,
     'Midsize': 3,
     'Mini': 2,
     'Premium': 5,
@@ -448,7 +448,7 @@ def search_cars():
     for car_type in car_types:
         i+=1
         for car_company in car_companies:
-            price_per_day = car_type_prices.get(car_type, 3)*5  
+            price_per_day = car_type_prices.get(car_type, 3)
             tax_rate = car_companies_taxes.get(car_company, 0.10)
             price_per_day = round(price_per_day * (1 + tax_rate), 2)
             cancellation_deadline = pick_up_date_obj
