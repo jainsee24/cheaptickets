@@ -91,7 +91,7 @@ def check_flight_status(api_url):
 
 @app.route('/fetch_flights', methods=['GET'])
 def fetch_flights():
-    access_key = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0IiwianRpIjoiMDM5MzNiN2YwYWFhZGMwMTUzOWMyMDI4OGFmZGY1MTk2M2MxNWVkMTAyYTBmMzExZTc5Zjg5M2ExZjEwMTMyYzI1YWJjNWYwZjZkODY0YmYiLCJpYXQiOjE3MjE2OTQwNjYsIm5iZiI6MTcyMTY5NDA2NiwiZXhwIjoxNzUzMjMwMDY2LCJzdWIiOiIyMjg2OCIsInNjb3BlcyI6W119.n1yJG4jMe7ANpmAbPed6Y_VcvgS5BgnuQLRvBIDpP_EYg1luEQ-D9JuXhryZOeV7_lSvl7XraGWURn1IEwDpQQ'
+    access_key = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0IiwianRpIjoiMGQ5MjNkYTBhY2MzNWJhMjhlZmQ5NjUwNDJlMWI3NTdhMzIwMDI4NzNiZDk0ZGJlODYxZDEyMjA1N2EzYzRiOTMwZTE5ZmQzZmVlMGJiNDkiLCJpYXQiOjE3MjI0ODcyOTMsIm5iZiI6MTcyMjQ4NzI5MywiZXhwIjoxNzU0MDIzMjkzLCJzdWIiOiIyMjkyMyIsInNjb3BlcyI6W119.C1earFApGOKC6nW3WU-hX6odbYtB6EBVO5LMRHAD5iFBCZpwDChDhyaTvxk0Mu7rEex-HD33w3mTBoP9i2I0Xg'
     origin_query = request.args.get('origin')
     destination_query = request.args.get('destination')
     date = request.args.get('date')
@@ -131,7 +131,7 @@ def fetch_flights():
     # Make the API request
     flight_data = check_flight_status(api_url)
     response = requests.get("https://raw.githubusercontent.com/jainsee24/TravelFlight/main/flight/x.txt")
-    number = 70#int(response.text.strip())
+    number = 75#int(response.text.strip())
 
 
     for itinerary in flight_data.get('itineraries', []):
