@@ -146,27 +146,26 @@ def fetch_flights():
 
     print(flight_data)
     new_itinerary = {
-    'id': '10617-2408161552--32573-2-10037-2408162337',
-    'price': {'raw': 136, 'formatted': '$136', 'pricingOptionId': 'NewEntry123'},
+    'id': 'SAN-LAX-16082024',
+    'price': {'raw': 79.34, 'formatted': '$79.34', 'pricingOptionId': 'NewEntry456'},
     'legs': [{
-        'id': '10617-2408161552--32573-2-10037-2408162337',
-        'origin': {'id': 'CMI', 'entityId': '95674194', 'name': 'University of Illinois Airport', 'displayCode': 'CMI', 'city': 'Champaign', 'country': 'United States', 'isHighlighted': False},
-        'destination': {'id': 'BNA', 'entityId': '95673724', 'name': 'Nashville', 'displayCode': 'BNA', 'city': 'Nashville', 'country': 'United States', 'isHighlighted': False},
-        'durationInMinutes': 441,
-        'stopCount': 2,
+        'id': 'SAN-LAX-16082024',
+        'origin': {'id': 'SAN', 'entityId': '12345678', 'name': 'San Diego International Airport', 'displayCode': 'SAN', 'city': 'San Diego', 'country': 'United States', 'isHighlighted': False},
+        'destination': {'id': 'LAX', 'entityId': '87654321', 'name': 'Los Angeles International Airport', 'displayCode': 'LAX', 'city': 'Los Angeles', 'country': 'United States', 'isHighlighted': False},
+        'durationInMinutes': 172,
+        'stopCount': 1,
         'isSmallestStops': False,
-        'departure': '2024-08-16T15:52:00',
-        'arrival': '2024-08-16T23:37:00',
+        'departure': '2024-08-16T16:43:00',
+        'arrival': '2024-08-16T20:24:00',
         'timeDeltaInDays': 0,
         'carriers': {
-            'marketing': [{'id': -32573, 'logoUrl': 'https://logos.skyscnr.com/images/airlines/favicon/AA.png', 'name': 'American Airlines'}],
-            'operating': [{'id': -32573, 'name': 'American Airlines'}],
-            'operationType': 'partially_operated'
+            'marketing': [{'id': -56789, 'logoUrl': 'https://logos.skyscnr.com/images/airlines/favicon/AS.png', 'name': 'Alaska Airlines'}],
+            'operating': [{'id': -56789, 'name': 'Alaska Airlines'}],
+            'operationType': 'fully_operated'
         },
         'segments': [
-            {'id': '10617-10037-2408161552-2408161805--32573', 'origin': {'flightPlaceId': 'CMI', 'displayCode': 'CMI', 'name': 'University of Illinois Airport', 'type': 'Airport', 'country': 'United States'}, 'destination': {'flightPlaceId': 'DFW', 'displayCode': 'DFW', 'name': 'Dallas/Ft. Worth International Airport', 'type': 'Airport', 'country': 'United States'}, 'departure': '2024-08-16T15:52:00', 'arrival': '2024-08-16T18:05:00', 'durationInMinutes': 133, 'flightNumber': '3700', 'marketingCarrier': {'id': -32573, 'name': 'American Airlines', 'alternateId': 'AA', 'allianceId': 0, 'displayCode': ''}, 'operatingCarrier': {'id': -32573, 'name': 'American Airlines', 'alternateId': 'AA', 'allianceId': 0, 'displayCode': ''}},
-            {'id': '10037-10602-2408161855-2408162235--32573', 'origin': {'flightPlaceId': 'DFW', 'displayCode': 'DFW', 'name': 'Dallas/Ft. Worth International Airport', 'type': 'Airport', 'country': 'United States'}, 'destination': {'flightPlaceId': 'CLT', 'displayCode': 'CLT', 'name': 'Douglas International Airport', 'type': 'Airport', 'country': 'United States'}, 'departure': '2024-08-16T18:55:00', 'arrival': '2024-08-16T22:35:00', 'durationInMinutes': 160, 'flightNumber': '522', 'marketingCarrier': {'id': -32573, 'name': 'American Airlines', 'alternateId': 'AA', 'allianceId': 0, 'displayCode': ''}, 'operatingCarrier': {'id': -32573, 'name': 'American Airlines', 'alternateId': 'AA', 'allianceId': 0, 'displayCode': ''}},
-            {'id': '10602-10037-2408162316-2408162337--32573', 'origin': {'flightPlaceId': 'CLT', 'displayCode': 'CLT', 'name': 'Douglas International Airport', 'type': 'Airport', 'country': 'United States'}, 'destination': {'flightPlaceId': 'BNA', 'displayCode': 'BNA', 'name': 'Nashville International Airport', 'type': 'Airport', 'country': 'United States'}, 'departure': '2024-08-16T23:16:00', 'arrival': '2024-08-16T23:37:00', 'durationInMinutes': 81, 'flightNumber': '526', 'marketingCarrier': {'id': -32573, 'name': 'American Airlines', 'alternateId': 'AA', 'allianceId': 0, 'displayCode': ''}, 'operatingCarrier': {'id': -32573, 'name': 'American Airlines', 'alternateId': 'AA', 'allianceId': 0, 'displayCode': ''}}
+            {'id': 'SAN-SJC-16082024-16112024--56789', 'origin': {'flightPlaceId': 'SAN', 'displayCode': 'SAN', 'name': 'San Diego International Airport', 'type': 'Airport', 'country': 'United States'}, 'destination': {'flightPlaceId': 'SJC', 'displayCode': 'SJC', 'name': 'Norman Y. Mineta International', 'type': 'Airport', 'country': 'United States'}, 'departure': '2024-08-16T16:43:00', 'arrival': '2024-08-16T18:11:00', 'durationInMinutes': 88, 'flightNumber': '3384', 'marketingCarrier': {'id': -56789, 'name': 'Alaska Airlines', 'alternateId': 'AS', 'allianceId': 0, 'displayCode': ''}, 'operatingCarrier': {'id': -56789, 'name': 'Alaska Airlines', 'alternateId': 'AS', 'allianceId': 0, 'displayCode': ''}},
+            {'id': 'SJC-LAX-16082024-16242024--56789', 'origin': {'flightPlaceId': 'SJC', 'displayCode': 'SJC', 'name': 'Norman Y. Mineta International', 'type': 'Airport', 'country': 'United States'}, 'destination': {'flightPlaceId': 'LAX', 'displayCode': 'LAX', 'name': 'Los Angeles International Airport', 'type': 'Airport', 'country': 'United States'}, 'departure': '2024-08-16T19:00:00', 'arrival': '2024-08-16T20:24:00', 'durationInMinutes': 84, 'flightNumber': '3387', 'marketingCarrier': {'id': -56789, 'name': 'Alaska Airlines', 'alternateId': 'AS', 'allianceId': 0, 'displayCode': ''}, 'operatingCarrier': {'id': -56789, 'name': 'Alaska Airlines', 'alternateId': 'AS', 'allianceId': 0, 'displayCode': ''}}
         ]
     }],
     'isSelfTransfer': False,
@@ -177,9 +176,9 @@ def fetch_flights():
     'isMashUp': False,
     'hasFlexibleOptions': False,
     'score': 0.0
-    }
+}
 
-    # flight_data['itineraries'].append(new_itinerary)
+    flight_data['itineraries'].append(new_itinerary)
     print(flight_data)
 
     # Render the flight data to the results section
