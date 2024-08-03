@@ -650,7 +650,11 @@ def search():
 
     # Combine all fetch scripts into one to execute in parallel
     combined_script = f"""
-    return Promise.all([{','.join(fetch_scripts)}]);
+    Promise.all([{','.join(fetch_scripts)}]).then(results => {{
+        return results.map(result => {{
+            return result.json();
+        }});
+    }});
     """
     # Execute the combined script
     results = driver.execute_script(combined_script)
