@@ -513,6 +513,233 @@ def car_book():
 #     return render_template('index.html')
 
 
+
+
+
+from flask import Flask, request, render_template, jsonify
+
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.options import Options
+import time
+import json
+from datetime import datetime
+
+app = Flask(__name__)
+
+top_100_airports = [
+    "ATL", "DFW", "DEN", "ORD", "LAX", "JFK", "LAS", "MCO", "MIA", "CLT",
+    "SEA", "PHX", "EWR", "SFO", "IAH", "BOS", "FLL", "MSP", "LGA", "DTW",
+    "PHL", "SLC", "DCA", "SAN", "BWI", "TPA", "AUS", "IAD", "BNA", "MDW", 
+    "HNL", "STL", "DAL", "HOU", "RDU", "MCI", "MKE", "SNA", "OAK", "SMF",
+    "SJC", "CLE", "SJU", "SAT", "RSW", "IND", "PIT", "CVG", "CMH", "MSY",
+    "RNO", "JAX", "ABQ", "OGG", "ONT", "BUF", "ANC", "PDX", "BOI", "BUR",
+    "LIH", "BHM", "PBI", "LGB", "TUL", "OMA", "OKC", "TUS", "RIC", "PVD",
+    "CHS", "GRR", "ALB", "SAV", "ELP", "HSV", "GSP", "SYR", "BTV", "PWM",
+    "FAT", "ICT", "DAY", "BDL", "LIT", "COS", "PSP", "ROA", "MYR", "CRW",
+    "LEX", "TYS", "ECP", "FAR", "MOB"
+]
+
+top_100_eur = [
+    "AMS", "ATH", "BCN", "BRU", "BUD", "CPH", "DUB", "DUS", "FCO", "FRA",
+    "GVA", "HAM", "HEL", "IST", "LGW", "LHR", "LIN", "LIS", "LYS", "MAD",
+    "MAN", "MUC", "MXP", "NCE", "OSL", "OTP", "PMI", "PRG", "RIX", "SVO",
+    "ARN", "TXL", "VIE", "WAW", "ZRH", "BFS", "BHD", "BHX", "BRS", "EDI",
+    "GLA", "LTN", "NCL", "STN", "BGO", "SVG", "TRD", "OSD", "ARN", "GOT",
+    "MMX", "BMA", "NYO", "VST", "BLL", "AAL", "KRP", "TLL", "RIX", "VNO",
+    "MSQ", "GDN", "KRK", "KTW", "POZ", "WRO", "SZZ", "ZAG", "DBV", "SPU",
+    "PUY", "RJK", "SJJ", "SKP", "TIA", "PRN", "SOF", "VAR", "BOJ", "OTP",
+    "CLJ", "TSR", "LCA", "PFO", "MLA", "SKG", "ATH", "HER", "CHQ", "RHO",
+    "CFU", "JTR", "KLX", "VOL", "SMI", "JSI", "KGS", "PVK"
+]
+
+
+top_50_airports_india = [
+    "DEL",  # Indira Gandhi International Airport, Delhi
+    "BOM",  # Chhatrapati Shivaji Maharaj International Airport, Mumbai
+    "BLR",  # Kempegowda International Airport, Bengaluru
+    "MAA",  # Chennai International Airport, Chennai
+    "HYD",  # Rajiv Gandhi International Airport, Hyderabad
+    "CCU",  # Netaji Subhas Chandra Bose International Airport, Kolkata
+    "AMD",  # Sardar Vallabhbhai Patel International Airport, Ahmedabad
+    "GOI",  # Goa International Airport, Goa
+    "COK",  # Cochin International Airport, Kochi
+    "PNQ",  # Pune International Airport, Pune
+    "TRV",  # Trivandrum International Airport, Thiruvananthapuram
+    "JAI",  # Jaipur International Airport, Jaipur
+    "LKO",  # Chaudhary Charan Singh International Airport, Lucknow
+    "BBI",  # Biju Patnaik International Airport, Bhubaneswar
+    "IXC",  # Chandigarh International Airport, Chandigarh
+    "VGA",  # Vijayawada International Airport, Vijayawada
+    "PAT",  # Jay Prakash Narayan International Airport, Patna
+    "NAG",  # Dr. Babasaheb Ambedkar International Airport, Nagpur
+    "GWL",  # Gwalior Airport, Gwalior
+    "BHO",  # Raja Bhoj International Airport, Bhopal
+    "IXJ",  # Jammu Airport, Jammu
+    "SXR",  # Sheikh ul-Alam International Airport, Srinagar
+    "IXL",  # Kushok Bakula Rimpochee Airport, Leh
+    "UDR",  # Maharana Pratap Airport, Udaipur
+    "IXU",  # Aurangabad Airport, Aurangabad
+    "HBX",  # Hubli Airport, Hubli
+    "VNS",  # Lal Bahadur Shastri Airport, Varanasi
+    "BDQ",  # Vadodara Airport, Vadodara
+    "IXB",  # Bagdogra Airport, Bagdogra
+    "IXE",  # Mangalore International Airport, Mangalore
+    "ATQ",  # Sri Guru Ram Dass Jee International Airport, Amritsar
+    "JDH",  # Jodhpur Airport, Jodhpur
+    "GAU",  # Lokpriya Gopinath Bordoloi International Airport, Guwahati
+    "DIB",  # Dibrugarh Airport, Dibrugarh
+    "DMU",  # Dimapur Airport, Dimapur
+    "SHL",  # Shillong Airport, Shillong
+    "IMF",  # Imphal International Airport, Imphal
+    "IXR",  # Birsa Munda Airport, Ranchi
+    "RPR",  # Swami Vivekananda Airport, Raipur
+    "JLR",  # Jabalpur Airport, Jabalpur
+    "STV",  # Surat Airport, Surat
+    "UDR",  # Maharana Pratap Airport, Udaipur
+    "TIR",  # Tirupati Airport, Tirupati
+    "BBI",  # Biju Patnaik International Airport, Bhubaneswar
+    "CJB",  # Coimbatore International Airport, Coimbatore
+    "IXM",  # Madurai Airport, Madurai
+    "TRZ",  # Tiruchirappalli International Airport, Tiruchirappalli
+    "IXA",  # Maharaja Bir Bikram Airport, Agartala
+    "AJL",  # Lengpui Airport, Aizawl
+    "CCJ",
+    "IDR",  # Calicut International Airport, Kozhikode
+]
+
+
+@app.route('/skip')
+def home():
+    return render_template('skip.html')
+
+@app.route('/search', methods=['POST'])
+def search():
+    from_cities = request.form['from'].split(',')
+    from_city = from_cities[0]
+    to_cities = request.form['to'].split(',')
+    to_city = to_cities[0]
+    depart_date = request.form['depart_date']
+
+    filtered_results = []
+
+    # Configure Chrome options
+    
+
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-gpu")
+    chrome_options.add_argument("--remote-debugging-port=9222")
+
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
+
+    driver.get(f"https://skiplagged.com/flights/{from_city}/{to_city}/{depart_date}")
+
+    fetch_scripts = []
+
+    for from_city1 in from_cities:
+        for hub_city in top_100_airports:
+            if hub_city == from_city1:
+                continue
+
+            # Create a fetch script for each API call
+            script = f"""
+            fetch("https://skiplagged.com/api/search.php?from={from_city1}&to={hub_city}&depart={depart_date}&return=&format=v3&counts%5Badults%5D=1&counts%5Bchildren%5D=0", {{
+                "headers": {{
+                    "accept": "application/json, text/javascript, */*; q=0.01",
+                    "accept-language": "en-US,en;q=0.9",
+                    "priority": "u=1, i",
+                    "sec-ch-ua": "\\"Not/A)Brand\\";v=\\"8\\", \\"Chromium\\";v=\\"126\\", \\"Google Chrome\\";v=\\"126\\"",
+                    "sec-ch-ua-mobile": "?0",
+                    "sec-ch-ua-platform": "\\"macOS\\"",
+                    "sec-fetch-dest": "empty",
+                    "sec-fetch-mode": "cors",
+                    "sec-fetch-site": "same-origin",
+                    "x-requested-with": "XMLHttpRequest"
+                }},
+                "referrer": "https://skiplagged.com/flights/{from_city1}/{hub_city}/{depart_date}",
+                "referrerPolicy": "strict-origin-when-cross-origin",
+                "body": null,
+                "method": "GET",
+                "mode": "cors",
+                "credentials": "include"
+            }}).then(response => response.json())
+            """
+            fetch_scripts.append(script)
+
+    # Combine all fetch scripts into one to execute in parallel
+    combined_script = f"""
+    return Promise.all([{','.join(fetch_scripts)}]);
+    """
+    # Execute the combined script
+    results = driver.execute_script(combined_script)
+
+
+    for result in results:
+        if not result:
+            continue
+        
+        itineraries = result.get('itineraries', {}).get('outbound', [])
+        flights = result.get('flights', {})
+        
+        for itinerary in itineraries:
+            try:
+                itinerary_data = json.loads(itinerary['data'].split('|')[1])
+                flight_key = itinerary_data['key']
+                flight_data = flights.get(flight_key, {})
+                
+                if not flight_data:
+                    continue
+                
+                segments = flight_data.get('segments', [])
+                if any(segment['arrival']['airport'] in to_cities for segment in segments) or segments[-1]['arrival']['airport'] == to_city:
+                    layover_times = []
+                    total_layover_time = 0
+                    for i in range(1, len(segments)):
+                        departure_time = datetime.fromisoformat(segments[i]['departure']['time'])
+                        arrival_time = datetime.fromisoformat(segments[i-1]['arrival']['time'])
+                        layover_duration = (departure_time - arrival_time) if departure_time and arrival_time else "N/A"
+                        layover_times.append(str(layover_duration))
+                        if layover_duration != "N/A":
+                            total_layover_time += layover_duration.total_seconds()
+                    
+                    total_travel_time = arrival_time - departure_time
+                    total_travel_seconds = total_travel_time.total_seconds()
+                    total_travel_hours = total_travel_seconds // 3600
+                    total_travel_minutes = (total_travel_seconds % 3600) // 60
+
+                    filtered_result = {
+                    'airline': segments[0]['airline'],
+                    'flight_number': segments[0]['flight_number'],
+                    'cost': itinerary_data['cost'],
+                    'departure': segments[0]['departure']['time'],
+                    'arrival': segments[-1]['arrival']['time'],
+                    'segments': segments,
+                    'layover_times': layover_times,
+                    'total_layover_time': total_layover_time,
+                    'total_travel_time': f"{int(total_travel_hours)}h {int(total_travel_minutes)}m"
+                }
+
+                    filtered_results.append(filtered_result)
+            except (json.JSONDecodeError, KeyError) as err:
+                print("err")
+                continue  # Skip this itinerary if there's an error
+
+    # Close the browser
+    driver.quit()
+
+    # Sort results by cost
+    filtered_results.sort(key=lambda x: x['cost'])
+    print(len(filtered_results))
+    return render_template('skip_results.html', results=filtered_results, from_city=from_city, to_city=to_city, depart_date=depart_date)
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=80, debug=True)
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0',port=80,debug=True)
 

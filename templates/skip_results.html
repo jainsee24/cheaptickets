@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='skip.css') }}">
+    <script>
+        function sortTableBy(columnIndex, isNumeric) {
+            const table = document.getElementById('resultsTable');
+            const rows = Array.from(table.rows).slice(1);
+
+            rows.sort((rowA, rowB) => {
+                const cellA = rowA.cells[columnIndex].innerText;
+                const cellB = rowB.cells[columnIndex].innerText;
+
+                if (isNumeric) {
+                    return parseFloat(cellA) - parseFloat(cellB);
+                } else {
+                    return cellA.localeCompare(cellB);
+                }
+            });
+
+            displayTopRows(rows);
+        }
+
+        function sortTableByTime(columnIndex) {
+            const table = document.getElementById('resultsTable');
+            const rows = Array.from(table.rows).slice(1);
+
+            rows.sort((rowA, rowB) => {
+                const cellA = new Date(`1970-01-01T${rowA.cells[columnIndex].innerText}Z`);
+                const cellB = new Date(`1970-01-01T${rowB.cells[columnIndex].innerText}Z`);
+
+                return cellA - cellB;
+            });
+
+            displayTopRows(rows);
+        }
+
+        function sortTableByTotalTime(columnIndex) {
+            const table = document.getElementById('resultsTable');
+            const rows = Array.from(table.rows).slice(1);
+
+            rows.sort((rowA, rowB) => {
+                const cellA = parseTotalDuration(rowA.cells[columnIndex].innerText);
+                const cellB = parseTotalDuration(rowB.cells[columnIndex].innerText);
+
+                return cellA - cellB;
+            });
+
+            displayTopRows(rows);
+        }
+
+        function sortTableByLayoverTime(columnIndex) {
+            const table = document.getElementById('resultsTable');
+            const rows = Array.from(table.rows).slice(1);
+
+            rows.sort((rowA, rowB) => {
+                const cellA = parseLowestLayover(rowA.cells[columnIndex].innerText);
+                const cellB = parseLowestLayover(rowB.cells[columnIndex].innerText);
+
+                return cellA - cellB;
+            });
+
+            displayTopRows(rows);
+        }
+
+        function parseDuration(duration) {
+            const parts = duration.split(':');
+            return parseInt(parts[0]) * 3600 + parseInt(parts[1]) * 60 + parseInt(parts[2]);
+        }
+
+        function parseTotalDuration(duration) {
+            const parts = duration.split(' ');
+            const hours = parseInt(parts[0].replace('h', ''));
+            const minutes = parseInt(parts[1].replace('m', ''));
+            return hours * 3600 + minutes * 60;
+        }
+
+        function parseLowestLayover(layoverTimes) {
+            if (layoverTimes.trim() === "") return 0;
+
+            const layoverDurations = layoverTimes.split(',').map(parseDuration);
+            return Math.min(...layoverDurations);
+        }
+
+        function formatTotalTime(duration) {
+            const totalSeconds = parseTotalDuration(duration);
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            return `${hours}h ${minutes}m`;
+        }
+
+        function displayTopRows(rows) {
+            const table = document.getElementById('resultsTable');
+            table.innerHTML = ""; // Clear existing rows
+
+            rows.slice(0, 200).forEach(row => table.appendChild(row));
+        }
+
+        window.onload = function () {
+            const totalTimes = document.querySelectorAll('.total-time');
+            totalTimes.forEach(el => {
+                el.innerText = formatTotalTime(el.innerText);
+            });
+
+            // Initial display limit
+            const rows = Array.from(document.getElementById('resultsTable').rows).slice(1);
+            displayTopRows(rows);
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Flight Results</h1>
+        <p>From: {{ from_city }}</p>
+        <p>To: {{ to_city }}</p>
+        <p>Departure Date: {{ depart_date }}</p>
+
+        <div>
+            <button onclick="sortTableBy(2, true)">Sort by Price</button>
+            <button onclick="sortTableByTime(3)">Sort by Departure Time</button>
+            <button onclick="sortTableByTime(4)">Sort by Arrival Time</button>
+            <button onclick="sortTableByLayoverTime(6)">Sort by Layover Time</button>
+            <button onclick="sortTableByTotalTime(7)">Sort by Total Time</button>
+        </div>
+
+        <table id="resultsTable">
+            <thead>
+                <tr>
+                    <th>Airline</th>
+                    <th>Flight Number</th>
+                    <th>Cost</th>
+                    <th>Departure</th>
+                    <th>Arrival</th>
+                    <th>Layovers</th>
+                    <th>Layover Times</th>
+                    <th>Total Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in results %}
+                <tr>
+                    <td>{{ result['airline'] }}</td>
+                    <td>{{ result['flight_number'] }}</td>
+                    <td>{{ result['cost'] }}</td>
+                    <td>{{ result['departure'].split('T')[1].split('-')[0] }}</td>
+                    <td>{{ result['arrival'].split('T')[1].split('-')[0] }}</td>
+                    <td>
+                        <ul>
+                            {% for segment in result['segments'] %}
+                                <li>{{ segment['departure']['airport'] }} -> {{ segment['arrival']['airport'] }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            {% for layover in result['layover_times'] %}
+                                <li>{{ layover }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td class="total-time">{{ result['total_travel_time'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

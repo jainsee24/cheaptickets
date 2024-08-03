@@ -3,3 +3,4 @@ numpy
 requests
 flask
 selenium
+webdriver-manager
