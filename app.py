@@ -516,7 +516,6 @@ def car_book():
 
 
 
-from flask import Flask, request, render_template, jsonify
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
@@ -524,7 +523,6 @@ import time
 import json
 from datetime import datetime
 
-app = Flask(__name__)
 
 top_100_airports = [
     "ATL", "DFW", "DEN", "ORD", "LAX", "JFK", "LAS", "MCO", "MIA", "CLT",
@@ -610,7 +608,7 @@ top_50_airports_india = [
 
 @app.route('/skip')
 def home():
-    return render_template('skip_index.html')
+    return render_template('skip.html')
 
 @app.route('/search', methods=['POST'])
 def search():
@@ -634,6 +632,7 @@ def search():
 
     # Assuming chromedriver is installed in the default location
     driver = webdriver.Chrome(service=Service('/app/.chromedriver/bin/chromedriver'), options=chrome_options)
+
 
     driver.get(f"https://skiplagged.com/flights/{from_city}/{to_city}/{depart_date}")
 
@@ -735,8 +734,6 @@ def search():
     print(len(filtered_results))
     return render_template('skip_results.html', results=filtered_results, from_city=from_city, to_city=to_city, depart_date=depart_date)
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=80, debug=True)
 
 
 if __name__ == '__main__':
