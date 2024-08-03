@@ -517,10 +517,8 @@ def car_book():
 
 
 from flask import Flask, request, render_template, jsonify
-
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 import time
 import json
@@ -634,7 +632,8 @@ def search():
     chrome_options.add_argument("--disable-gpu")
     chrome_options.add_argument("--remote-debugging-port=9222")
 
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
+    # Assuming chromedriver is installed in the default location
+    driver = webdriver.Chrome(service=Service('/app/.chromedriver/bin/chromedriver'), options=chrome_options)
 
     driver.get(f"https://skiplagged.com/flights/{from_city}/{to_city}/{depart_date}")
 
