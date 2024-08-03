@@ -2,3 +2,4 @@ gunicorn
 numpy
 requests
 flask
+selenium
