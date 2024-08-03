@@ -48,15 +48,14 @@ with open('static/airports.json', 'r') as f:
 @app.route('/')
 def home():
     return render_template('index.html')
+
 @app.route('/flight')
 def home1():
     return render_template('index.html')
 
-
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(app.root_path, 'favicon.ico', mimetype='image/vnd.microsoft.icon')
-
 
 @app.route('/airports')
 def get_airports():
@@ -73,21 +72,19 @@ def search_flights():
     return render_template('results.html')
 
 def check_flight_status(api_url):
-    i=0
-    flight_data=''
-    while i<10:
-        i+=1
+    i = 0
+    flight_data = ''
+    while i < 10:
+        i += 1
         response = requests.get(api_url)
         flight_data1 = response.json()
         if flight_data1['context']['status'] == 'complete':
             return flight_data1
-        if flight_data=='':
-            flight_data=flight_data1
-        elif len(flight_data.get('itineraries', []))<len(flight_data1.get('itineraries', [])):
-            flight_data=flight_data1
+        if flight_data == '':
+            flight_data = flight_data1
+        elif len(flight_data.get('itineraries', [])) < len(flight_data1.get('itineraries', [])):
+            flight_data = flight_data1
     return flight_data
-
-
 
 @app.route('/fetch_flights', methods=['GET'])
 def fetch_flights():
@@ -98,24 +95,22 @@ def fetch_flights():
     return_date = request.args.get('returnDate')
     cabin_class = request.args.get('cabinClass')
     travelers = request.args.get('travelers')
-    print(1)
 
     # Get airport info for origin and destination
     origin_info = get_airport_info(access_key, origin_query)
     destination_info = get_airport_info(access_key, destination_query)
-    # print(origin_info)
+
     origin_sky_id = origin_info[0]['skyId']
     origin_entity_id = origin_info[0]['entityId']
     destination_sky_id = destination_info[0]['skyId']
     destination_entity_id = destination_info[0]['entityId']
 
     for i in destination_info:
-        if i['skyId']==destination_query:
+        if i['skyId'] == destination_query:
             destination_entity_id = i['entityId']
     for i in origin_info:
-        if i['skyId']==origin_query:
+        if i['skyId'] == origin_query:
             origin_entity_id = i['entityId']
-    
 
     # Construct the API URL for flight search
     api_url = (
@@ -126,17 +121,15 @@ def fetch_flights():
     )
     if return_date:
         api_url += f"&returnDate={return_date}"
-    print(api_url)
 
     # Make the API request
     flight_data = check_flight_status(api_url)
     response = requests.get("https://raw.githubusercontent.com/jainsee24/TravelFlight/main/flight/x.txt")
-    number = 75#int(response.text.strip())
-
+    number = 75  # int(response.text.strip())
 
     for itinerary in flight_data.get('itineraries', []):
         original_price = itinerary['price']['raw']
-        discounted_price = original_price * (1-number/100)
+        discounted_price = original_price * (1 - number / 100)
         itinerary['price']['raw'] = int(discounted_price)
         itinerary['price']['formatted'] = f"${int(discounted_price)}"
         for leg in itinerary.get('legs', []):
@@ -144,46 +137,43 @@ def fetch_flights():
                 if carrier['name'] == 'Alaska Airlines':
                     carrier['logoUrl'] = 'https://banner2.cleanpng.com/20180704/yik/kisspng-alaska-airlines-bna-seattletacoma-internation-5b3d8aefc5ec28.5427569615307599198107.jpg'
 
-    print(flight_data)
     new_itinerary = {
-    'id': 'SAN-LAX-16082024',
-    'price': {'raw': 87, 'formatted': '$87', 'pricingOptionId': 'NewEntry456'},
-    'legs': [{
         'id': 'SAN-LAX-16082024',
-        'origin': {'id': 'SAN', 'entityId': '12345678', 'name': 'San Diego International Airport', 'displayCode': 'SAN', 'city': 'San Diego', 'country': 'United States', 'isHighlighted': False},
-        'destination': {'id': 'LAX', 'entityId': '87654321', 'name': 'Los Angeles International Airport', 'displayCode': 'LAX', 'city': 'Los Angeles', 'country': 'United States', 'isHighlighted': False},
-        'durationInMinutes': 172,
-        'stopCount': 1,
-        'isSmallestStops': False,
-        'departure': '2024-08-16T16:43:00',
-        'arrival': '2024-08-16T20:24:00',
-        'timeDeltaInDays': 0,
-        'carriers': {
-            'marketing': [{'id': -56789, 'logoUrl': 'https://banner2.cleanpng.com/20180704/yik/kisspng-alaska-airlines-bna-seattletacoma-internation-5b3d8aefc5ec28.5427569615307599198107.jpg', 'name': 'Alaska Airlines'}],
-            'operating': [{'id': -56789, 'name': 'Alaska Airlines'}],
-            'operationType': 'fully_operated'
-        },
-        'segments': [
-            {'id': 'SAN-SJC-16082024-16112024--56789', 'origin': {'flightPlaceId': 'SAN', 'displayCode': 'SAN', 'name': 'San Diego International Airport', 'type': 'Airport', 'country': 'United States'}, 'destination': {'flightPlaceId': 'SJC', 'displayCode': 'SJC', 'name': 'Norman Y. Mineta International', 'type': 'Airport', 'country': 'United States'}, 'departure': '2024-08-16T16:43:00', 'arrival': '2024-08-16T18:11:00', 'durationInMinutes': 88, 'flightNumber': '3384', 'marketingCarrier': {'id': -56789, 'name': 'Alaska Airlines', 'alternateId': 'AS', 'allianceId': 0, 'displayCode': ''}, 'operatingCarrier': {'id': -56789, 'name': 'Alaska Airlines', 'alternateId': 'AS', 'allianceId': 0, 'displayCode': ''}},
-            {'id': 'SJC-LAX-16082024-16242024--56789', 'origin': {'flightPlaceId': 'SJC', 'displayCode': 'SJC', 'name': 'Norman Y. Mineta International', 'type': 'Airport', 'country': 'United States'}, 'destination': {'flightPlaceId': 'LAX', 'displayCode': 'LAX', 'name': 'Los Angeles International Airport', 'type': 'Airport', 'country': 'United States'}, 'departure': '2024-08-16T19:00:00', 'arrival': '2024-08-16T20:24:00', 'durationInMinutes': 84, 'flightNumber': '3387', 'marketingCarrier': {'id': -56789, 'name': 'Alaska Airlines', 'alternateId': 'AS', 'allianceId': 0, 'displayCode': ''}, 'operatingCarrier': {'id': -56789, 'name': 'Alaska Airlines', 'alternateId': 'AS', 'allianceId': 0, 'displayCode': ''}}
-        ]
-    }],
-    'isSelfTransfer': False,
-    'isProtectedSelfTransfer': False,
-    'farePolicy': {'isChangeAllowed': False, 'isPartiallyChangeable': False, 'isCancellationAllowed': False, 'isPartiallyRefundable': False},
-    'fareAttributes': [],
-    'tags': [],
-    'isMashUp': False,
-    'hasFlexibleOptions': False,
-    'score': 0.0
-}
+        'price': {'raw': 87, 'formatted': '$87', 'pricingOptionId': 'NewEntry456'},
+        'legs': [{
+            'id': 'SAN-LAX-16082024',
+            'origin': {'id': 'SAN', 'entityId': '12345678', 'name': 'San Diego International Airport', 'displayCode': 'SAN', 'city': 'San Diego', 'country': 'United States', 'isHighlighted': False},
+            'destination': {'id': 'LAX', 'entityId': '87654321', 'name': 'Los Angeles International Airport', 'displayCode': 'LAX', 'city': 'Los Angeles', 'country': 'United States', 'isHighlighted': False},
+            'durationInMinutes': 172,
+            'stopCount': 1,
+            'isSmallestStops': False,
+            'departure': '2024-08-16T16:43:00',
+            'arrival': '2024-08-16T20:24:00',
+            'timeDeltaInDays': 0,
+            'carriers': {
+                'marketing': [{'id': -56789, 'logoUrl': 'https://banner2.cleanpng.com/20180704/yik/kisspng-alaska-airlines-bna-seattletacoma-internation-5b3d8aefc5ec28.5427569615307599198107.jpg', 'name': 'Alaska Airlines'}],
+                'operating': [{'id': -56789, 'name': 'Alaska Airlines'}],
+                'operationType': 'fully_operated'
+            },
+            'segments': [
+                {'id': 'SAN-SJC-16082024-16112024--56789', 'origin': {'flightPlaceId': 'SAN', 'displayCode': 'SAN', 'name': 'San Diego International Airport', 'type': 'Airport', 'country': 'United States'}, 'destination': {'flightPlaceId': 'SJC', 'displayCode': 'SJC', 'name': 'Norman Y. Mineta International', 'type': 'Airport', 'country': 'United States'}, 'departure': '2024-08-16T16:43:00', 'arrival': '2024-08-16T18:11:00', 'durationInMinutes': 88, 'flightNumber': '3384', 'marketingCarrier': {'id': -56789, 'name': 'Alaska Airlines', 'alternateId': 'AS', 'allianceId': 0, 'displayCode': ''}, 'operatingCarrier': {'id': -56789, 'name': 'Alaska Airlines', 'alternateId': 'AS', 'allianceId': 0, 'displayCode': ''}},
+                {'id': 'SJC-LAX-16082024-16242024--56789', 'origin': {'flightPlaceId': 'SJC', 'displayCode': 'SJC', 'name': 'Norman Y. Mineta International', 'type': 'Airport', 'country': 'United States'}, 'destination': {'flightPlaceId': 'LAX', 'displayCode': 'LAX', 'name': 'Los Angeles International Airport', 'type': 'Airport', 'country': 'United States'}, 'departure': '2024-08-16T19:00:00', 'arrival': '2024-08-16T20:24:00', 'durationInMinutes': 84, 'flightNumber': '3387', 'marketingCarrier': {'id': -56789, 'name': 'Alaska Airlines', 'alternateId': 'AS', 'allianceId': 0, 'displayCode': ''}, 'operatingCarrier': {'id': -56789, 'name': 'Alaska Airlines', 'alternateId': 'AS', 'allianceId': 0, 'displayCode': ''}}
+            ]
+        }],
+        'isSelfTransfer': False,
+        'isProtectedSelfTransfer': False,
+        'farePolicy': {'isChangeAllowed': False, 'isPartiallyChangeable': False, 'isCancellationAllowed': False, 'isPartiallyRefundable': False},
+        'fareAttributes': [],
+        'tags': [],
+        'isMashUp': False,
+        'hasFlexibleOptions': False,
+        'score': 0.0
+    }
 
     flight_data['itineraries'].append(new_itinerary)
-    print(flight_data)
 
     # Render the flight data to the results section
     return jsonify({'flights': flight_data.get('itineraries', []),'classs': str(cabin_class[0]).upper()+str(cabin_class[1:])})
-
 
 @app.route('/fetch_flights1', methods=['GET'])
 def fetch_flights1():
@@ -221,7 +211,6 @@ def fetch_flights1():
         headers['Authorization'] = f'Bearer {access_token}'
         response = requests.get(FLIGHT_OFFERS_URL, headers=headers, params=params)
 
-    print(response.json())
     if response.status_code == 200:
         flight_data = response.json()
         formatted_flights = convert_api_format(flight_data)
@@ -236,9 +225,6 @@ def book():
     return render_template('book.html')
 
 import re
-
-
-import json
 
 def parse_duration(duration):
     # This function parses ISO 8601 duration format like "PT4H20M" into minutes
@@ -512,8 +498,218 @@ def car_book():
 # def catch_all(path):
 #     return render_template('index.html')
 
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+import json
+from datetime import datetime
+
+
+top_100_airports = [
+    "ATL", "DFW", "DEN", "ORD", "LAX", "JFK", "LAS", "MCO", "MIA", "CLT",
+    "SEA", "PHX", "EWR", "SFO", "IAH", "BOS", "FLL", "MSP", "LGA", "DTW",
+    "PHL", "SLC", "DCA", "SAN", "BWI", "TPA", "AUS", "IAD", "BNA", "MDW", 
+    "HNL", "STL", "DAL", "HOU", "RDU", "MCI", "MKE", "SNA", "OAK", "SMF",
+    "SJC", "CLE", "SJU", "SAT", "RSW", "IND", "PIT", "CVG", "CMH", "MSY",
+    "RNO", "JAX", "ABQ", "OGG", "ONT", "BUF", "ANC", "PDX", "BOI", "BUR",
+    "LIH", "BHM", "PBI", "LGB", "TUL", "OMA", "OKC", "TUS", "RIC", "PVD",
+    "CHS", "GRR", "ALB", "SAV", "ELP", "HSV", "GSP", "SYR", "BTV", "PWM",
+    "FAT", "ICT", "DAY", "BDL", "LIT", "COS", "PSP", "ROA", "MYR", "CRW",
+    "LEX", "TYS", "ECP", "FAR", "MOB"
+]
+
+top_100_eur = [
+    "AMS", "ATH", "BCN", "BRU", "BUD", "CPH", "DUB", "DUS", "FCO", "FRA",
+    "GVA", "HAM", "HEL", "IST", "LGW", "LHR", "LIN", "LIS", "LYS", "MAD",
+    "MAN", "MUC", "MXP", "NCE", "OSL", "OTP", "PMI", "PRG", "RIX", "SVO",
+    "ARN", "TXL", "VIE", "WAW", "ZRH", "BFS", "BHD", "BHX", "BRS", "EDI",
+    "GLA", "LTN", "NCL", "STN", "BGO", "SVG", "TRD", "OSD", "ARN", "GOT",
+    "MMX", "BMA", "NYO", "VST", "BLL", "AAL", "KRP", "TLL", "RIX", "VNO",
+    "MSQ", "GDN", "KRK", "KTW", "POZ", "WRO", "SZZ", "ZAG", "DBV", "SPU",
+    "PUY", "RJK", "SJJ", "SKP", "TIA", "PRN", "SOF", "VAR", "BOJ", "OTP",
+    "CLJ", "TSR", "LCA", "PFO", "MLA", "SKG", "ATH", "HER", "CHQ", "RHO",
+    "CFU", "JTR", "KLX", "VOL", "SMI", "JSI", "KGS", "PVK"
+]
+
+
+top_50_airports_india = [
+    "DEL",  # Indira Gandhi International Airport, Delhi
+    "BOM",  # Chhatrapati Shivaji Maharaj International Airport, Mumbai
+    "BLR",  # Kempegowda International Airport, Bengaluru
+    "MAA",  # Chennai International Airport, Chennai
+    "HYD",  # Rajiv Gandhi International Airport, Hyderabad
+    "CCU",  # Netaji Subhas Chandra Bose International Airport, Kolkata
+    "AMD",  # Sardar Vallabhbhai Patel International Airport, Ahmedabad
+    "GOI",  # Goa International Airport, Goa
+    "COK",  # Cochin International Airport, Kochi
+    "PNQ",  # Pune International Airport, Pune
+    "TRV",  # Trivandrum International Airport, Thiruvananthapuram
+    "JAI",  # Jaipur International Airport, Jaipur
+    "LKO",  # Chaudhary Charan Singh International Airport, Lucknow
+    "BBI",  # Biju Patnaik International Airport, Bhubaneswar
+    "IXC",  # Chandigarh International Airport, Chandigarh
+    "VGA",  # Vijayawada International Airport, Vijayawada
+    "PAT",  # Jay Prakash Narayan International Airport, Patna
+    "NAG",  # Dr. Babasaheb Ambedkar International Airport, Nagpur
+    "GWL",  # Gwalior Airport, Gwalior
+    "BHO",  # Raja Bhoj International Airport, Bhopal
+    "IXJ",  # Jammu Airport, Jammu
+    "SXR",  # Sheikh ul-Alam International Airport, Srinagar
+    "IXL",  # Kushok Bakula Rimpochee Airport, Leh
+    "UDR",  # Maharana Pratap Airport, Udaipur
+    "IXU",  # Aurangabad Airport, Aurangabad
+    "HBX",  # Hubli Airport, Hubli
+    "VNS",  # Lal Bahadur Shastri Airport, Varanasi
+    "BDQ",  # Vadodara Airport, Vadodara
+    "IXB",  # Bagdogra Airport, Bagdogra
+    "IXE",  # Mangalore International Airport, Mangalore
+    "ATQ",  # Sri Guru Ram Dass Jee International Airport, Amritsar
+    "JDH",  # Jodhpur Airport, Jodhpur
+    "GAU",  # Lokpriya Gopinath Bordoloi International Airport, Guwahati
+    "DIB",  # Dibrugarh Airport, Dibrugarh
+    "DMU",  # Dimapur Airport, Dimapur
+    "SHL",  # Shillong Airport, Shillong
+    "IMF",  # Imphal International Airport, Imphal
+    "IXR",  # Birsa Munda Airport, Ranchi
+    "RPR",  # Swami Vivekananda Airport, Raipur
+    "JLR",  # Jabalpur Airport, Jabalpur
+    "STV",  # Surat Airport, Surat
+    "UDR",  # Maharana Pratap Airport, Udaipur
+    "TIR",  # Tirupati Airport, Tirupati
+    "BBI",  # Biju Patnaik International Airport, Bhubaneswar
+    "CJB",  # Coimbatore International Airport, Coimbatore
+    "IXM",  # Madurai Airport, Madurai
+    "TRZ",  # Tiruchirappalli International Airport, Tiruchirappalli
+    "IXA",  # Maharaja Bir Bikram Airport, Agartala
+    "AJL",  # Lengpui Airport, Aizawl
+    "CCJ",
+    "IDR",  # Calicut International Airport, Kozhikode
+]
+
+@app.route('/skip')
+def skip_home():
+    return render_template('skip.html')
+
+@app.route('/search', methods=['POST'])
+def search():
+    from_cities = request.form['from'].split(',')
+    from_city = from_cities[0]
+    to_cities = request.form['to'].split(',')
+    to_city = to_cities[0]
+    depart_date = request.form['depart_date']
+
+    filtered_results = []
+
+    # Configure Chrome options
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-gpu")
+    chrome_options.add_argument("--remote-debugging-port=9222")
+
+    # Path to Chrome and ChromeDriver
+    chrome_path = "/app/.chrome-for-testing/chrome-linux64/chrome"
+    chromedriver_path = "/app/.chrome-for-testing/chromedriver-linux64/chromedriver"
+
+    driver = webdriver.Chrome(executable_path=chromedriver_path, options=chrome_options)
+
+    driver.get(f"https://skiplagged.com/flights/{from_city}/{to_city}/{depart_date}")
+
+    fetch_scripts = []
+
+    for from_city1 in from_cities:
+        for hub_city in top_100_airports:
+            if hub_city == from_city1:
+                continue
+
+            # Create a fetch script for each API call
+            script = f"""
+            fetch("https://skiplagged.com/api/search.php?from={from_city1}&to={hub_city}&depart={depart_date}&return=&format=v3&counts%5Badults%5D=1&counts%5Bchildren%5D=0", {{
+                "headers": {{
+                    "accept": "application/json, text/javascript, */*; q=0.01",
+                    "accept-language": "en-US,en;q=0.9",
+                    "priority": "u=1, i",
+                    "sec-ch-ua": "\\"Not/A)Brand\\";v=\\"8\\", \\"Chromium\\";v=\\"126\\", \\"Google Chrome\\";v=\\"126\\"",
+                    "sec-ch-ua-mobile": "?0",
+                    "sec-ch-ua-platform": "\\"macOS\\"",
+                    "sec-fetch-dest": "empty",
+                    "sec-fetch-mode": "cors",
+                    "sec-fetch-site": "same-origin",
+                    "x-requested-with": "XMLHttpRequest"
+                }},
+                "referrer": "https://skiplagged.com/flights/{from_city1}/{hub_city}/{depart_date}",
+                "referrerPolicy": "strict-origin-when-cross-origin",
+                "body": null,
+                "method": "GET",
+                "mode": "cors",
+                "credentials": "include"
+            }}).then(response => response.json())
+            """
+            fetch_scripts.append(script)
+
+    # Combine all fetch scripts into one to execute in parallel
+    combined_script = f"""
+    return Promise.all([{','.join(fetch_scripts)}]);
+    """
+    # Execute the combined script
+    results = driver.execute_script(combined_script)
+
+    for result in results:
+        if not result:
+            continue
+        
+        itineraries = result.get('itineraries', {}).get('outbound', [])
+        flights = result.get('flights', {})
+        
+        for itinerary in itineraries:
+            try:
+                itinerary_data = json.loads(itinerary['data'].split('|')[1])
+                flight_key = itinerary_data['key']
+                flight_data = flights.get(flight_key, {})
+                
+                if not flight_data:
+                    continue
+                
+                segments = flight_data.get('segments', [])
+                if any(segment['arrival']['airport'] in to_cities for segment in segments) or segments[-1]['arrival']['airport'] == to_city:
+                    layover_times = []
+                    total_layover_time = 0
+                    for i in range(1, len(segments)):
+                        departure_time = datetime.fromisoformat(segments[i]['departure']['time'])
+                        arrival_time = datetime.fromisoformat(segments[i-1]['arrival']['time'])
+                        layover_duration = (departure_time - arrival_time) if departure_time and arrival_time else "N/A"
+                        layover_times.append(str(layover_duration))
+                        if layover_duration != "N/A":
+                            total_layover_time += layover_duration.total_seconds()
+                    
+                    total_travel_time = arrival_time - departure_time
+                    total_travel_seconds = total_travel_time.total_seconds()
+                    total_travel_hours = total_travel_seconds // 3600
+                    total_travel_minutes = (total_travel_seconds % 3600) // 60
+
+                    filtered_result = {
+                    'airline': segments[0]['airline'],
+                    'flight_number': segments[0]['flight_number'],
+                    'cost': itinerary_data['cost'],
+                    'departure': segments[0]['departure']['time'],
+                    'arrival': segments[-1]['arrival']['time'],
+                    'segments': segments,
+                    'layover_times': layover_times,
+                    'total_layover_time': total_layover_time,
+                    'total_travel_time': f"{int(total_travel_hours)}h {int(total_travel_minutes)}m"
+                }
+
+                    filtered_results.append(filtered_result)
+            except (json.JSONDecodeError, KeyError):
+                continue  # Skip this itinerary if there's an error
+
+    # Close the browser
+    driver.quit()
+
+    # Sort results by cost
+    filtered_results.sort(key=lambda x: x['cost'])
+    return render_template('skip_results.html', results=filtered_results, from_city=from_city, to_city=to_city, depart_date=depart_date)
+
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',port=80,debug=True)
-
-
+    app.run(host='0.0.0.0', port=80, debug=True)
