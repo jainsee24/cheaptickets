@@ -611,7 +611,8 @@ def search():
     chrome_path = "/app/.chrome-for-testing/chrome-linux64/chrome"
     chromedriver_path = "/app/.chrome-for-testing/chromedriver-linux64/chromedriver"
 
-    driver = webdriver.Chrome(executable_path=chromedriver_path, options=chrome_options)
+    service = Service(chromedriver_path)
+    driver = webdriver.Chrome(service=service, options=chrome_options)
 
     driver.get(f"https://skiplagged.com/flights/{from_city}/{to_city}/{depart_date}")
 
