@@ -610,7 +610,7 @@ top_50_airports_india = [
 
 @app.route('/skip')
 def home():
-    return render_template('skip.html')
+    return render_template('skip_index.html')
 
 @app.route('/search', methods=['POST'])
 def search():
