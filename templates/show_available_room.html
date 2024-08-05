@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Details - {{ hotel.name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_hotel.css') }}">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="/" style="text-decoration: none; color: inherit;">
+                <i class="fas fa-plane-departure"></i> TravelFlight
+            </a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/">Flights</a></li>
+                <li><a href="/">Stays</a></li>
+                <li><a href="/">Cars</a></li>
+                <li><a href="/">Rewards</a></li>
+                <li><a href="/">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <a href="/search_stays" class="back-to-results">Back to Search Results</a>
+        <div class="hotel-details-container">
+            <h1>{{ hotel.name }}</h1>
+            <p>{{ hotel.address }}, {{ hotel.city }}, {{ hotel.state }}, {{ hotel.country }}</p>
+            <div class="hotel-rating">
+                <span>{{ hotel.ratings.review_rating }}/10 {{ hotel.ratings.review_rating_text }}</span>
+                <span>({{ hotel.ratings.review_count }} reviews)</span>
+            </div>
+            <div class="hotel-description">
+                <p>{{ hotel.description }}</p>
+            </div>
+            <div class="hotel-amenities">
+                <h3>Amenities</h3>
+                <ul>
+                    {% for code in hotel.amenity_codes %}
+                        <li>{{ hotel.amenity_map[code] }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="hotel-rooms">
+                <h3>Rooms</h3>
+                {% for room_id, room in hotel.inventory_data.items() %}
+                    <div class="room">
+                        <h4>{{ room.title }}</h4>
+                        <p>{{ room.description }}</p>
+                        <p><strong>Price:</strong> ${{ room.price_details.display_price }} per night</p>
+                        <p><strong>Total:</strong> ${{ room.price_details.display_total }}</p>
+                        <p><strong>Refundable:</strong> {{ room.details_summary.freeRefundableFlag }}</p>
+                        <p><strong>Cancel until:</strong> {{ room.details_summary.cancellableUntil }}</p>
+                        <a href="{{ room.rate_data.contract_page_url }}" target="_blank">Select</a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </main>
+</body>
+</html>

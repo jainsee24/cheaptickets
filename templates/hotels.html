@@ -5,12 +5,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Travel Booking App</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_hotel.css') }}">
+
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script defer src="{{ url_for('static', filename='scripts.js') }}"></script>
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"> 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        .flight-details button:hover {
+            background-color: #0056b3;
+        }
+        .results-section {
+            display: flex;
+            padding: 20px;
+        }
+        .filters {
+            flex: 1;
+            padding: 20px;
+            background-color: #e9ecef;
+            margin-right: 20px;
+        }
+        .filters h3, .filters h4 {
+            margin-top: 0;
+        }
+        .filters label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        .filters input[type="checkbox"] {
+            margin-right: 5px;
+        }
+        .filters input[type="text"] {
+            width: calc(100% - 12px);
+            padding: 5px;
+        }
+        .results {
+            flex: 3;
+            padding: 20px;
+            background-color: #fff;
+        }
+        .results ul {
+            list-style: none;
+            padding: 0;
+        }
+        .results li {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .results h4 {
+            margin: 0 0 10px 0;
+        }
+        .results img {
+            max-width: 150px;
+            margin-right: 20px;
+            border-radius: 5px;
+        }
+    </style>
     <script defer>
         $(document).ready(function() {
             // Fetch airports data
@@ -129,6 +192,8 @@
                 dateFormat: "Y-m-d",
                 minDate: "today" // Initially, set to today or a later date
             });
+
+            showTab('stays');
         });
 
         function toggleDateInputs() {
@@ -155,8 +220,6 @@
             document.querySelector(`button[onclick="showTab('${tabId}')"]`).classList.add('active');
         }
     </script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </head>
 <body>
     <header>
@@ -167,20 +230,20 @@
         </div>        
         <nav>
             <ul>
-                <li>Shop travel</li>
-                <li>Get the app</li>
-                <li>List your property</li>
-                <li>Support</li>
-                <li>Trips</li>
-                <li>Sign in</li>
+                <li><a href="#">Shop travel</a></li>
+                <li><a href="#">Get the app</a></li>
+                <li><a href="#">List your property</a></li>
+                <li><a href="#">Support</a></li>
+                <li><a href="#">Trips</a></li>
+                <li><a href="#">Sign in</a></li>
             </ul>
         </nav>
     </header>
     <main>
         <div class="search-section">
             <div class="tab-menu">
-                <button class="tab active" onclick="showTab('flights')"><i class="fas fa-plane icon"></i>Flights</button>
-                <button class="tab" onclick="showTab('stays')"><i class="fas fa-hotel icon"></i>Stays</button>
+                <button class="tab" onclick="showTab('flights')"><i class="fas fa-plane icon"></i>Flights</button>
+                <button class="tab active" onclick="showTab('stays')"><i class="fas fa-hotel icon"></i>Stays</button>
                 <button class="tab" onclick="showTab('cars')"><i class="fas fa-car icon"></i>Cars</button>
                 <button class="tab" onclick="showTab('packages')"><i class="fas fa-suitcase icon"></i>Packages</button>
                 <button class="tab" onclick="showTab('thingsToDo')"><i class="fas fa-map-signs icon"></i>Things to do</button>
@@ -208,31 +271,6 @@
                         </div>
                         <button type="submit" onclick="validateDates()"><i class="fas fa-search icon"></i>Search</button>
                     </div>
-                    <script>
-                        var departDatepicker = flatpickr("#depart-date", {
-                            dateFormat: "Y-m-d",
-                            minDate: "today", // Prevent selecting past dates
-                            onChange: function(selectedDates) {
-                                returnDatepicker.set('minDate', selectedDates[0]); // Set minDate for return date
-                                // document.getElementById('return-date').style.display = 'inline'; // Show return date field if hidden
-                            }
-                        });
-                    
-                        var returnDatepicker = flatpickr("#return-date", {
-                            dateFormat: "Y-m-d",
-                            minDate: "today" // Initially, set to today or a later date
-                        });
-                    
-                        function validateDates() {
-                            var departDate = new Date(document.getElementById('depart-date').value);
-                            var returnDate = new Date(document.getElementById('return-date').value);
-                            
-                            if (returnDate <= departDate) {
-                                alert("Return date must be after the departure date.");
-                            }
-                        }
-                    </script>
-                    
                 </form>
                 <div class="add-ons">
                     <label><input type="checkbox" name="addStay"> Add a place to stay</label>
@@ -240,32 +278,18 @@
                 </div>
             </div>
 
-            <div id="stays" class="tab-content">
-                <form id="stays-form">
+            <div id="stays" class="tab-content active">
+                <form id="stays-form" action="{{ url_for('search_stays') }}" method="GET">
                     <div class="flight-details">
-                        <input type="text" id="stay-location" name="airport" placeholder="Enter airport code">
-                        <input type="text" id="checkin-date" name="checkin" placeholder="Select check-in date">
-                        <input type="text" id="checkout-date" name="checkout" placeholder="Select check-out date">
-                        <input type="number" name="num_rooms" value="1" placeholder="Number of rooms">
-                        <input type="number" name="num_adults" value="1" placeholder="Number of adults">
-                        <input type="number" name="num_children" value="0" placeholder="Number of children">
+                        <input type="text" id="stay-location" name="airport" value="{{ airport }}" placeholder="Enter airport code">
+                        <input type="text" id="checkin-date" name="checkin" value="{{ checkin }}" placeholder="Select check-in date">
+                        <input type="text" id="checkout-date" name="checkout" value="{{ checkout }}" placeholder="Select check-out date">
+                        <input type="number" name="num_rooms" value="{{ num_rooms }}" placeholder="Number of rooms">
+                        <input type="number" name="num_adults" value="{{ num_adults }}" placeholder="Number of adults">
+                        <input type="number" name="num_children" value="{{ num_children }}" placeholder="Number of children">
                         <button type="submit"><i class="fas fa-search icon"></i>Search</button>
                     </div>
                 </form>
-                <script>
-                    var checkinDatepicker = flatpickr("#checkin-date", {
-                        dateFormat: "Y-m-d",
-                        minDate: "today", // Prevent selecting past dates
-                        onChange: function(selectedDates) {
-                            checkoutDatepicker.set('minDate', selectedDates[0]); // Set minDate for checkout date
-                        }
-                    });
-
-                    var checkoutDatepicker = flatpickr("#checkout-date", {
-                        dateFormat: "Y-m-d",
-                        minDate: "today" // Initially, set to today or a later date
-                    });
-                </script>
             </div>
 
             <div id="cars" class="tab-content">
@@ -279,47 +303,8 @@
                         <input type="time" id="dropoff-time" name="dropOffTime" value="10:30" placeholder="Drop-off time">
                         <button type="submit"><i class="fas fa-search icon"></i>Search</button>
                     </div>
-                    
-                    <script>
-                        var pickupDatepicker = flatpickr("#pickup-date", {
-                            dateFormat: "Y-m-d",
-                            minDate: "today", // Prevent selecting past dates
-                            onChange: function(selectedDates) {
-                                dropoffDatepicker.set('minDate', selectedDates[0]); // Set minDate for dropoff date
-                            }
-                        });
-                    
-                        var dropoffDatepicker = flatpickr("#dropoff-date", {
-                            dateFormat: "Y-m-d",
-                            minDate: "today" // Initially, set to today or a later date
-                        });
-                    
-                        function validateDates() {
-                            var pickupDate = new Date(document.getElementById('pickup-date').value);
-                            var dropoffDate = new Date(document.getElementById('dropoff-date').value);
-                            
-                            if (dropoffDate <= pickupDate) {
-                                alert("Drop-off date must be after the pick-up date.");
-                            }
-                        }
-                    </script>
-                    
-                    
-                    <div class="add-ons">
-                        <button class="additional-option"><i class="fas fa-percentage icon"></i>Show AARP rates</button>
-                        <div class="dropdown">
-                            <button class="additional-option"><i class="fas fa-tag icon"></i>Discount codes</button>
-                            <div class="dropdown-content">
-                                <a href="#">Code 1</a>
-                                <a href="#">Code 2</a>
-                                <a href="#">Code 3</a>
-                            </div>
-                        </div>
-                    </div>
                 </form>
             </div>
-
-            
 
             <div id="packages" class="tab-content">
                 <form id="packages-form">
@@ -358,81 +343,126 @@
                 </form>
             </div>
         </div>
-
-        <div class="srt-banner"><div class="col-7"><span class="text-white srt-banner__heading">Need help booking? Our agents are ready!</span><span class="srt-banner__text">Call us 24/7 at<span class="phone"> <a href="tel:1-646-738-4820">1-646-738-4820</a></span></span></div><div class="col-5 pr-0"><div class="row airline-list"><span class="col-4"><img src="//c.fareportal.com/gcms/portals/2/gcmsfiles/live/images/srt-ha.png" alt="Hawaiian Airlines" width="102" height="56"><br>Hawaiian Airlines</span><span class="col-4"><img src="//c.fareportal.com/gcms/portals/2/gcmsfiles/live/images/srt-b6.png" alt="JetBlue Airways" width="102" height="56"><br>JetBlue Airways</span><span class="col-4"><img src="//c.fareportal.com/gcms/portals/2/gcmsfiles/live/images/srt-tk.png" alt="Turkish Airlines" width="102" height="56"><br>Turkish Airlines</span></div></div></div>
-        <div class="banner">
-            <h2>WELCOME TO THE TRAVEL HUB</h2>
-            <img src="{{ url_for('static', filename='main.jpg') }}" alt="" width="100%">
-        </div>
-
-        <div class="explore">
-            <h3>Explore stays in trending destinations</h3>
-            <div class="destination-grid">
-                <div class="destination-card">
-                    <img src="{{ url_for('static', filename='paris.jpeg') }}" alt="Destination 1">
-                    <h4>Paris</h4>
-                    <p>The city of lights offers iconic landmarks and rich culture.</p>
+        <!-- Results and Filters Section -->
+        <div class="results-section">
+            <div class="filters">
+                <h3>Filters</h3>
+                <div>
+                    <h4>Stars</h4>
+                    <label><input type="checkbox" name="stars" value="5" class="filter-checkbox"> 5 Stars</label>
+                    <label><input type="checkbox" name="stars" value="4" class="filter-checkbox"> 4 + Stars</label>
+                    <label><input type="checkbox" name="stars" value="3" class="filter-checkbox"> 3 + Stars</label>
+                    <label><input type="checkbox" name="stars" value="2" class="filter-checkbox"> 2 + Stars</label>
+                    <label><input type="checkbox" name="stars" value="1" class="filter-checkbox"> 1 + Stars</label>
                 </div>
-                <div class="destination-card">
-                    <img src="{{ url_for('static', filename='tokyo.jpeg') }}" alt="Destination 2">
-                    <h4>Tokyo</h4>
-                    <p>A bustling metropolis known for its modern architecture and cuisine.</p>
-                </div>
-                <div class="destination-card">
-                    <img src="{{ url_for('static', filename='ny.jpeg') }}" alt="Destination 3">
-                    <h4>New York</h4>
-                    <p>The Big Apple is a hub of entertainment, fashion, and finance.</p>
-                </div>
-                <div class="destination-card">
-                    <img src="{{ url_for('static', filename='sydney.jpeg') }}" alt="Destination 4">
-                    <h4>Sydney</h4>
-                    <p>Known for its Sydney Opera House and beautiful beaches.</p>
-                </div>
-                <div class="destination-card">
-                    <img src="{{ url_for('static', filename='paris.jpeg') }}" alt="Destination 1">
-                    <h4>Munich</h4>
-                    <p>The city of lights offers iconic landmarks and rich culture.</p>
-                </div>
-                <div class="destination-card">
-                    <img src="{{ url_for('static', filename='tokyo.jpeg') }}" alt="Destination 2">
-                    <h4>Delhi</h4>
-                    <p>A bustling metropolis known for its modern architecture and cuisine.</p>
-                </div>
-                <div class="destination-card">
-                    <img src="{{ url_for('static', filename='ny.jpeg') }}" alt="Destination 3">
-                    <h4>Chicago</h4>
-                    <p>The Big Apple is a hub of entertainment, fashion, and finance.</p>
-                </div>
-                <div class="destination-card">
-                    <img src="{{ url_for('static', filename='sydney.jpeg') }}" alt="Destination 4">
-                    <h4>Austria</h4>
-                    <p>Known for its Sydney Opera House and beautiful beaches.</p>
-                </div>
-                <div class="destination-card">
-                    <img src="{{ url_for('static', filename='paris.jpeg') }}" alt="Destination 1">
-                    <h4>Nantes</h4>
-                    <p>The city of lights offers iconic landmarks and rich culture.</p>
-                </div>
-                <div class="destination-card">
-                    <img src="{{ url_for('static', filename='tokyo.jpeg') }}" alt="Destination 2">
-                    <h4>Shanghai</h4>
-                    <p>A bustling metropolis known for its modern architecture and cuisine.</p>
-                </div>
-                <div class="destination-card">
-                    <img src="{{ url_for('static', filename='ny.jpeg') }}" alt="Destination 3">
-                    <h4>San Francisco</h4>
-                    <p>The Big Apple is a hub of entertainment, fashion, and finance.</p>
-                </div>
-                <div class="destination-card">
-                    <img src="{{ url_for('static', filename='sydney.jpeg') }}" alt="Destination 4">
-                    <h4>London</h4>
-                    <p>Known for its Sydney Opera House and beautiful beaches.</p>
+                <div>
+                    <h4>Hotel Name</h4>
+                    <input type="text" id="hotel-name-filter" placeholder="Search hotel by name">
                 </div>
             </div>
+            <div class="results">
+                {% if data.error %}
+                    <p>{{ data.error }}</p>
+                {% else %}
+                    <h3>Hotels</h3>
+                    <ul id="hotel-list">
+                        {% for hotel in data.hotels %}
+                            <li class="hotel-item" data-star-rating="{{ hotel.ratings.star_rating }}" data-hotel-name="{{ hotel.name | lower }}">
+                                <div class="hotel-container">
+                                    <div class="hotel-photo">
+                                        <img src="{{ hotel.photos[0] }}" alt="{{ hotel.name }}">
+                                    </div>
+                                    <div class="hotel-details">
+                                        <div class="hotel-name-rating">
+                                            <h4><a href="{{ hotel.link }}" target="_blank">{{ hotel.name }}</a></h4>
+                                            <div class="rating-large">
+                                                {% for i in range(hotel.ratings.star_rating) %}
+                                                    <i class="fas fa-star"></i>
+                                                {% endfor %}
+                                                {% for i in range(5 - hotel.ratings.star_rating) %}
+                                                    <i class="far fa-star"></i>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                        <p>{{ hotel.address }}</p>
+                                        <div class="hotel-rating-review">
+                                            <span class="hotel-rating-text">{{ hotel.ratings.review_rating }} Good</span>
+                                            <span class="hotel-review-count">({{ hotel.ratings.review_count }} reviews)</span>
+                                        </div>
+                                        <div class="hotel-amenities">
+                                            {% for amenity in hotel.amenity_codes %}
+                                                <span class="hotel-amenity">{{ amenity }}</span>
+                                            {% endfor %}
+                                        </div>
+                                        <div class="hotel-prices">
+                                            <span class="hotel-price">${{ hotel.rates.priceline_low_rate }} per night</span>
+                                            <span class="hotel-total-price">${{ hotel.rates.priceline_low_rate_total }} total</span>
+                                        </div>
+                                        <a href="#" onclick="redirectToRoomDetails({{ hotel.id }})" target="_blank">See available rooms</a>
+                                    </div>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            
+            
         </div>
+        <script>
+            function redirectToRoomDetails(hotelId) {
+                const checkin = document.getElementById('checkin-date').value;
+                const checkout = document.getElementById('checkout-date').value;
+                const numRooms = document.getElementById('num_rooms').value;
+                const numAdults = document.getElementById('num_adults').value;
+                const numChildren = document.getElementById('num_children').value;
+        
+                const url = `/show_available_room?hotel_id=${hotelId}&checkin=${checkin}&checkout=${checkout}&num_rooms=${numRooms}&num_adults=${numAdults}&num_children=${numChildren}`;
+                window.open(url, '_blank');
+            }
+        </script>
+        
     </main>
     <footer>
-        <button><i class="fas fa-question-circle icon"></i>Help</button>
+        <p>&copy; 2024 TravelFlight</p>
     </footer>
+    <script>
+        $(document).ready(function() {
+            // Autocomplete for hotel name filter
+            var hotelNames = {{ data.hotels | map(attribute='name') | list | tojson }};
+            $("#hotel-name-filter").autocomplete({
+                source: hotelNames
+            });
+
+            // Filter functionality
+            $(".filter-checkbox").change(function() {
+                filterHotels();
+            });
+
+            $("#hotel-name-filter").on("input", function() {
+                filterHotels();
+            });
+
+            function filterHotels() {
+                var selectedStars = [];
+                $(".filter-checkbox:checked").each(function() {
+                    selectedStars.push(parseInt($(this).val()));
+                });
+
+                var hotelName = $("#hotel-name-filter").val().toLowerCase();
+
+                $(".hotel-item").each(function() {
+                    var starRating = parseInt($(this).data("star-rating"));
+                    var hotelNameMatch = $(this).data("hotel-name").includes(hotelName);
+
+                    if ((selectedStars.length === 0 || selectedStars.includes(starRating)) && hotelNameMatch) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>

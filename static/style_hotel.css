@@ -1,0 +1,130 @@
+.results {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: #fff;
+}
+
+.results ul {
+    list-style: none;
+    padding: 0;
+}
+
+.results li {
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #fff;
+    display: flex;
+    align-items: stretch; /* Ensure items stretch to same height */
+    transition: transform 0.2s;
+}
+
+.results li:hover {
+    transform: scale(1.02);
+}
+
+.hotel-container {
+    display: flex;
+    align-items: stretch; /* Ensure items stretch to same height */
+    width: 100%;
+}
+
+.hotel-photo {
+    max-width: 200px;
+    min-width: 200px;
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hotel-photo img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 10px 0 0 10px;
+}
+
+.hotel-details {
+    flex: 1;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.hotel-name-rating {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.hotel-name-rating h4 {
+    margin: 0;
+    font-size: 1.2em;
+}
+
+.rating-large i {
+    color: #FFD700;
+}
+
+.hotel-rating-review {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 5px;
+    font-size: 0.9em;
+    color: #555;
+}
+
+.hotel-amenities {
+    margin: 10px 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.hotel-amenity {
+    background: #f1f1f1;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    font-size: 0.85em;
+}
+
+.hotel-prices {
+    margin-top: 10px;
+    font-size: 1.1em;
+}
+
+.hotel-price {
+    display: block;
+    font-weight: bold;
+}
+
+.hotel-total-price {
+    display: block;
+    color: #555;
+}
+
+.hotel-rooms-button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.hotel-rooms-button a {
+    color: white;
+    text-decoration: none;
+}
+
+.hotel-rooms-button:hover {
+    background-color: #0056b3;
+}

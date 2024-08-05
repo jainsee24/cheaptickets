@@ -45,6 +45,12 @@ def get_new_access_token():
 with open('static/airports.json', 'r') as f:
     airports = json.load(f)
 
+# Load airports data
+with open('static/cities.json', 'r') as f:
+    cities = json.load(f)
+
+
+
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -60,6 +66,11 @@ def favicon():
 @app.route('/airports')
 def get_airports():
     return jsonify(airports)
+
+@app.route('/cities')
+def get_cities():
+    return jsonify(cities)
+
 
 def get_airport_info(access_key, query):
     api_url = f"https://app.goflightlabs.com/retrieveAirport?access_key={access_key}&query={query}"
@@ -714,6 +725,58 @@ def search():
     # Sort results by cost
     filtered_results.sort(key=lambda x: x['cost'])
     return render_template('skip_results.html', results=filtered_results, from_city=from_city, to_city=to_city, depart_date=depart_date)
+
+@app.route('/search_stays')
+def search_stays():
+    airport = request.args.get('airport')
+    checkin = request.args.get('checkin')
+    checkout = request.args.get('checkout')
+    num_rooms = request.args.get('num_rooms', 1)
+    num_adults = request.args.get('num_adults', 1)
+    num_children = request.args.get('num_children', 0)
+
+    api_url = f"https://skiplagged.com/api/hotel_search.php?airport={airport}&checkin={checkin}&checkout={checkout}&num_rooms={num_rooms}&num_adults={num_adults}&num_children={num_children}"
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
+    }
+    
+    response = requests.get(api_url, headers=headers)
+    
+    try:
+        data = response.json()
+    except requests.exceptions.JSONDecodeError:
+        data = {"error": "Invalid response from the hotel API"}
+    
+    return render_template(
+        'hotels.html',
+        data=data,
+        airport=airport,
+        checkin=checkin,
+        checkout=checkout,
+        num_rooms=num_rooms,
+        num_adults=num_adults,
+        num_children=num_children
+    )
+
+@app.route('/show_available_room')
+def show_available_room():
+    hotel_id = request.args.get('hotel_id')
+    checkin = request.args.get('checkin')
+    checkout = request.args.get('checkout')
+    num_rooms = request.args.get('num_rooms')
+    num_adults = request.args.get('num_adults')
+    num_children = request.args.get('num_children')
+
+    url = f"https://skiplagged.com/api/hotel_detail.php?hotel_id={hotel_id}&checkin={checkin}&checkout={checkout}&num_rooms={num_rooms}&numAdults={num_adults}&numChildren={num_children}&live=true"
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
+    }
+
+    response = requests.get(url,headers=headers)
+    data = response.json()
+
+    return render_template('show_available_room.html', hotel=data)
+
 
 
 if __name__ == '__main__':
