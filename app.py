@@ -447,7 +447,7 @@ def search_cars():
             price_per_day = car_type_prices.get(car_type, 3)
             tax_rate = car_companies_taxes.get(car_company, 0.10)
             price_per_day = round(price_per_day * (1 + tax_rate), 2)
-            cancellation_deadline = pick_up_date_obj - timedelta(days=2)
+            cancellation_deadline = pick_up_date_obj - timedelta(days=0)
             company_logo = f"/static/images/{car_company.lower()}.png"
             image = f"/static/images/{car_type.lower()}.png"
 
