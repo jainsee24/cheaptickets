@@ -671,7 +671,7 @@
     };
 
     let markup = '';
-    for (let i = -2; i <= 4; i++) {
+    for (let i = -3; i <= 3; i++) {
         const date = new Date(searchDate);
         date.setDate(searchDate.getDate() + i);
         const isCurrentDate = date.toISOString().split('T')[0] === searchDate.toISOString().split('T')[0];
