@@ -162,7 +162,7 @@ def fetch_flights():
         'arrival': '2024-09-26T19:07:00',
         'timeDeltaInDays': 0,
         'carriers': {
-            'marketing': [{'id': -67890, 'logoUrl': 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/American_Airlines_logo_2013.svg/1200px-American_Airlines_logo_2013.svg.png', 'name': 'American Airlines'}],
+            'marketing': [{'id': -67890, 'logoUrl': 'https://s202.q4cdn.com/986123435/files/doc_downloads/logos/american-airlines/THUMB-aa_aa__ahz_4cp_grd_pos-(1).png', 'name': 'American Airlines'}],
             'operating': [{'id': -67890, 'name': 'American Airlines'}],
             'operationType': 'fully_operated'
         },
