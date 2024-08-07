@@ -85,7 +85,7 @@ def search_flights():
 def check_flight_status(api_url):
     i = 0
     flight_data = ''
-    while i < 10:
+    while i < 1:
         i += 1
         response = requests.get(api_url)
         flight_data1 = response.json()
