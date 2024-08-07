@@ -149,37 +149,37 @@ def fetch_flights():
                     carrier['logoUrl'] = 'https://banner2.cleanpng.com/20180704/yik/kisspng-alaska-airlines-bna-seattletacoma-internation-5b3d8aefc5ec28.5427569615307599198107.jpg'
 
     new_itinerary = {
-        'id': 'SAN-LAX-16082024',
-        'price': {'raw': 87, 'formatted': '$87', 'pricingOptionId': 'NewEntry456'},
-        'legs': [{
-            'id': 'SAN-LAX-16082024',
-            'origin': {'id': 'SAN', 'entityId': '12345678', 'name': 'San Diego International Airport', 'displayCode': 'SAN', 'city': 'San Diego', 'country': 'United States', 'isHighlighted': False},
-            'destination': {'id': 'LAX', 'entityId': '87654321', 'name': 'Los Angeles International Airport', 'displayCode': 'LAX', 'city': 'Los Angeles', 'country': 'United States', 'isHighlighted': False},
-            'durationInMinutes': 172,
-            'stopCount': 1,
-            'isSmallestStops': False,
-            'departure': '2024-08-16T16:43:00',
-            'arrival': '2024-08-16T20:24:00',
-            'timeDeltaInDays': 0,
-            'carriers': {
-                'marketing': [{'id': -56789, 'logoUrl': 'https://banner2.cleanpng.com/20180704/yik/kisspng-alaska-airlines-bna-seattletacoma-internation-5b3d8aefc5ec28.5427569615307599198107.jpg', 'name': 'Alaska Airlines'}],
-                'operating': [{'id': -56789, 'name': 'Alaska Airlines'}],
-                'operationType': 'fully_operated'
-            },
-            'segments': [
-                {'id': 'SAN-SJC-16082024-16112024--56789', 'origin': {'flightPlaceId': 'SAN', 'displayCode': 'SAN', 'name': 'San Diego International Airport', 'type': 'Airport', 'country': 'United States'}, 'destination': {'flightPlaceId': 'SJC', 'displayCode': 'SJC', 'name': 'Norman Y. Mineta International', 'type': 'Airport', 'country': 'United States'}, 'departure': '2024-08-16T16:43:00', 'arrival': '2024-08-16T18:11:00', 'durationInMinutes': 88, 'flightNumber': '3384', 'marketingCarrier': {'id': -56789, 'name': 'Alaska Airlines', 'alternateId': 'AS', 'allianceId': 0, 'displayCode': ''}, 'operatingCarrier': {'id': -56789, 'name': 'Alaska Airlines', 'alternateId': 'AS', 'allianceId': 0, 'displayCode': ''}},
-                {'id': 'SJC-LAX-16082024-16242024--56789', 'origin': {'flightPlaceId': 'SJC', 'displayCode': 'SJC', 'name': 'Norman Y. Mineta International', 'type': 'Airport', 'country': 'United States'}, 'destination': {'flightPlaceId': 'LAX', 'displayCode': 'LAX', 'name': 'Los Angeles International Airport', 'type': 'Airport', 'country': 'United States'}, 'departure': '2024-08-16T19:00:00', 'arrival': '2024-08-16T20:24:00', 'durationInMinutes': 84, 'flightNumber': '3387', 'marketingCarrier': {'id': -56789, 'name': 'Alaska Airlines', 'alternateId': 'AS', 'allianceId': 0, 'displayCode': ''}, 'operatingCarrier': {'id': -56789, 'name': 'Alaska Airlines', 'alternateId': 'AS', 'allianceId': 0, 'displayCode': ''}}
-            ]
-        }],
-        'isSelfTransfer': False,
-        'isProtectedSelfTransfer': False,
-        'farePolicy': {'isChangeAllowed': False, 'isPartiallyChangeable': False, 'isCancellationAllowed': False, 'isPartiallyRefundable': False},
-        'fareAttributes': [],
-        'tags': [],
-        'isMashUp': False,
-        'hasFlexibleOptions': False,
-        'score': 0.0
-    }
+    'id': 'ZRH-SFO-26092024',
+    'price': {'raw': 221, 'formatted': '$221', 'pricingOptionId': 'NewEntry789'},
+    'legs': [{
+        'id': 'ZRH-SFO-26092024',
+        'origin': {'id': 'ZRH', 'entityId': '23456789', 'name': 'Zurich Airport', 'displayCode': 'ZRH', 'city': 'Zurich', 'country': 'Switzerland', 'isHighlighted': False},
+        'destination': {'id': 'SFO', 'entityId': '98765432', 'name': 'San Francisco International Airport', 'displayCode': 'SFO', 'city': 'San Francisco', 'country': 'United States', 'isHighlighted': False},
+        'durationInMinutes': 873, # 8h 40m + 1h 46m layover + 5h 56m
+        'stopCount': 1,
+        'isSmallestStops': False,
+        'departure': '2024-09-26T11:45:00',
+        'arrival': '2024-09-26T19:07:00',
+        'timeDeltaInDays': 0,
+        'carriers': {
+            'marketing': [{'id': -67890, 'logoUrl': 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/American_Airlines_logo_2013.svg/1200px-American_Airlines_logo_2013.svg.png', 'name': 'American Airlines'}],
+            'operating': [{'id': -67890, 'name': 'American Airlines'}],
+            'operationType': 'fully_operated'
+        },
+        'segments': [
+            {'id': 'ZRH-PHL-26092024-26122024--67890', 'origin': {'flightPlaceId': 'ZRH', 'displayCode': 'ZRH', 'name': 'Zurich Airport', 'type': 'Airport', 'country': 'Switzerland'}, 'destination': {'flightPlaceId': 'PHL', 'displayCode': 'PHL', 'name': 'Philadelphia International Airport', 'type': 'Airport', 'country': 'United States'}, 'departure': '2024-09-26T11:45:00', 'arrival': '2024-09-26T14:25:00', 'durationInMinutes': 520, 'flightNumber': '93', 'marketingCarrier': {'id': -67890, 'name': 'American Airlines', 'alternateId': 'AA', 'allianceId': 0, 'displayCode': ''}, 'operatingCarrier': {'id': -67890, 'name': 'American Airlines', 'alternateId': 'AA', 'allianceId': 0, 'displayCode': ''}},
+            {'id': 'PHL-SFO-26092024-26142024--67890', 'origin': {'flightPlaceId': 'PHL', 'displayCode': 'PHL', 'name': 'Philadelphia International Airport', 'type': 'Airport', 'country': 'United States'}, 'destination': {'flightPlaceId': 'SFO', 'displayCode': 'SFO', 'name': 'San Francisco International Airport', 'type': 'Airport', 'country': 'United States'}, 'departure': '2024-09-26T16:11:00', 'arrival': '2024-09-26T19:07:00', 'durationInMinutes': 356, 'flightNumber': '2821', 'marketingCarrier': {'id': -67890, 'name': 'American Airlines', 'alternateId': 'AA', 'allianceId': 0, 'displayCode': ''}, 'operatingCarrier': {'id': -67890, 'name': 'American Airlines', 'alternateId': 'AA', 'allianceId': 0, 'displayCode': ''}}
+        ]
+    }],
+    'isSelfTransfer': False,
+    'isProtectedSelfTransfer': False,
+    'farePolicy': {'isChangeAllowed': False, 'isPartiallyChangeable': False, 'isCancellationAllowed': False, 'isPartiallyRefundable': False},
+    'fareAttributes': [],
+    'tags': [],
+    'isMashUp': False,
+    'hasFlexibleOptions': False,
+    'score': 0.0
+}
 
     flight_data['itineraries'].append(new_itinerary)
 
