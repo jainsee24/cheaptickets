@@ -671,11 +671,13 @@
     };
 
     let markup = '';
-    for (let i = -3; i <= 3; i++) {
+    for (let i = -2; i <= 4; i++) {
         const date = new Date(searchDate);
         date.setDate(searchDate.getDate() + i);
-        const isCurrentDate = date.toISOString().split('T')[0] === searchDate.toISOString().split('T')[0];
-        markup += generateDateMarkup(date, isCurrentDate);
+        const searchDateMinusOne = new Date(searchDate);
+        searchDateMinusOne.setDate(searchDateMinusOne.getDate() + 1);
+        const isDateMinusOne = date.toISOString().split('T')[0] === searchDateMinusOne.toISOString().split('T')[0];
+        markup += generateDateMarkup(date, isDateMinusOne);
     }
     datesRange.innerHTML = `<div class="dates-row">${markup}</div>`;
 
