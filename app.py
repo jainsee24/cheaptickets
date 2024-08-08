@@ -761,11 +761,12 @@ def search():
 
 from flask import Flask, request, render_template
 import undetected_chromedriver as uc
+from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import os
 import json
-import time
 
 app = Flask(__name__)
 
@@ -780,16 +781,19 @@ def search_stays():
 
     api_url = f"https://skiplagged.com/api/hotel_search.php?airport={airport}&checkin={checkin}&checkout={checkout}&num_rooms={num_rooms}&num_adults={num_adults}&num_children={num_children}"
     
-    options = uc.ChromeOptions()
-    # options.headless = True
-    driver = uc.Chrome(options=options, use_subprocess=False)
+    options = webdriver.ChromeOptions() 
+    options.add_argument("start-maximized")
+    options.add_argument('--headless')
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
+    options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
     
     try:
+        driver = uc.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=options)
         driver.get(api_url)
-        print(api_url)
         
         # Wait until the specific element that contains the data is present
-        pre_element = WebDriverWait(driver, 200).until(
+        pre_element = WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.TAG_NAME, "pre"))
         )
         
@@ -800,7 +804,8 @@ def search_stays():
     except Exception as e:
         data = {"error": f"An error occurred: {str(e)}"}
     finally:
-        driver.quit()
+        if 'driver' in locals():
+            driver.quit()
     
     return render_template(
         'hotels.html',
@@ -812,9 +817,6 @@ def search_stays():
         num_adults=num_adults,
         num_children=num_children
     )
-
-
-
 
 @app.route('/show_available_room')
 def show_available_room():
@@ -830,12 +832,13 @@ def show_available_room():
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
     }
 
-    response = requests.get(url,headers=headers)
-    data = response.json()
+    response = requests.get(url, headers=headers)
+    try:
+        data = response.json()
+    except requests.exceptions.JSONDecodeError:
+        data = {"error": "Invalid response from the hotel API"}
 
     return render_template('show_available_room.html', hotel=data)
-
-
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
