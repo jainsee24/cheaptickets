@@ -741,7 +741,7 @@ def search_stays():
     }
     
     response = requests.get(api_url, headers=headers)
-    
+    print(response.content)
     try:
         data = response.json()
     except requests.exceptions.JSONDecodeError:
