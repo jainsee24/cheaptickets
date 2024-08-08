@@ -757,9 +757,9 @@ def search():
 #         num_adults=num_adults,
 #         num_children=num_children
 #     )
-
 from flask import Flask, request, render_template
 import undetected_chromedriver as uc
+from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -786,7 +786,7 @@ def search_stays():
     options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
     
     try:
-        driver = uc.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=options)
+        driver = uc.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=options, browser_executable_path=os.environ.get("GOOGLE_CHROME_BIN"))
         driver.get(api_url)
         
         # Wait until the specific element that contains the data is present
