@@ -776,6 +776,18 @@ def search_stays():
     num_adults = request.args.get('num_adults', 1)
     num_children = request.args.get('num_children', 0)
 
+    url = "https://raw.githubusercontent.com/jainsee24/Datasets/main/hotel_search.json"
+    
+    try:
+        response = requests.get(url)
+        response.raise_for_status()  # This will raise an HTTPError if the HTTP request returned an unsuccessful status code
+        data = response.json()
+    except requests.exceptions.RequestException as e:
+        data = {"error": f"An error occurred: {str(e)}"}
+    
+    return render_template('hotels.html', data=data)
+
+
     api_url = f"https://skiplagged.com/api/hotel_search.php?airport={airport}&checkin={checkin}&checkout={checkout}&num_rooms={num_rooms}&num_adults={num_adults}&num_children={num_children}"
     
     options = webdriver.ChromeOptions() 
@@ -803,6 +815,8 @@ def search_stays():
     finally:
         if 'driver' in locals():
             driver.quit()
+
+    
     
     return render_template(
         'hotels.html',
