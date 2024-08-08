@@ -758,17 +758,14 @@ def search():
 #         num_children=num_children
 #     )
 
-
 from flask import Flask, request, render_template
 import undetected_chromedriver as uc
-from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import os
 import json
 
-app = Flask(__name__)
 
 @app.route('/search_stays')
 def search_stays():
