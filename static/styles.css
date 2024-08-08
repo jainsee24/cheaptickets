@@ -1,12 +1,157 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css');
+/* Add to the existing CSS */
 
+/* General styles for smaller screens */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    header nav ul {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    header nav ul li {
+        padding: 10px 0;
+        width: 100%;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .search-section {
+        padding: 10px;
+        margin: 10px auto;
+        width: 95%;
+    }
+
+    .tab-menu {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .tab {
+        margin-right: 0;
+        margin-bottom: 5px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .flight-details,
+    .rental-details {
+        flex-direction: column;
+        gap: 5px;
+        width: 100%;
+    }
+
+    .flight-details input,
+    .rental-details input,
+    .flight-details button,
+    .rental-details button,
+    .flight-details select,
+    .rental-details select {
+        flex: none;
+        width: 100%;
+    }
+
+    .banner {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .explore {
+        padding: 10px;
+        margin: 10px auto;
+        width: 95%;
+    }
+
+    .destination-grid {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .destination-card {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 20px;
+    }
+
+    footer button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .srt-banner {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .srt-banner__text {
+        margin-top: 10px;
+        text-align: center;
+    }
+
+    .airline-list {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+/* For very small screens */
+@media (max-width: 480px) {
+    header nav ul {
+        gap: 5px;
+    }
+
+    .trip-type,
+    .class-type,
+    .add-ons {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .trip-type label,
+    .class-type label,
+    .add-ons label {
+        margin-right: 0;
+        width: 100%;
+        text-align: left;
+    }
+
+    .destination-card img {
+        height: 150px;
+    }
+
+    .flight-details button,
+    .rental-details button {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .flight-details input::placeholder,
+    .rental-details input::placeholder {
+        font-size: 14px;
+    }
+
+    .srt-banner {
+        padding: 10px;
+    }
+
+    .srt-banner__heading {
+        font-size: 18px;
+    }
+
+    .srt-banner__text {
+        font-size: 14px;
+    }
+}
+
+/* Additional improvements for a better look */
 body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f9f9f9;
-    transition: background-color 0.3s;
 }
 
 header {
@@ -110,11 +255,13 @@ header nav ul li:hover {
     display: flex;
     justify-content: space-around;
 }
+
 .class-type {
     text-align: left;
     display: flex;
     justify-content: space-around;
 }
+
 .trip-type label, .class-type label, .add-ons label {
     margin-right: 10px;
     display: flex;
@@ -172,7 +319,7 @@ header nav ul li:hover {
     text-align: center;
     padding: 40px 20px;
     margin-top: 20px;
-    width: 80%; 
+    width: 80%;
     animation: fadeIn 1s ease-in-out;
 }
 
@@ -727,7 +874,6 @@ footer button {
     background-color: #f1f1f1;
 }
 
-
 .srt-banner {
     background-color: #007bff; /* Background color for the banner */
     padding: 20px; /* Padding around the content */
@@ -810,109 +956,5 @@ footer button {
 
     .airline-list span {
         flex: 1; /* Allow images to take more space */
-    }
-}
-
-
-/* Add to the existing CSS */
-
-/* General styles for smaller screens */
-@media (max-width: 768px) {
-    header nav ul {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .search-section {
-        padding: 10px;
-        margin: 10px auto;
-    }
-
-    .tab-menu {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .tab {
-        margin-right: 0;
-        margin-bottom: 5px;
-    }
-
-    .flight-details,
-    .rental-details {
-        flex-direction: column;
-        gap: 5px;
-    }
-
-    .flight-details input,
-    .rental-details input,
-    .flight-details button,
-    .rental-details button,
-    .flight-details select,
-    .rental-details select {
-        flex: none;
-        width: 100%;
-    }
-
-    .banner {
-        width: 100%;
-    }
-
-    .explore {
-        padding: 10px;
-        margin: 10px auto;
-    }
-
-    .destination-grid {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .destination-card {
-        width: 90%;
-        max-width: 100%;
-    }
-
-    footer button {
-        width: 100%;
-        margin-bottom: 10px;
-    }
-
-    .srt-banner {
-        flex-direction: column;
-        width: 100%;
-    }
-
-    .srt-banner__text {
-        margin-top: 10px;
-    }
-
-    .airline-list {
-        flex-direction: column;
-        align-items: center;
-    }
-}
-
-/* For very small screens */
-@media (max-width: 480px) {
-    header nav ul {
-        gap: 10px;
-    }
-
-    .trip-type,
-    .class-type,
-    .add-ons {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .trip-type label,
-    .class-type label,
-    .add-ons label {
-        margin-right: 0;
-    }
-
-    .destination-card img {
-        height: 150px;
     }
 }
