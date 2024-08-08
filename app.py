@@ -726,6 +726,49 @@ def search():
     filtered_results.sort(key=lambda x: x['cost'])
     return render_template('skip_results.html', results=filtered_results, from_city=from_city, to_city=to_city, depart_date=depart_date)
 
+# @app.route('/search_stays')
+# def search_stays():
+#     airport = request.args.get('airport')
+#     checkin = request.args.get('checkin')
+#     checkout = request.args.get('checkout')
+#     num_rooms = request.args.get('num_rooms', 1)
+#     num_adults = request.args.get('num_adults', 1)
+#     num_children = request.args.get('num_children', 0)
+
+#     api_url = f"https://skiplagged.com/api/hotel_search.php?airport={airport}&checkin={checkin}&checkout={checkout}&num_rooms={num_rooms}&num_adults={num_adults}&num_children={num_children}"
+#     headers = {
+#         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
+#     }
+    
+#     response = requests.get(api_url, headers=headers)
+#     print(response.content)
+#     try:
+#         data = response.json()
+#     except requests.exceptions.JSONDecodeError:
+#         data = {"error": "Invalid response from the hotel API"}
+    
+#     return render_template(
+#         'hotels.html',
+#         data=data,
+#         airport=airport,
+#         checkin=checkin,
+#         checkout=checkout,
+#         num_rooms=num_rooms,
+#         num_adults=num_adults,
+#         num_children=num_children
+#     )
+
+
+from flask import Flask, request, render_template
+import undetected_chromedriver as uc
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+import json
+import time
+
+app = Flask(__name__)
+
 @app.route('/search_stays')
 def search_stays():
     airport = request.args.get('airport')
@@ -736,16 +779,28 @@ def search_stays():
     num_children = request.args.get('num_children', 0)
 
     api_url = f"https://skiplagged.com/api/hotel_search.php?airport={airport}&checkin={checkin}&checkout={checkout}&num_rooms={num_rooms}&num_adults={num_adults}&num_children={num_children}"
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
-    }
     
-    response = requests.get(api_url, headers=headers)
-    print(response.content)
+    options = uc.ChromeOptions()
+    # options.headless = True
+    driver = uc.Chrome(options=options, use_subprocess=False)
+    
     try:
-        data = response.json()
-    except requests.exceptions.JSONDecodeError:
-        data = {"error": "Invalid response from the hotel API"}
+        driver.get(api_url)
+        print(api_url)
+        
+        # Wait until the specific element that contains the data is present
+        pre_element = WebDriverWait(driver, 200).until(
+            EC.presence_of_element_located((By.TAG_NAME, "pre"))
+        )
+        
+        # Extract the text content from the <pre> tag
+        json_data = pre_element.get_attribute('textContent')
+        
+        data = json.loads(json_data)
+    except Exception as e:
+        data = {"error": f"An error occurred: {str(e)}"}
+    finally:
+        driver.quit()
     
     return render_template(
         'hotels.html',
@@ -757,6 +812,9 @@ def search_stays():
         num_adults=num_adults,
         num_children=num_children
     )
+
+
+
 
 @app.route('/show_available_room')
 def show_available_room():
