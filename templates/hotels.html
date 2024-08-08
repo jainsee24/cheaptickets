@@ -219,6 +219,17 @@
             });
             document.querySelector(`button[onclick="showTab('${tabId}')"]`).classList.add('active');
         }
+
+        function redirectToRoomDetails(hotelId) {
+            const checkin = document.getElementById('checkin-date').value;
+            const checkout = document.getElementById('checkout-date').value;
+            const numRooms = document.querySelector('input[name="num_rooms"]').value;
+            const numAdults = document.querySelector('input[name="num_adults"]').value;
+            const numChildren = document.querySelector('input[name="num_children"]').value;
+
+            const url = `/show_available_room?hotel_id=${hotelId}&checkin=${checkin}&checkout=${checkout}&num_rooms=${numRooms}&num_adults=${numAdults}&num_children=${numChildren}`;
+            window.open(url, '_blank');
+        }
     </script>
 </head>
 <body>
@@ -398,7 +409,7 @@
                                             <span class="hotel-price">${{ hotel.rates.priceline_low_rate }} per night</span>
                                             <span class="hotel-total-price">${{ hotel.rates.priceline_low_rate_total }} total</span>
                                         </div>
-                                        <a href="#" onclick="redirectToRoomDetails({{ hotel.id }})" target="_blank">See available rooms</a>
+                                        <button style="padding: 10px; background-color: #007bff; color: white; border: none; cursor: pointer; border-radius: 5px;" onclick="redirectToRoomDetails({{ hotel.id }})">See available rooms</button>
                                     </div>
                                 </div>
                             </li>
@@ -406,22 +417,19 @@
                     </ul>
                 {% endif %}
             </div>
-            
-            
         </div>
         <script>
             function redirectToRoomDetails(hotelId) {
                 const checkin = document.getElementById('checkin-date').value;
                 const checkout = document.getElementById('checkout-date').value;
-                const numRooms = document.getElementById('num_rooms').value;
-                const numAdults = document.getElementById('num_adults').value;
-                const numChildren = document.getElementById('num_children').value;
+                const numRooms = document.querySelector('input[name="num_rooms"]').value;
+                const numAdults = document.querySelector('input[name="num_adults"]').value;
+                const numChildren = document.querySelector('input[name="num_children"]').value;
         
                 const url = `/show_available_room?hotel_id=${hotelId}&checkin=${checkin}&checkout=${checkout}&num_rooms=${numRooms}&num_adults=${numAdults}&num_children=${numChildren}`;
                 window.open(url, '_blank');
             }
         </script>
-        
     </main>
     <footer>
         <p>&copy; 2024 TravelFlight</p>
